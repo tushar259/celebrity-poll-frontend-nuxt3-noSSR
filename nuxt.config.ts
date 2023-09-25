@@ -5,7 +5,8 @@ export default defineNuxtConfig({
     // apiKey: process.env.API_KEY || 'abcd', // Default to an empty string, automatically set at runtime using process.env.NUXT_API_KEY
     private_API_URL: process.env.API_URL,
     public: {
-       API_URL: process.env.API_URL // Exposed to the frontend as well.
+       API_URL: process.env.API_URL, // Exposed to the frontend as well.
+       Project_URL: process.env.Project_URL
     }
   },
   app: {

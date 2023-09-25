@@ -22,7 +22,7 @@
                 <h6 class="poll-heads-in-all-poll-new"><span>New polls</span></h6>
                 <div v-if="allRecentPollsFound == true">
                     <div v-for="(poll, index) in allRecentUploadedPolls" :key="index">
-                        <router-link class="card my-3 custom-card-border" :to="'/poll/'+poll.table_name_starts_with"> 
+                        <router-link class="card my-3 custom-card-border" :to="'/poll/'+poll.poll_title"> 
                             
                             <div class="card-body d-flex">
                                 <div>
@@ -61,7 +61,7 @@
                 <h6 class="poll-heads-in-all-poll-new"><span>Recent results</span></h6>
                 <div v-if="resultPollsFound == true">
                     <div v-for="(poll, index) in resultAllPolls" :key="index">
-                        <router-link class="card my-3 custom-card-border" :to="'/poll-winner/'+poll.table_name_starts_with">
+                        <router-link class="card my-3 custom-card-border" :to="'/poll-winner/'+poll.poll_title">
                             
                             <div class="card-body d-flex">
                                 <div>
@@ -86,7 +86,7 @@
                 <div v-if="allPollFound == true">
                     <div v-for="(poll, index) in allPolls" :key="index">
 
-                        <router-link class="card my-3 custom-card-border" :to="'/poll/'+poll.table_name_starts_with">
+                        <router-link class="card my-3 custom-card-border" :to="'/poll/'+poll.poll_title">
                             
                             <div class="card-body d-flex">
                                 <div>
@@ -135,7 +135,24 @@
             
             
             useHead({
-                title: `PollDiary - ${industry}`
+                title: `PollDiary - ${industry}`,
+                meta: [
+                    
+                    {name: 'description', content: ''},
+
+                    { hid: 'og:title', property: 'og:title', content: 'PollDiary - '+industry },
+                    { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
+                    { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
+                    { hid: 'og:url', property: 'og:url', content: process.env.Project_URL+'/industry/'+industry },
+                    { hid: 'og:type', property: 'og:type', content: 'website' },
+
+                    { name: 'twitter:title', content: 'PollDiary - '+industry },
+                    { name: 'twitter:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
+                    { name: 'twitter:image', content: process.env.API_URL+'/logo/favicon2.png' },
+                    { name: 'twitter:card', content: 'summary_large_image' },
+                    // { name: 'poll-id', content: '123456' }, // Replace with the actual poll ID
+                    // { name: 'poll-title', content: 'My Awesome Poll' },
+                ]
             })
         },
         

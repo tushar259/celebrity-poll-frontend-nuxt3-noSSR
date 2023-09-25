@@ -20,7 +20,7 @@
                 <h6 class="poll-heads-in-all-poll-new"><span>New polls</span></h6>
                 <div v-if="allRecentPollsFound == true">
                     <div v-for="(poll, index) in allRecentUploadedPolls" :key="index">
-                        <router-link class="card my-3 custom-card-border" :to="'/poll/'+poll.table_name_starts_with"> 
+                        <router-link class="card my-3 custom-card-border" :to="'/poll/'+poll.poll_title"> 
                             <div class="card-body d-flex">
                                 <div>
                                     <img :src="apiUrl+'/'+poll.thumbnail_image" class="thumbnail-images-in-list-of-polls">
@@ -58,7 +58,7 @@
                 <h6 class="poll-heads-in-all-poll-new"><span>Recent results</span></h6>
                 <div v-if="resultPollsFound == true">
                     <div v-for="(poll, index) in resultAllPolls" :key="index">
-                        <router-link class="card my-3 custom-card-border" :to="'/poll-winner/'+poll.table_name_starts_with">
+                        <router-link class="card my-3 custom-card-border" :to="'/poll-winner/'+poll.poll_title">
                             
                             <div class="card-body d-flex">
                                 <div>
@@ -80,7 +80,7 @@
                 <h6 class="poll-heads-in-all-poll-new"><span>Polls ending</span></h6>
                 <div v-if="allPollFound == true">
                     <div v-for="(poll, index) in allPolls" :key="index">
-                        <router-link class="card my-3 custom-card-border" :to="'/poll/'+poll.table_name_starts_with">
+                        <router-link class="card my-3 custom-card-border" :to="'/poll/'+poll.poll_title">
                             
                             <div class="card-body d-flex">
                                 <div>

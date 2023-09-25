@@ -92,7 +92,7 @@
             this.apiUrl = this.$config.public.API_URL;
             this.pollId = this.$route.params.pollid;
             this.pollId = this.pollId.replace(/:/g, '');
-            this.pollId = this.pollId.replace(/-/g, ' ');
+            // this.pollId = this.pollId.replace(/-/g, ' ');
             this.getPollInfo();
             // window.scrollTo(0, 0);
         },
