@@ -56,6 +56,31 @@
 <script>
     import axios from 'axios';
     export default {
+        setup(){
+            // Now you can use router and route as needed
+            
+            
+            useHead({
+                title: `PollDiary - Poll history`,
+                meta: [
+                    
+                    {name: 'description', content: ''},
+
+                    { hid: 'og:title', property: 'og:title', content: 'PollDiary - Poll history'},
+                    { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! We are dedicated to providing an engaging platform for star polls and discussions.' },
+                    { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
+                    { hid: 'og:url', property: 'og:url', content: process.env.Project_URL+'/poll-history/'},
+                    { hid: 'og:type', property: 'og:type', content: 'website' },
+
+                    { name: 'twitter:title', content: 'PollDiary - Poll history'},
+                    { name: 'twitter:description', content: 'Welcome to PollDiary! We are dedicated to providing an engaging platform for star polls and discussions.' },
+                    { name: 'twitter:image', content: process.env.API_URL+'/logo/favicon2.png' },
+                    { name: 'twitter:card', content: 'summary_large_image' },
+                    // { name: 'poll-id', content: '123456' }, // Replace with the actual poll ID
+                    // { name: 'poll-title', content: 'My Awesome Poll' },
+                ]
+            })
+        },
 
         data: () => ({
             apiUrl: process.env.API_URL,
@@ -82,7 +107,7 @@
             getPollHistory(){
                 axios.get(this.apiUrl+'/api/get-list-of-all-poll-history')
                 .then(response =>{
-                    console.log(response);
+                    // console.log(response);
                     if(response.data.success === true){
                         response.data.value.forEach(item => {
                             if(item.total_votes_received > 0){

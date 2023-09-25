@@ -55,7 +55,31 @@
     // const toast = useToast();
     import axios from 'axios';
     export default {
-        
+        setup(){
+            // Now you can use router and route as needed
+            
+            
+            useHead({
+                title: `PollDiary - Login`,
+                meta: [
+                    
+                    {name: 'description', content: ''},
+
+                    { hid: 'og:title', property: 'og:title', content: 'PollDiary - Login'},
+                    { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! We are dedicated to providing an engaging platform for star polls and discussions.' },
+                    { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
+                    { hid: 'og:url', property: 'og:url', content: process.env.Project_URL+'/login' },
+                    { hid: 'og:type', property: 'og:type', content: 'website' },
+
+                    { name: 'twitter:title', content: 'PollDiary - Login'},
+                    { name: 'twitter:description', content: 'Welcome to PollDiary! We are dedicated to providing an engaging platform for star polls and discussions.' },
+                    { name: 'twitter:image', content: process.env.API_URL+'/logo/favicon2.png' },
+                    { name: 'twitter:card', content: 'summary_large_image' },
+                    // { name: 'poll-id', content: '123456' }, // Replace with the actual poll ID
+                    // { name: 'poll-title', content: 'My Awesome Poll' },
+                ]
+            })
+        },
 
         data() {
             return {
@@ -166,7 +190,7 @@
                             }
                         })
                         .then(response =>{
-                            console.log(response.data);
+                            // console.log(response.data);
                             if(response.data.success === true && response.data.message === "User logged in"){
                                 this.userEmail = response.data.userInfoFromTk.email;
                                 this.$router.push(`/`);
@@ -178,7 +202,7 @@
                         });
                     }
                     else{
-                        console.log("no token in storage");
+                        console.log("nothing in to_ st_");
                     }
                 }
             },

@@ -175,7 +175,7 @@
             this.pollId = this.$route.params.pollid;
             this.pollId = this.pollId.replace(/:/g, '');
             // this.pollId = this.pollId.replace(/-/g, ' ');
-            console.log(this.pollId);
+            // console.log(this.pollId);
             // if(process.client){
             //     document.title = 'Fans - '+this.pollTitle;
             // }
@@ -288,7 +288,7 @@
                 }
                 axios.post(this.apiUrl+'/api/get-poll-info', formData)
                 .then(response => {
-                    console.log(response);
+                    // console.log(response);
                     if(response.data.success === true){
                         this.pollFound = true;
                         this.pollTitle = response.data.title_n_other_info.poll_title;
