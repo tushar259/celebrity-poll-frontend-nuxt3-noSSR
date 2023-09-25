@@ -124,7 +124,7 @@
                                 this.password = "";
                                 this.userEmail = response.data.userEmail;
                                 this.isLoading = false;
-                                this.$nuxt.$emit('class-changed', this.userEmail);
+                                this.$emit('class-changed', this.userEmail);
                                 if(localStorage.getItem('load-page') && localStorage.getItem('load-page').length > 0){
                                     this.$router.push(localStorage.getItem('load-page'));
                                 }

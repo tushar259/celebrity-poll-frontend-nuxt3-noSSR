@@ -56,7 +56,7 @@
 
       <div class="content">
           <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
-          <NuxtPage />
+          <NuxtPage @class-changed="updateSpecificDivClass"/>
       </div>
       <div>
           <!-- Sticky footer -->

@@ -128,7 +128,16 @@
     import moment from 'moment';
     import FormData from 'form-data';
     export default {
-
+        setup(){
+            const route = useRoute()
+            const industry = route.params.industry;
+            // Now you can use router and route as needed
+            
+            
+            useHead({
+                title: `PollDiary - ${industry}`
+            })
+        },
         
         data: () => ({
             apiUrl: process.env.API_URL,

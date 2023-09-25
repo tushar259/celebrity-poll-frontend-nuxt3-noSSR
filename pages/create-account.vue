@@ -256,7 +256,7 @@
                                 this.selectedQuestion = "";
                                 this.selectedAnswer = "";
                                 this.isChecked = "";
-                                this.$nuxt.$emit('class-changed', this.userEmail);
+                                this.$emit('class-changed', this.userEmail);
                                 setTimeout(() => {
                                     this.isLoading = false;
                                     this.uploadLoading = true;
