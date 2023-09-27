@@ -316,7 +316,7 @@ export default {
       getListOfIndustries(){
           axios.get(this.apiUrl+'/api/get-list-of-industries')
           .then(response =>{
-              console.log(response);
+            //   console.log(response);
               if(response.data.success === true){
                   response.data.all_industry.forEach(item =>{
                       this.allIndustry.push(item);
