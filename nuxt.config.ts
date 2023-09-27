@@ -66,9 +66,30 @@ export default defineNuxtConfig({
     // '~/jsplugins/bootstrap.client.js'
     { src: '~/jsplugins/bootstrap.client.js', mode: 'client' }
   ],
+  
   build:{
     // vue-toastification - old commonjs module 
     // transpile: ['vue-toastification'],
   },
   components: true,
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      routes: ['/', 'sitemap.xml'],
+      ignore: ['/tak', '/konfiguration', '/checkout'],
+    },
+  },
+
+  modules: ['nuxt-simple-sitemap'],
+  // site: {
+  //   url: 'https://www.polldiary.com/',
+  // },
+  // sitemap: {
+  //   sitemaps: {
+  //     allpages: {
+  //       //should only include /bar urls
+  //       include: ['/**'],
+  //     },
+  //   },
+  // },
 })
