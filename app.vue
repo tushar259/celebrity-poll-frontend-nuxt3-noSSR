@@ -1,5 +1,22 @@
 <template>
   <div>
+    <header class="top-layer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 d-none d-md-block">
+                    <!-- <i class="fas fa-phone-alt"></i> -->
+                    <i class="fas fa-envelope"></i> <span class="vertically-middle-top-header">contact@polldiary.com</span>
+                </div>
+                <div class="col-md-8">
+                    <ul class="social-links">
+                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
       <nav class="navbar navbar-expand-lg navbar-light" style="width: 100% !important">
           <img class="navbar-brand navbar-logo-custom" :src="apiUrl+'/logo/favicon2.png'" alt="logo" @click="gotoHome()">
           
@@ -60,9 +77,9 @@
       </div>
       <div>
           <!-- Sticky footer -->
-          <footer class="footer">
+          <!-- <footer class="footer">
                 <div class="container text-white">
-                    <!-- <div class="row">
+                    <div class="row">
                         <div class="col-md-7">
                             <h5>Contact Information</h5>
                             <ul>
@@ -78,7 +95,7 @@
                                 <li><a href="https://www.instagram.com/YourWebsiteName">Instagram</a></li>
                             </ul>
                         </div>
-                    </div> -->
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <p>
@@ -86,7 +103,7 @@
                                 All content including text displayed on PollDiary except images, is protected by copyright laws.
                             </p>
                             <p>
-                                <a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-and-conditions">Terms and Conditions</a> | <!-- <a href="/copyright">Copyright Notice</a> |--> <a href="/about-us">About us</a> | <a href="/report-problem">Report a Problem</a>
+                                <a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-and-conditions">Terms and Conditions</a> | <a href="/about-us">About us</a> | <a href="/report-problem">Report a Problem</a>
                             </p>
                             <p>&copy; 2023 PollDiary. All rights reserved.
 
@@ -94,9 +111,58 @@
                         </div>
                     </div>
                 </div>
+            </footer> -->
+            <footer class="footer upper-layer-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="footer-red">Disclaimer</h4>
+                            <p>
+                                PollDiary is an independent platform and is not affiliated with any particular star or celebrity.
+                                All content including text displayed on PollDiary except images and names, is protected by copyright laws.
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 class="footer-red">Pages</h4>
+                            <p><a href="/">Home</a></p>
+                            <p><a href="/about-us">About US</a></p>
+                            <!-- <p>Contact US</p> -->
+                            <p><a href="/report-problem">Report a Problem</a></p>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 class="footer-red">Legal</h4>
+                            <p><a href="/privacy-policy">Privacy Policy</a></p>
+                            <p><a href="/terms-and-conditions">Terms & Conditions</a></p>
+                        </div>
+                        <!-- <div class="col-md-3">
+                            <h4 class="footer-red">Social</h4>
+                            <p>Facebook</p>
+                            <p>Twitter</p>
+                            <p>Instagram</p>
+                        </div> -->
+                    </div>
+                </div>
             </footer>
-      </div>
-  </div>
+            <footer class="footer upper-layer-footer">
+                <div class="container">
+                    <div class="row">
+                        <h4 class="footer-red">Social</h4>
+                        <ul class="social-links-footer">
+                            <a href="">Facebook</a>
+                            <a href="">Twitter</a>
+                            <a href="">Instagram</a>
+                        </ul>
+                    </div>
+                </div>
+            </footer>
+            <!-- Lower Layer Footer (Copyright) -->
+            <footer class="text-center bg-dark text-white lower-layer-footer">
+                <div class="container">
+                    <p>&copy; 2023 PollDiary. All rights reserved.</p>
+                </div>
+            </footer>
+       </div>
+   </div>
 </template>
 
 <script>
@@ -453,11 +519,7 @@ export default {
 </script>
 <style>
   /* Add CSS styles for the toast container */
-  #toastContainer {
-    position: fixed;
-    bottom: 20px; /* Adjust the distance from the bottom as needed */
-    right: 20px; /* Adjust the distance from the right as needed */
-    z-index: 11;
-  }
+  
+        
 </style>
 

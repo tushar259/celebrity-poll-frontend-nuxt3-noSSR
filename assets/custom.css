@@ -744,3 +744,47 @@ input[type='text'] {
     padding-left: 20px;
     padding-top: 5px;
 }
+
+#toastContainer {
+    position: fixed;
+    bottom: 20px; 
+    right: 20px; 
+    z-index: 11;
+}
+.upper-layer-footer {
+    background-color: #333 !important; 
+    color: #fff; 
+}
+.lower-layer-footer {
+    background-color: #555; 
+    padding-top: 10px;
+    padding-bottom: 2px;
+}
+.footer-red{
+    color: #e04646;
+}
+.top-layer {
+    background-color: #7c2424; 
+    color: #fff; 
+    padding: 2px;
+    height: 30px;
+}
+.social-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 30px;
+}
+.social-links li {
+    font-size: 18px;
+}
+.vertically-middle-top-header{
+    color: white !important;
+}
+.social-links-footer{
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}

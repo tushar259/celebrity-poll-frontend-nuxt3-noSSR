@@ -41,8 +41,10 @@ export default defineNuxtConfig({
         {rel: 'stylesheet', href: 'https://fonts.bunny.net/css?family=figtree:400,600&display=swap',},
         {rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css',},
         {rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',},
+        
         // <link rel="stylesheet" href="https://myawesome-lib.css">
         // { rel: 'stylesheet', href: 'https://awesome-lib.css' }
+        {rel: "stylesheet", href:"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"}
       ],
       // please note that this is an area that is likely to change
       style: [
@@ -86,9 +88,13 @@ export default defineNuxtConfig({
   // },
   // sitemap: {
   //   sitemaps: {
-  //     allpages: {
+  //     allPages: {
   //       //should only include /bar urls
   //       include: ['/**'],
+  //     },
+  //     industryPages: {
+  //       //should only include /bar urls
+  //       include: ['/bar/**'],
   //     },
   //   },
   // },
