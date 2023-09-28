@@ -513,7 +513,7 @@
             showToast(message, delay) {
                 // Create a new toast element
                 var toast = document.createElement('div');
-                toast.className = 'toast';
+                toast.className = 'toast bg-success text-white';
                 toast.setAttribute('role', 'alert');
                 toast.setAttribute('aria-live', 'assertive');
                 toast.setAttribute('aria-atomic', 'true');

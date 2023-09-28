@@ -8,7 +8,7 @@
                 <div class="px-20-gap"></div>
                 <div class="form-group">
                     <label for="email">Email address*</label>
-                    <input type="email" class="form-control" id="email" v-model="email" @keyup.enter="createAccount()" @blur="checkIfEmailExist()" placeholder="Email">
+                    <input type="email" class="form-control" id="email" v-model="email" @keyup.enter="createAccount()" @focus="removeError()" @blur="checkIfEmailExist()" placeholder="Email">
                     <small v-html="emailMessage"></small>
                 </div>
                 <div class="form-group">
@@ -149,6 +149,9 @@
                 else{
                     this.passwordType = "";
                 }
+            },
+            removeError(){
+                this.emailMessage = "";
             },
 
             checkIfEmailExist(){
@@ -344,7 +347,7 @@
             showToast(message, delay) {
                 // Create a new toast element
                 var toast = document.createElement('div');
-                toast.className = 'toast';
+                toast.className = 'toast bg-success text-white';
                 toast.setAttribute('role', 'alert');
                 toast.setAttribute('aria-live', 'assertive');
                 toast.setAttribute('aria-atomic', 'true');

@@ -786,5 +786,5 @@ input[type='text'] {
 .social-links-footer{
     list-style: none;
     display: flex;
-    gap: 30px;
+    gap: 20px;
 }

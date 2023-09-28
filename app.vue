@@ -9,9 +9,9 @@
                 </div>
                 <div class="col-md-8">
                     <ul class="social-links">
-                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="https://www.facebook.com/officialPollDiary" target="_blank"><i class="fab fa-facebook"></i></a></li>
+                        <li><a href="https://twitter.com/PollDiary" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="https://www.instagram.com/officialpolldiary/" target="_blank"><i class="fab fa-instagram"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -126,8 +126,8 @@
                             <h4 class="footer-red">Pages</h4>
                             <p><a href="/">Home</a></p>
                             <p><a href="/about-us">About US</a></p>
-                            <!-- <p>Contact US</p> -->
-                            <p><a href="/report-problem">Report a Problem</a></p>
+                            <p><a href="/contact-us">Contact US</a></p>
+                            <!-- <p><a href="/report-problem">Report a Problem</a></p> -->
                         </div>
                         <div class="col-md-3">
                             <h4 class="footer-red">Legal</h4>
@@ -148,9 +148,10 @@
                     <div class="row">
                         <h4 class="footer-red">Social</h4>
                         <ul class="social-links-footer">
-                            <a href="">Facebook</a>
-                            <a href="">Twitter</a>
-                            <a href="">Instagram</a>
+                            <a href="https://www.facebook.com/officialPollDiary" target="_blank">Facebook</a>
+                            <a href="https://www.facebook.com/groups/polldiary" target="_blank">Facebook group</a>
+                            <a href="https://twitter.com/PollDiary" target="_blank">Twitter</a>
+                            <a href="https://www.instagram.com/officialpolldiary/" target="_blank">Instagram</a>
                         </ul>
                     </div>
                 </div>
