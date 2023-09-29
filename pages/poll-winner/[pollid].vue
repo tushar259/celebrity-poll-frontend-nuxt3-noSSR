@@ -79,13 +79,13 @@
 
                     { hid: 'og:title', property: 'og:title', content: 'Poll Winner - '+pollid },
                     { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! We are dedicated to providing an engaging platform for star polls and discussions.' },
-                    { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
-                    { hid: 'og:url', property: 'og:url', content: process.env.Project_URL+'/poll/'+pollid },
+                    // { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
+                    { hid: 'og:url', property: 'og:url', content: 'https://www.polldiary.com/poll/'+pollid },
                     { hid: 'og:type', property: 'og:type', content: 'website' },
 
                     { name: 'twitter:title', content: 'Poll Winner - '+pollid },
                     { name: 'twitter:description', content: 'Welcome to PollDiary! We are dedicated to providing an engaging platform for star polls and discussions.' },
-                    { name: 'twitter:image', content: process.env.API_URL+'/logo/favicon2.png' },
+                    // { name: 'twitter:image', content: process.env.API_URL+'/logo/favicon2.png' },
                     { name: 'twitter:card', content: 'summary_large_image' },
                     // { name: 'poll-id', content: '123456' }, // Replace with the actual poll ID
                     // { name: 'poll-title', content: 'My Awesome Poll' },

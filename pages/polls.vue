@@ -124,7 +124,6 @@
         setup(){
             // Now you can use router and route as needed
             
-            
             useHead({
                 title: `PollDiary - Polls`,
                 meta: [

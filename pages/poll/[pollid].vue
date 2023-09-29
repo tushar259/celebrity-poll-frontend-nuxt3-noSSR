@@ -129,13 +129,13 @@
 
                     { hid: 'og:title', property: 'og:title', content: 'Poll - '+pollid },
                     { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
-                    { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
-                    { hid: 'og:url', property: 'og:url', content: process.env.Project_URL+'/poll/'+pollid },
+                    // { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
+                    { hid: 'og:url', property: 'og:url', content: 'https://www.polldiary.com/poll/'+pollid },
                     { hid: 'og:type', property: 'og:type', content: 'website' },
 
                     { name: 'twitter:title', content: 'Poll - '+pollid },
                     { name: 'twitter:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
-                    { name: 'twitter:image', content: process.env.API_URL+'/logo/favicon2.png' },
+                    // { name: 'twitter:image', content: process.env.API_URL+'/logo/favicon2.png' },
                     { name: 'twitter:card', content: 'summary_large_image' },
                     // { name: 'poll-id', content: '123456' }, // Replace with the actual poll ID
                     // { name: 'poll-title', content: 'My Awesome Poll' },
@@ -240,13 +240,11 @@
                     const url = `${protocol}//${hostname}${port ? `:${port}` : ''}`;
 
                     const currentLink = window.location.href;
-                    const title = this.pollTitle+'\r\n';
-                    const description = 'Your Description, Check out this link! ';
-                    const imageUrl = url+'/'+this.thumbnail;
+                    const title = "Vote for "+this.pollTitle+'\r\n\r\n';
                     const pageUrl = currentLink;
-                    const twitterUsername = 'Company_UserName';
+                    const twitterUsername = 'PollDiary';
 
-                    const text = `${title} ${description} ${imageUrl}`;
+                    const text = `${title}`;
 
                     const shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(text)}&via=${twitterUsername}`;
                     // const text = "Check out this link!";
