@@ -93,7 +93,7 @@
                     <div class="custom-align">
                         
 
-                        <button type="button" class="btn mt-3" @click="preCheckBeforeVote()" :disabled="disableVote">Vote</button>
+                        <button type="button" class="btn mt-3" @click="voteNow()" :disabled="disableVote">Vote</button>
                     </div>
                 </div>
             </div>
@@ -461,7 +461,7 @@
                     const formData = {
                         "selected_id": this.idSelectedToVote,
                         "table_name_starts_with": this.tableNameStartsWith,
-                        "email": this.userEmail
+                        // "email": this.userEmail
                     };
                     axios.post(this.apiUrl+'/api/vote-selected-candidate', formData)
                     .then(response => {
