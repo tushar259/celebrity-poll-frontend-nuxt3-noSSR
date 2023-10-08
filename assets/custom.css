@@ -788,3 +788,6 @@ input[type='text'] {
     display: flex;
     gap: 20px;
 }
+.vote-again{
+    color: rgb(0, 219, 0);
+}

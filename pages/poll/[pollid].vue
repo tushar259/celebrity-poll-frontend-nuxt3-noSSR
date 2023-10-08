@@ -90,7 +90,7 @@
                         </div>
                     </div>
                     <div class="total-votes-count-in-poll-page">{{formatNumber(totalVotes)}} votes</div>
-                    <div class="total-votes-count-in-poll-page" v-if="showTimer == true">Vote again in {{youCanVoteIn}} sec</div>
+                    <div class="total-votes-count-in-poll-page" v-if="showTimer == true">Vote again in <span class="vote-again">{{youCanVoteIn}}</span> sec</div>
                     <div class="custom-align">
                         
 
@@ -200,10 +200,8 @@
             //     window.scrollTo(0, 0);
             // }
             if(process.client){
-                console.log("ifUserVotedThenCanVoteNow: "+ this.ifUserVotedThenCanVoteNow);
                 if(this.ifUserVotedThenCanVoteNow == "false"){
                     const newTime = localStorage.getItem(`whenUserVoted${this.pollId}`);
-                    console.log("newTime: "+ newTime);
                     this.startCountdown(newTime);
                 }
             }
@@ -478,7 +476,8 @@
                     // }, 2000);
                 }
                 else{
-                    
+                    localStorage.setItem(`canUserVoteNow${this.pollId}`, "false");
+                    this.ifUserVotedThenCanVoteNow = "false";
                     const formData = {
                         "selected_id": this.idSelectedToVote,
                         "table_name_starts_with": this.tableNameStartsWith,
