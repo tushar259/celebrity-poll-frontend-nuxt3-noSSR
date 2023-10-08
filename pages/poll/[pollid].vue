@@ -90,6 +90,7 @@
                         </div>
                     </div>
                     <div class="total-votes-count-in-poll-page">{{formatNumber(totalVotes)}} votes</div>
+                    <div class="total-votes-count-in-poll-page" v-if="showTimer == true">Vote again in {{youCanVoteIn}} sec</div>
                     <div class="custom-align">
                         
 
@@ -165,7 +166,12 @@
             userEmail: '',
             voteMessage: '',
             pageDescriptionForMeta: '',
-            selectedPollTagName: ''
+            selectedPollTagName: '',
+            youCanVoteIn: 60,
+            timer: null,
+            showTimer: false,
+            ifUserVotedThenTime: '',
+            ifUserVotedThenCanVoteNow: "true",
         }),
 
         
@@ -174,6 +180,9 @@
             this.apiUrl = this.$config.public.API_URL;
             this.pollId = this.$route.params.pollid;
             this.pollId = this.pollId.replace(/:/g, '');
+
+            this.ifUserVotedThenTime = process.client ? localStorage.getItem(`whenUserVoted${this.pollId}`) : '',
+            this.ifUserVotedThenCanVoteNow = process.client ? localStorage.getItem(`canUserVoteNow${this.pollId}`) : "true",
             // this.pollId = this.pollId.replace(/-/g, ' ');
             // console.log(this.pollId);
             // if(process.client){
@@ -190,7 +199,14 @@
             // if(process.client){
             //     window.scrollTo(0, 0);
             // }
-            
+            if(process.client){
+                console.log("ifUserVotedThenCanVoteNow: "+ this.ifUserVotedThenCanVoteNow);
+                if(this.ifUserVotedThenCanVoteNow == "false"){
+                    const newTime = localStorage.getItem(`whenUserVoted${this.pollId}`);
+                    console.log("newTime: "+ newTime);
+                    this.startCountdown(newTime);
+                }
+            }
         },
 
         beforeMount(){
@@ -447,10 +463,15 @@
             },
 
             voteNow(){
-                
-                if(this.idSelectedToVote === "" || this.idSelectedToVote === null){
+
+                if(this.idSelectedToVote === "" || this.idSelectedToVote === null || this.ifUserVotedThenCanVoteNow == "false"){
                     this.disableVote = false;
-                    this.showDangerToast("Please select an option.", 5000)
+                    if(this.ifUserVotedThenCanVoteNow == "false"){
+                        this.showDangerToast("Please wait for a moment.", 5000);
+                    }
+                    else{
+                        this.showDangerToast("Please select an option.", 5000);
+                    }
                     // this.voteMessage = "<span style='color:red;'>Please select an option.</span>";
                     // setTimeout(() => {
                     //     this.voteMessage = "";
@@ -486,7 +507,18 @@
                                 this.showToast(response.data.message, 5000);
                             }
                             else{
-                                this.showToast("You have voted '"+this.capitalizeWords(this.selectedPollTagName)+"'", 5000);
+                                this.showToast("You have voted '"+this.capitalizeWords(this.selectedPollTagName)+"'", 7000);
+                                localStorage.setItem(`userVotedOption${this.pollId}`, this.selectedPollTagName);
+                                localStorage.setItem(`canUserVoteNow${this.pollId}`, "false");
+                                this.ifUserVotedThenCanVoteNow = "false";
+                                const newTime = new Date().getTime();
+                                localStorage.setItem(`whenUserVoted${this.pollId}`, newTime);
+                                
+                                this.startCountdown(newTime);
+
+                                // setTimeout(() => {
+                                //     this.voteMessage = "";
+                                // }, 2000);
                             }
                             
                             // this.voteMessage = "<span style='color:green;'>"+response.data.message+"</span>";
@@ -499,7 +531,26 @@
                     });
                 }
             },
+            startCountdown(newTime) {
+                this.timer = setInterval(() => {
+                    const currentTime = new Date().getTime();
+                    const elapsedTime = currentTime - newTime;
+                    const remainingSeconds = Math.max(60 - Math.floor(elapsedTime / 1000), 0);
 
+                    if(remainingSeconds > 0){
+                        this.showTimer = true;
+                        this.youCanVoteIn = remainingSeconds;
+                    } 
+                    else{
+                        this.showTimer = false;
+                        localStorage.setItem(`canUserVoteNow${this.pollId}`, "true");
+                        this.ifUserVotedThenCanVoteNow = "true";
+                        clearInterval(this.timer); // Stop the timer when it reaches 0
+                    }
+                }, 1000); // Update every 1000 milliseconds (1 second)
+                
+            },
+            
             capitalizeWords(inputString) {
                 return inputString
                     .toLowerCase()
@@ -599,6 +650,10 @@
                 toastInstance.show();
             },
             
-        }
+        },
+        beforeDestroy() {
+            // Cleanup: Stop the timer when the component is destroyed
+            clearInterval(this.timer);
+        },
     }
 </script>
