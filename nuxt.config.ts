@@ -32,6 +32,20 @@ export default defineNuxtConfig({
         {src: 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' },
         {src: 'https://kit.fontawesome.com/a076d05399.js', crossorigin: 'anonymous' },
         { src: 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js' },
+        {
+          src: 'https://www.googletagmanager.com/gtag/js?id=G-R03V9LK5WC', // Replace 'G-abcd' with your actual Google Analytics property ID
+          async: true,
+        },
+        {
+          innerHTML: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              window.dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', 'G-R03V9LK5WC'); // Replace 'G-abcd' with your actual Google Analytics property ID
+          `,
+        },
       ],
       link: [
         {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
