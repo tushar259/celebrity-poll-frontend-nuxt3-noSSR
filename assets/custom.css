@@ -790,4 +790,5 @@ input[type='text'] {
 }
 .vote-again{
     color: rgb(0, 219, 0);
+    font-weight: bold;
 }

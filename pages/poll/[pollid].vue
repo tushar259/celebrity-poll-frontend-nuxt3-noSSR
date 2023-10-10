@@ -545,6 +545,7 @@
                         localStorage.setItem(`canUserVoteNow${this.pollId}`, "true");
                         this.ifUserVotedThenCanVoteNow = "true";
                         clearInterval(this.timer); // Stop the timer when it reaches 0
+                        window.location.reload();
                     }
                 }, 1000); // Update every 1000 milliseconds (1 second)
                 
