@@ -775,7 +775,15 @@ input[type='text'] {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 30px;
+    gap: 3%;
+}
+.social-links i{
+    color: white;
+}
+.top-layer .container{
+    max-width: 100%;
+    padding-left: 2%;
+    padding-right: 2%;
 }
 .social-links li {
     font-size: 18px;

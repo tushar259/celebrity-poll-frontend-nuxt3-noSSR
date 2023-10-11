@@ -90,7 +90,7 @@
                         </div>
                     </div>
                     <div class="total-votes-count-in-poll-page">{{formatNumber(totalVotes)}} votes</div>
-                    <div class="total-votes-count-in-poll-page" v-if="showTimer == true">Vote again in <span class="vote-again">{{youCanVoteIn}}</span> sec</div>
+                    <div class="total-votes-count-in-poll-page" v-if="showTimer == true">Vote again in <span class="vote-again">{{youCanVoteIn}}</span>s</div>
                     <div class="custom-align">
                         
 
