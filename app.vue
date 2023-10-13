@@ -18,7 +18,7 @@
         </div>
     </header>
       <nav class="navbar navbar-expand-lg navbar-light" style="width: 100% !important">
-          <img class="navbar-brand navbar-logo-custom" :src="apiUrl+'/logo/favicon2.png'" alt="logo" @click="gotoHome()">
+          <img class="navbar-brand navbar-logo-custom" src="favicon2.webp" alt="logo" @click="gotoHome()">
           
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" @click="collapse = false">
               <span class="navbar-toggler-icon"></span>

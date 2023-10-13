@@ -54,7 +54,8 @@
                                 <img :src="apiUrl+'/logo/Instagram_logo_2016.svg.webp'" alt="LinkedIn Share" style="height: 27px;width: 27px;">
                             </a> -->
                             <a href="#" @click="copyLinkToClipboard()">
-                                <i class="fas fa-copy fa-lg"></i>
+                                <!-- <i class="fas fa-copy fa-lg"></i> -->
+                                <i class="fa-regular fa-copy fa-lg"></i>
                             </a>
                         </li>
                     </ul>
