@@ -314,8 +314,8 @@
                         
                         response.data.polls_n_counts.forEach(item => {
                             
-                            if(((item.votes / response.data.total_votes) * 100).toFixed(2) > 0){
-                                item.percent = ((item.votes / response.data.total_votes) * 100).toFixed(2);
+                            if(((item.votes / response.data.total_votes) * 100).toFixed(1) > 0){
+                                item.percent = ((item.votes / response.data.total_votes) * 100).toFixed(1);
                             }
                             else{
                                 item.percent = 0;
@@ -491,8 +491,8 @@
                         if(response.data.success === true){
                             response.data.new_polls.forEach(item => {
                                 // const votesNumber = parseInt(item.votes);
-                                if(((item.votes / response.data.total_votes) * 100).toFixed(2) > 0){
-                                    item.percent = ((item.votes / response.data.total_votes) * 100).toFixed(2);
+                                if(((item.votes / response.data.total_votes) * 100).toFixed(1) > 0){
+                                    item.percent = ((item.votes / response.data.total_votes) * 100).toFixed(1);
                                 }
                                 else{
                                     item.percent = 0;

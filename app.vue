@@ -148,10 +148,15 @@
                     <div class="row">
                         <h4 class="footer-red">Social</h4>
                         <ul class="social-links-footer">
-                            <a href="https://www.facebook.com/officialPollDiary" target="_blank">Facebook</a>
+                            <a href="https://www.facebook.com/officialPollDiary" target="_blank"><i class="fab fa-facebook"></i></a>
+                            <a href="https://www.facebook.com/groups/polldiary" target="_blank"><i class="fab fa-facebook"></i></a>
+                            <a href="https://twitter.com/PollDiary" target="_blank"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.instagram.com/officialpolldiary/" target="_blank"><i class="fab fa-instagram"></i></a>
+
+                            <!-- <a href="https://www.facebook.com/officialPollDiary" target="_blank">Facebook</a>
                             <a href="https://www.facebook.com/groups/polldiary" target="_blank">Facebook group</a>
                             <a href="https://twitter.com/PollDiary" target="_blank">Twitter</a>
-                            <a href="https://www.instagram.com/officialpolldiary/" target="_blank">Instagram</a>
+                            <a href="https://www.instagram.com/officialpolldiary/" target="_blank">Instagram</a> -->
                         </ul>
                     </div>
                 </div>
