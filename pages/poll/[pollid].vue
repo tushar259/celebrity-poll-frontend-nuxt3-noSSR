@@ -41,21 +41,25 @@
                         <span><i class="fas fa-share-alt"></i> Share</span>
                     </button>
                     <ul class="dropdown-menu share-dropdown-button">
-                        <li>
-                            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" title="facebook" style="margin-right: 0px;" @click="shareOnFacebook">
-                                <img :src="apiUrl+'/logo/Facebook-logo.png'" alt="Facebook Share" style="height: 30px;width: 48px;">
+                        <li style="display:flex;align-items: center;">
+                            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" title="facebook" style="margin-right: 13px;margin-left: 10px;" @click="shareOnFacebook">
+                                <!-- <img :src="apiUrl+'/logo/Facebook-logo.png'" alt="Facebook Share" style="height: 30px;width: 48px;"> -->
+                                <i class="fab fa-facebook" style="font-size:26px"></i>
                             </a>
                         
-                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="twitter" style="margin-right: 8px;" @click="shareOnTwitter">
-                                <img :src="apiUrl+'/logo/Twitter-logo.svg.png'" alt="Twitter Share" style="height: 24px;width: 31px;">
+                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="twitter" style="margin-right: 13px;" @click="shareOnTwitter">
+                                <!-- <img :src="apiUrl+'/logo/Twitter-logo.svg.png'" alt="Twitter Share" style="height: 24px;width: 31px;"> -->
+                                <i class="fab fa-twitter" style="font-size:28px"></i>
                             </a>
                         
                             <!-- <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" title="instagram" @click="shareOnInstagram">
                                 <img :src="apiUrl+'/logo/Instagram_logo_2016.svg.webp'" alt="LinkedIn Share" style="height: 27px;width: 27px;">
                             </a> -->
                             <a href="#" @click="copyLinkToClipboard()">
-                                <!-- <i class="fas fa-copy fa-lg"></i> -->
-                                <i class="fa-regular fa-copy fa-lg"></i>
+                                <i class="fas fa-copy fa-lg" style="padding-bottom: 10px;"></i>
+                                <!-- <i class="fa-regular fa-copy fa-lg"></i> -->
+                                <!-- <i class="fa fa-copy" style="font-size:24px"></i> -->
+                                
                             </a>
                         </li>
                     </ul>
