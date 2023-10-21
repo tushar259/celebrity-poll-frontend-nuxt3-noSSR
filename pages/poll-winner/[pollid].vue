@@ -86,7 +86,7 @@
                     { name: 'twitter:title', content: 'Poll Winner - '+pollid },
                     { name: 'twitter:description', content: 'Welcome to PollDiary! We are dedicated to providing an engaging platform for star polls and discussions.' },
                     // { name: 'twitter:image', content: process.env.API_URL+'/logo/favicon2.png' },
-                    { name: 'twitter:card', content: 'summary_large_image' },
+                    { name: 'twitter:card', content: 'summary' },
                     // { name: 'poll-id', content: '123456' }, // Replace with the actual poll ID
                     // { name: 'poll-title', content: 'My Awesome Poll' },
                 ]
