@@ -201,9 +201,6 @@
 
             this.getPollInfo();
 
-            // if(process.client){
-            //     window.scrollTo(0, 0);
-            // }
             if(process.client){
                 if(this.ifUserVotedThenCanVoteNow == "false"){
                     const newTime = localStorage.getItem(`whenUserVoted${this.pollId}`);
@@ -467,13 +464,18 @@
 
             voteNow(){
 
-                if(this.idSelectedToVote === "" || this.idSelectedToVote === null || this.ifUserVotedThenCanVoteNow == "false"){
+                if(this.idSelectedToVote === "" || this.idSelectedToVote === null || (this.ifUserVotedThenCanVoteNow == "false" || localStorage.getItem(`canUserVoteNow${this.pollId}`) == "false")){
                     this.disableVote = false;
                     if(this.ifUserVotedThenCanVoteNow == "false"){
                         this.showDangerToast("Please wait for a moment.", 5000);
                     }
-                    else{
+                    if(this.idSelectedToVote === "" || this.idSelectedToVote === null){
                         this.showDangerToast("Please select an option.", 5000);
+                    }
+                    if(localStorage.getItem(`canUserVoteNow${this.pollId}`) == "false"){
+                        const newTime = localStorage.getItem(`whenUserVoted${this.pollId}`);
+                        this.showDangerToast("Please wait for a moment.", 5000);
+                        this.startCountdown(newTime);
                     }
                     // this.voteMessage = "<span style='color:red;'>Please select an option.</span>";
                     // setTimeout(() => {
