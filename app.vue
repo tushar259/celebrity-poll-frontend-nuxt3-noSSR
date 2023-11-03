@@ -28,7 +28,9 @@
                   <li class="nav-item active">
                       <a class="nav-link custom-cursor" href="/" :class="{ 'active': activeLink === 'home' }" @click="gotoHome()">Home</a>
                   </li>
-                  
+                  <li class="nav-item active">
+                      <a class="nav-link custom-cursor" href="/" :class="{ 'active': activeLink === 'polls' }" @click="gotoPolls()">Polls</a>
+                  </li>
                   <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle text-truncate" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Industry
@@ -325,12 +327,21 @@ export default {
           this.$router.push('/');
           // console.log("this.activeLink: "+this.activeLink);
       },
+
+      gotoPolls(){
+          event.preventDefault();
+          this.collapse = true;
+          this.activeLink = 'polls';
+          this.$router.push('/polls');
+          // console.log("this.activeLink: "+this.activeLink);
+      },
       
       getCurrentWindowLocation(){
           
           const parts = this.currentLocation.split('/');
           
-          if((parts[1] === "" || parts[1] === "polls") && !parts[2]){
+        //   if((parts[1] === "" || parts[1] === "polls") && !parts[2]){
+          if(parts[1] === ""){
               this.activeLink = 'home';
           }
           if(parts[1] === "industry" && parts[2] && parts[2].length > 0){
@@ -350,6 +361,9 @@ export default {
           }
           else if(parts[1] === "poll-history"){
               this.activeLink = 'pollHistory';
+          }
+          else if(parts[1] === "polls"){
+              this.activeLink = 'polls';
           }
 
           // console.log("this.activeLink: "+this.activeLink);

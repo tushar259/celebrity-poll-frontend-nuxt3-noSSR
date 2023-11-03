@@ -29,7 +29,7 @@
                     // { name: 'poll-title', content: 'My Awesome Poll' },
                 ]
             });
-            navigateTo('/polls');
+            // navigateTo('/polls');
         },
 
         data: () => ({
