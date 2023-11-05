@@ -238,8 +238,8 @@
 
                     const currentLink = window.location.href;
                     const title = this.pollTitle;
-                    const description = 'Your Description';
-                    const imageUrl = url+'/'+this.thumbnail;
+                    const description = 'Welcome to PollDiary!';
+                    const imageUrl = this.apiUrl+'/'+this.thumbnail;
                     const pageUrl = currentLink;
 
                     const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}&quote=${encodeURIComponent(description)}&hashtag=${encodeURIComponent(title)}&picture=${encodeURIComponent(imageUrl)}`;
@@ -280,7 +280,7 @@
                     const currentLink = window.location.href;
                     const title = this.pollTitle;
                     const description = 'Your Description';
-                    const imageUrl = url+'/'+this.thumbnail;
+                    const imageUrl = this.apiUrl+'/'+this.thumbnail;
                     const pageUrl = currentLink;
                     const text = `Check out this link! ${imageUrl} ${title} ${description} ${pageUrl}`;
                     const shareText = encodeURIComponent(text);

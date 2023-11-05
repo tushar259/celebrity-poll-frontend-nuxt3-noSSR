@@ -805,3 +805,47 @@ input[type='text'] {
     color: rgb(0, 219, 0);
     font-weight: bold;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*NEW FEATURE*/
+.newsfeed-container{
+    margin-left: 7%;
+    margin-right: 7%;
+    padding-top: 2%;
+    padding-bottom: 10%;
+}
+.news-details img{
+    max-width: 100%;
+    height: auto;
+}
+.news-follow-icon{
+    font-size: 38px;
+    padding-left: 10px;
+    color: #707070;
+}
+.news-share-button{
+    border-radius: 40px !important;
+}
+.single-news-side-news-img{
+    max-width: 100%;
+    height: auto;
+}
+.single-news-side-news-all-article a{
+    text-decoration: none;
+    color:#000;
+}
+/*NEW FEATURE*/
