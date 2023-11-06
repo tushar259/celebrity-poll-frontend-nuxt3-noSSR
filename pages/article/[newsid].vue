@@ -130,15 +130,19 @@
             // this.$router.push(`/polls`);
             this.apiUrl = this.$config.public.API_URL;
             this.newsid = this.$route.params.newsid;
-            this.fetchCurrentNews()
+            // this.fetchCurrentNews();
+        },
+
+        mounted(){
+            this.fetchCurrentNews();
         },
 
         methods:{
-            fetchCurrentNews() {
+            async fetchCurrentNews() {
                 const formData = {
                     'newsid': this.newsid
                 }
-                axios.post(this.apiUrl+`/api/get-current-news-description`, formData)
+                await axios.post(this.apiUrl+`/api/get-current-news-description-details`, formData)
                 .then((response) => {
                     console.log(response);
                     this.nId = response.data.id;
