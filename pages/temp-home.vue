@@ -1,10 +1,32 @@
 <template>
     <div >
         <!-- welcome home -->
+        <div class="newsfeed-container">
+            <div class="row">
+                <div class="col">
+                    <div class="row top-left-news">
+                        <div class="col-md-3" v-for="(singletopLeftNews, index) in topLeftNews" :key="index">
+                            <a :href="'/article/' + singletopLeftNews.url">
+                                <img :src="apiUrl + '/' + singletopLeftNews.thumbnail" class="top-left-news-image">
+                                <span>{{singletopLeftNews.headline}}</span>
+                            </a>
+                            <div class="px-20-gap"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h4>
+                        Top News
+                    </h4>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+    import moment from 'moment';
+    import axios from 'axios';
     export default {
         setup(){
             // Now you can use router and route as needed
@@ -35,10 +57,31 @@
         data: () => ({
             token: process.client ? localStorage.getItem('token') : '',
             userEmail: '',
+            apiUrl: process.env.API_URL,
+            topLeftNews: [],
         }),
 
         created(){
             // this.$router.push(`/polls`);
+            this.apiUrl = this.$config.public.API_URL;
+            this.getAllCurrentNews();
+        },
+
+        methods:{
+            getAllCurrentNews(){
+                axios.get(this.apiUrl+`/api/get-all-current-news`)
+                .then(response =>{
+                    console.log(response);
+                    if(response.data.success == 'true'){
+                        response.data.topLeftNews.forEach(element => {
+                            this.topLeftNews.push(element);
+                        });
+                    }
+                })
+                .catch(error =>{
+                    console.log(error);
+                });
+            }
         }
     }
 </script>
