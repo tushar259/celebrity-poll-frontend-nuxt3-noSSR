@@ -56,10 +56,37 @@
                 </ul>
                 
             </div>
-            <div class="px-15-gap"></div>
+            <div class="px-30-gap"></div>
             <div class="row">
                 <div class="col-md-9">
                     <div class="news-details" v-html="newsDetails"></div>
+
+                    <div class="px-15-gap"></div>
+                    <h4>
+                        You May Like This
+                    </h4>
+                    <div class="bottom-news">
+                        <div class="px-10-gap"></div>
+                        <div class="bottom-news-row" v-for="(singlebottomNews, index) in bottomNews" :key="index">
+                            <div class="bottom-news-column" v-if="index == 0 || index%3 == 0">
+                                <a :href="singlebottomNews.url"><img :src="apiUrl+'/'+singlebottomNews.thumbnail" class="bottom-news-img">
+                                <span>{{singlebottomNews.headline}}</span></a>
+                                <div class="px-10-gap"></div>
+                            </div>
+                            <div class="bottom-news-column" v-else-if="index == 1 || index%2 == 1">
+                                <a :href="singlebottomNews.url"><img :src="apiUrl+'/'+singlebottomNews.thumbnail" class="bottom-news-img">
+                                <span>{{singlebottomNews.headline}}</span></a>
+                                <div class="px-10-gap"></div>
+                            </div>
+                            <div class="bottom-news-column" v-else-if="index == 2 || index%2 == 2">
+                                <a :href="singlebottomNews.url"><img :src="apiUrl+'/'+singlebottomNews.thumbnail" class="bottom-news-img">
+                                <span style="display: block;">{{singlebottomNews.headline}}</span></a>
+                                <div class="px-10-gap"></div>
+                            </div>
+                        </div>
+                        <div class="px-10-gap"></div>
+                    </div>
+                    
                 </div>
                 <div class="col-md-3">
                     <h4>
@@ -69,7 +96,7 @@
                     <div v-for="(singleSideNews, index) in sideNews" :key="index" class="single-news-side-news-all-article">
                         <a :href="singleSideNews.url"><img :src="apiUrl+'/'+singleSideNews.thumbnail" class="single-news-side-news-img">
                         <span>{{singleSideNews.headline}}</span></a>
-                        <div class="px-10-gap"></div>
+                        <div class="px-20-gap"></div>
                     </div>
                 </div>
             </div>
@@ -124,6 +151,7 @@
             newsFound: null,
             thumbnail: '',
             sideNews: [],
+            bottomNews: [],
         }),
 
         created(){
@@ -145,16 +173,25 @@
                 await axios.post(this.apiUrl+`/api/get-current-news-description-details`, formData)
                 .then((response) => {
                     console.log(response);
-                    this.nId = response.data.id;
-                    this.headline = response.data.mainNews.headline;
-                    this.newsDetails = response.data.mainNews.news_details;
-                    this.industry = response.data.mainNews.industry;
-                    this.createdAt = response.data.mainNews.created_at;
-                    this.thumbnail = response.data.mainNews.thumbnail;
-                    response.data.sideNews.forEach(item => {
-                        this.sideNews.push(item);
-                    });
-                    this.newsFound = true;
+                    if(response.data.success == "true"){
+                        this.nId = response.data.id;
+                        this.headline = response.data.mainNews.headline;
+                        this.newsDetails = response.data.mainNews.news_details;
+                        this.industry = response.data.mainNews.industry;
+                        this.createdAt = response.data.mainNews.created_at;
+                        this.thumbnail = response.data.mainNews.thumbnail;
+                        response.data.sideNews.forEach(item => {
+                            this.sideNews.push(item);
+                        });
+                        response.data.bottomNews.forEach(item =>{
+                            this.bottomNews.push(item);
+                        });
+                        this.newsFound = true;
+                    }
+                    else{
+                        this.newsFound = false;
+                    }
+                    
                 })
                 .catch((error) => {
                     console.error('Error fetching poll description', error);
