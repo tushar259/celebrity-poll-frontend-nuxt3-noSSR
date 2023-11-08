@@ -13,20 +13,12 @@
             <div v-else-if="newsFound == true">
                 <div class="row">
                     <div class="col">
-                        <!-- <div class="row top-left-news">
-                            <div class="col-md-3" v-for="(singletopLeftNews, index) in topLeftNews" :key="index">
-                                <a :href="'/article/' + singletopLeftNews.url">
-                                    <img :src="apiUrl + '/' + singletopLeftNews.thumbnail" class="top-left-news-image">
-                                    <span>{{singletopLeftNews.headline}}</span>
-                                </a>
-                                <div class="px-20-gap"></div>
-                            </div>
-                        </div> -->
                         <div class="row top-left-news">
                             <div class="col-md-6">
                                 <a :href="'/article/' + topOftopLeftNews[0].url" class="top-left-news-image-latest">
                                     <img :src="apiUrl + '/' + topOftopLeftNews[0].thumbnail" ><br>
-                                    <span>{{topOftopLeftNews[0].headline}}</span>
+                                    <span>{{topOftopLeftNews[0].headline}}</span><br>
+                                    <small>{{topOftopLeftNews[0].created_at}}</small>
                                     <div class="px-10-gap"></div>
                                 </a>
                             </div>
@@ -37,14 +29,17 @@
                                 <div class="px-5-gap"></div>
                                 <a :href="'/article/' + singletopLeftNews.url" class="d-flex top-left-news-image">
                                     <img :src="apiUrl + '/' + singletopLeftNews.thumbnail">
+                                
                                     <span>{{singletopLeftNews.headline}}</span>
+                                    <small>{{singletopLeftNews.created_at}}</small>
+                                
                                 </a>
                                 <div class="px-5-gap"></div>
                             </div>
                         </div>
 
                         <div class="px-10-gap"></div>
-                        <div class="home-top-news-show-more"><button class="btn">Show More</button></div>
+                        <div class="home-top-news-show-more"><button class="btn" @click="showMoreTopNews()">Show More</button></div>
                         <div class="px-10-gap"></div>
 
                         <ul class="nav nav-tabs home-news-nav-tab">
@@ -218,6 +213,7 @@
             token: process.client ? localStorage.getItem('token') : '',
             userEmail: '',
             apiUrl: process.env.API_URL,
+            topCurrentShowPagination: 0,
             topLeftNews: [],
             topOftopLeftNews: [],
             newsFound: null,
@@ -240,34 +236,40 @@
 
         methods:{
             getAllCurrentNews(){
-                axios.get(this.apiUrl+`/api/get-all-current-news`)
-                .then(response =>{
-                    console.log(response);
-                    if(response.data.success == 'true'){
-                        response.data.topLeftNews.forEach((element, index) => {
-                            if(index == 0){
-                                this.topOftopLeftNews.push(element); //insert first index only
-                            }
-                            else{
-                                this.topLeftNews.push(element); //insert rest of the indexes
-                            }
-                        });
-                        response.data.mostViewedNews.forEach(element =>{
-                            this.mostViewedNews.push(element);
-                        });
-                        response.data.bollywoodNews.forEach(element =>{
-                            this.bollywoodNews.push(element);
-                        });
-                        this.newsFound = true;
-                    }
-                    else{
+                if(this.topOftopLeftNews.length == 0){
+                    axios.get(this.apiUrl+`/api/get-all-current-news`)
+                    .then(response =>{
+                        console.log(response);
+                        if(response.data.success == 'true'){
+                            response.data.topLeftNews.forEach((element, index) => {
+                                element.created_at = this.beautifyTime(element.created_at);
+                                if(index == 0){
+                                    this.topOftopLeftNews.push(element); //insert first index only
+                                }
+                                else{
+                                    this.topLeftNews.push(element); //insert rest of the indexes
+                                }
+                            });
+                            response.data.mostViewedNews.forEach(element =>{
+                                this.mostViewedNews.push(element);
+                            });
+                            response.data.bollywoodNews.forEach(element =>{
+                                this.bollywoodNews.push(element);
+                            });
+                            this.newsFound = true;
+                        }
+                        else{
+                            this.newsFound = false;
+                        }
+                    })
+                    .catch(error =>{
+                        console.log(error);
                         this.newsFound = false;
-                    }
-                })
-                .catch(error =>{
-                    console.log(error);
-                    this.newsFound = false;
-                });
+                    });
+                }
+                else{
+                    this.newsFound = true;
+                }
             },
 
             getNewsIndustryWise(industry){
@@ -282,6 +284,7 @@
                             console.log(response);
                             if(response.data.success == 'true'){
                                 response.data.industryNews.forEach(element =>{
+                                    element.created_at = this.beautifyTime(element.created_at);
                                     this.bollywoodNews.push(element);
                                 });
                             }
@@ -301,6 +304,7 @@
                             console.log(response);
                             if(response.data.success == 'true'){
                                 response.data.industryNews.forEach(element =>{
+                                    element.created_at = this.beautifyTime(element.created_at);
                                     this.musicNews.push(element);
                                 });
                             }
@@ -320,6 +324,7 @@
                             console.log(response);
                             if(response.data.success == 'true'){
                                 response.data.industryNews.forEach(element =>{
+                                    element.created_at = this.beautifyTime(element.created_at);
                                     this.hollywoodNews.push(element);
                                 });
                             }
@@ -339,6 +344,7 @@
                             console.log(response);
                             if(response.data.success == 'true'){
                                 response.data.industryNews.forEach(element =>{
+                                    element.created_at = this.beautifyTime(element.created_at);
                                     this.southIndiaNews.push(element);
                                 });
                             }
@@ -358,6 +364,7 @@
                             console.log(response);
                             if(response.data.success == 'true'){
                                 response.data.industryNews.forEach(element =>{
+                                    element.created_at = this.beautifyTime(element.created_at);
                                     this.tvNews.push(element);
                                 });
                             }
@@ -377,6 +384,7 @@
                             console.log(response);
                             if(response.data.success == 'true'){
                                 response.data.industryNews.forEach(element =>{
+                                    element.created_at = this.beautifyTime(element.created_at);
                                     this.worldwideNews.push(element);
                                 });
                             }
@@ -396,6 +404,7 @@
                             console.log(response);
                             if(response.data.success == 'true'){
                                 response.data.industryNews.forEach(element =>{
+                                    element.created_at = this.beautifyTime(element.created_at);
                                     this.othersNews.push(element);
                                 });
                             }
@@ -407,6 +416,44 @@
                 }
             },
 
+            showMoreTopNews(){
+                this.topCurrentShowPagination += 1;
+                const formData = {
+                    'showAmount': this.topCurrentShowPagination
+                };
+
+                axios.post(this.apiUrl+`/api/show-next-amount-top-news`, formData)
+                .then(response =>{
+                    console.log(response);
+                    if(response.data.success == 'true'){
+                        response.data.currentNews.forEach(element => {
+                            element.created_at = this.beautifyTime(element.created_at);
+                            this.topLeftNews.push(element); //insert rest of the indexes
+                        });
+                    }
+                })
+                .catch(error =>{
+                    console.log(error);
+                });
+            },
+
+            beautifyTime(timestamp) {
+                timestamp = Date.parse(timestamp) / 1000;
+                const now = Date.now() / 1000;
+                const diff = Math.floor(now - timestamp);
+                if (diff < 60) {
+                    return 'now';
+                } else if (diff < 3600) {
+                    const minutes = Math.floor(diff / 60);
+                    return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+                } else if (diff < 86400) {
+                    const hours = Math.floor(diff / 3600);
+                    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+                } else {
+                    const days = Math.floor(diff / 86400);
+                    return `${days} day${days > 1 ? 's' : ''} ago`;
+                }
+            },
             
         }
     }

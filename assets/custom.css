@@ -908,4 +908,8 @@ input[type='text'] {
 .home-news-nav-tab li{
     cursor: pointer;
 }
+.top-left-news-image-latest small,
+.top-left-news-image small{
+    color: #696868;
+}
 /*NEW FEATURE*/
