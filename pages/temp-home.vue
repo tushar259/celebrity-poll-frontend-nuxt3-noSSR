@@ -17,12 +17,16 @@
                             <div class="col-md-6">
                                 <a :href="'/article/' + topOftopLeftNews[0].url" class="top-left-news-image-latest">
                                     <img :src="apiUrl + '/' + topOftopLeftNews[0].thumbnail" ><br>
-                                    <span>{{topOftopLeftNews[0].headline}}</span><br>
-                                    <small>{{topOftopLeftNews[0].created_at}}</small>
+                                    <span>{{topOftopLeftNews[0].headline}}<br>
+                                        <small>{{topOftopLeftNews[0].created_at}}</small>
+                                    </span>
+                                    
                                     <div class="px-10-gap"></div>
                                 </a>
                             </div>
+                            
                         </div>
+                        <div class="px-10-gap"></div>
                         <div class="row top-left-news">
                             <div v-for="(singletopLeftNews, index) in topLeftNews" :key="index" class="col-md-5">
                                 <hr class="d-block d-sm-none">
@@ -30,8 +34,11 @@
                                 <a :href="'/article/' + singletopLeftNews.url" class="d-flex top-left-news-image">
                                     <img :src="apiUrl + '/' + singletopLeftNews.thumbnail">
                                 
-                                    <span>{{singletopLeftNews.headline}}</span>
-                                    <small>{{singletopLeftNews.created_at}}</small>
+                                    <span>
+                                        {{singletopLeftNews.headline}}<br>
+                                        <small>{{singletopLeftNews.created_at}}</small>
+                                    </span>
+                                    
                                 
                                 </a>
                                 <div class="px-5-gap"></div>
@@ -73,7 +80,10 @@
                                 <div class="px-5-gap"></div>
                                 <a :href="'/article/' + singlebollywoodNews.url" class="d-flex top-left-news-image">
                                     <img :src="apiUrl + '/' + singlebollywoodNews.thumbnail">
-                                    <span>{{singlebollywoodNews.headline}}</span>
+                                    <span>
+                                        {{singlebollywoodNews.headline}}<br>
+                                        <small>{{singlebollywoodNews.created_at}}</small>
+                                    </span>
                                 </a>
                                 <div class="px-5-gap"></div>
                                 <hr class="d-block d-sm-none">
@@ -86,7 +96,10 @@
                                 <div class="px-5-gap"></div>
                                 <a :href="'/article/' + singlemusicNews.url" class="d-flex top-left-news-image">
                                     <img :src="apiUrl + '/' + singlemusicNews.thumbnail">
-                                    <span>{{singlemusicNews.headline}}</span>
+                                    <span>
+                                        {{singlemusicNews.headline}}<br>
+                                        <small>{{singlemusicNews.created_at}}</small>
+                                    </span>
                                 </a>
                                 <div class="px-5-gap"></div>
                                 <hr class="d-block d-sm-none">
@@ -99,7 +112,10 @@
                                 <div class="px-5-gap"></div>
                                 <a :href="'/article/' + singlehollywoodNews.url" class="d-flex top-left-news-image">
                                     <img :src="apiUrl + '/' + singlehollywoodNews.thumbnail">
-                                    <span>{{singlehollywoodNews.headline}}</span>
+                                    <span>
+                                        {{singlehollywoodNews.headline}}<br>
+                                        <small>{{singlehollywoodNews.created_at}}</small>
+                                    </span>
                                 </a>
                                 <div class="px-5-gap"></div>
                                 <hr class="d-block d-sm-none">
@@ -112,7 +128,10 @@
                                 <div class="px-5-gap"></div>
                                 <a :href="'/article/' + singlesouthIndiaNews.url" class="d-flex top-left-news-image">
                                     <img :src="apiUrl + '/' + singlesouthIndiaNews.thumbnail">
-                                    <span>{{singlesouthIndiaNews.headline}}</span>
+                                    <span>
+                                        {{singlesouthIndiaNews.headline}}<br>
+                                        <small>{{singlesouthIndiaNews.created_at}}</small>
+                                    </span>
                                 </a>
                                 <div class="px-5-gap"></div>
                                 <hr class="d-block d-sm-none">
@@ -125,7 +144,10 @@
                                 <div class="px-5-gap"></div>
                                 <a :href="'/article/' + singletvNews.url" class="d-flex top-left-news-image">
                                     <img :src="apiUrl + '/' + singletvNews.thumbnail">
-                                    <span>{{singletvNews.headline}}</span>
+                                    <span>
+                                        {{singletvNews.headline}}<br>
+                                        <small>{{singletvNews.created_at}}</small>
+                                    </span>
                                 </a>
                                 <div class="px-5-gap"></div>
                                 <hr class="d-block d-sm-none">
@@ -138,7 +160,10 @@
                                 <div class="px-5-gap"></div>
                                 <a :href="'/article/' + singleworldwideNews.url" class="d-flex top-left-news-image">
                                     <img :src="apiUrl + '/' + singleworldwideNews.thumbnail">
-                                    <span>{{singleworldwideNews.headline}}</span>
+                                    <span>
+                                        {{singleworldwideNews.headline}}<br>
+                                        <small>{{singleworldwideNews.created_at}}</small>
+                                    </span>
                                 </a>
                                 <div class="px-5-gap"></div>
                                 <hr class="d-block d-sm-none">
@@ -151,7 +176,10 @@
                                 <div class="px-5-gap"></div>
                                 <a :href="'/article/' + singleOthersNews.url" class="d-flex top-left-news-image">
                                     <img :src="apiUrl + '/' + singleOthersNews.thumbnail">
-                                    <span>{{singleOthersNews.headline}}</span>
+                                    <span>
+                                        {{singleOthersNews.headline}}<br>
+                                        <small>{{singleOthersNews.created_at}}</small>
+                                    </span>
                                 </a>
                                 <div class="px-5-gap"></div>
                                 <hr class="d-block d-sm-none">
@@ -168,7 +196,9 @@
                         <div v-for="(singlemostViewedNews, index) in mostViewedNews" :key="index" class="most-viewed-news">
                             <a :href="'/article/' + singlemostViewedNews.url" class="">
                                 <img :src="apiUrl + '/' + singlemostViewedNews.thumbnail">
-                                <span>{{singlemostViewedNews.headline}}</span>
+                                <span>
+                                    {{singlemostViewedNews.headline}}
+                                </span>
                             </a>
                             <div class="px-15-gap"></div>
                         </div>
@@ -251,9 +281,11 @@
                                 }
                             });
                             response.data.mostViewedNews.forEach(element =>{
+                                element.created_at = this.beautifyTime(element.created_at);
                                 this.mostViewedNews.push(element);
                             });
                             response.data.bollywoodNews.forEach(element =>{
+                                element.created_at = this.beautifyTime(element.created_at);
                                 this.bollywoodNews.push(element);
                             });
                             this.newsFound = true;

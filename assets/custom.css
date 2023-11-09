@@ -834,12 +834,14 @@ input[type='text'] {
     border-radius: 4px;
 }
 .news-follow-icon{
-    font-size: 38px;
-    padding-left: 10px;
+    font-size: 30px;
+    padding-left: 7px;
     color: #707070;
 }
 .news-share-button{
-    border-radius: 40px !important;
+    border-radius: 10px !important;
+    height: 30px;
+    width: 90px;
 }
 .single-news-side-news-img{
     border-radius: 4px;

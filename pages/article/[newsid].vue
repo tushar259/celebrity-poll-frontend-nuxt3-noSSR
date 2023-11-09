@@ -17,10 +17,10 @@
             </div>
             <div class="px-20-gap"></div>
             <h1>{{headline}}</h1>
-            
-
+            <small>Published on {{createdAt}}</small>
+            <div class="px-10-gap"></div>
             <div class="btn-group news-follow-everything">
-                <button type="button" class="btn btn-light share-button news-share-button" disabled>
+                <button type="button" class="news-share-button" disabled>
                     <span>Follow Us</span>
                 </button>
                 <a href="https://www.facebook.com/officialPollDiary" target="_blank"><i class="fab fa-facebook news-follow-icon"></i></a>
@@ -28,7 +28,7 @@
                 <a href="https://twitter.com/PollDiary" target="_blank"><i class="fab fa-twitter news-follow-icon"></i></a>
                 <a href="https://www.instagram.com/officialpolldiary/" target="_blank"><i class="fab fa-instagram news-follow-icon" style="padding-right: 10px;"></i></a>
 
-                <button type="button" id="shareButton" class="btn btn-secondary share-button news-share-button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button type="button" id="shareButton" class="news-share-button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span><i class="fas fa-share-alt"></i> Share</span>
                 </button>
                 <ul class="dropdown-menu share-dropdown-button">
@@ -166,11 +166,11 @@
         },
 
         methods:{
-            async fetchCurrentNews() {
+            fetchCurrentNews() {
                 const formData = {
                     'newsid': this.newsid
                 }
-                await axios.post(this.apiUrl+`/api/get-current-news-description-details`, formData)
+                axios.post(this.apiUrl+`/api/get-current-news-description-details`, formData)
                 .then((response) => {
                     console.log(response);
                     if(response.data.success == "true"){
@@ -178,7 +178,8 @@
                         this.headline = response.data.mainNews.headline;
                         this.newsDetails = response.data.mainNews.news_details;
                         this.industry = response.data.mainNews.industry;
-                        this.createdAt = response.data.mainNews.created_at;
+                        // this.createdAt = response.data.mainNews.created_at;
+                        this.createdAt = moment(response.data.mainNews.created_at).format('MMM D, YYYY');
                         this.thumbnail = response.data.mainNews.thumbnail;
                         response.data.sideNews.forEach(item => {
                             this.sideNews.push(item);
