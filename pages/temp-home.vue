@@ -18,7 +18,7 @@
                                 <a :href="'/article/' + topOftopLeftNews[0].url" class="top-left-news-image-latest">
                                     <img :src="apiUrl + '/' + topOftopLeftNews[0].thumbnail" ><br>
                                     <span>{{topOftopLeftNews[0].headline}}<br>
-                                        <small>{{topOftopLeftNews[0].created_at}}</small>
+                                        <small>{{beautifyTime(topOftopLeftNews[0].created_at)}}</small>
                                     </span>
                                     
                                     <div class="px-10-gap"></div>
@@ -213,29 +213,75 @@
     import moment from 'moment';
     import axios from 'axios';
     export default {
-        setup(){
+        async setup(){
+            const config = useRuntimeConfig();
+            const ssrApiUrl = config.public.API_URL;
+            const newsFound = ref(null);
+            const topOftopLeftNews = ref([]);
+            const topLeftNews = ref([]);
+            const mostViewedNews = ref([]);
+            const bollywoodNews = ref([]);
+
+            await useFetch(`${ssrApiUrl}/api/get-all-current-news`)
+            .then(response =>{
+                // console.log(response.data.value.bottomNews);
+                if(response.data.value.success == 'true'){
+                    response.data.value.topLeftNews.forEach((element, index) => {
+                        element.created_at = element.created_at;
+                        if(index == 0){
+                            topOftopLeftNews.value.push(element); 
+                        }
+                        else{
+                            topLeftNews.value.push(element); 
+                        }
+                    });
+                    mostViewedNews.value = response.data.value.mostViewedNews;
+                    bollywoodNews.value = response.data.value.bollywoodNews;
+                    // response.data.mostViewedNews.forEach(element =>{
+                    //     element.created_at = this.beautifyTime(element.created_at);
+                    //     this.mostViewedNews.push(element);
+                    // });
+                    // response.data.bollywoodNews.forEach(element =>{
+                    //     element.created_at = this.beautifyTime(element.created_at);
+                    //     this.bollywoodNews.push(element);
+                    // });
+                    newsFound.value = true;
+                }
+                else{
+                    newsFound.value = false;
+                }
+            })
+            .catch(error =>{
+                console.log(error);
+            });
+
+            return{
+                newsFound,
+                topOftopLeftNews,
+                topLeftNews,
+                mostViewedNews,
+                bollywoodNews
+            }
             // Now you can use router and route as needed
             
-            useHead({
-                title: `PollDiary - Home`,
-                meta: [
+            // useHead({
+            //     title: `PollDiary - Home`,
+            //     meta: [
                     
-                    {name: 'description', content: ''},
+            //         {name: 'description', content: ''},
 
-                    { hid: 'og:title', property: 'og:title', content: `PollDiary - Home` },
-                    { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
-                    { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
-                    { hid: 'og:url', property: 'og:url', content: process.env.Project_URL },
-                    { hid: 'og:type', property: 'og:type', content: 'website' },
+            //         { hid: 'og:title', property: 'og:title', content: `PollDiary - Home` },
+            //         { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
+            //         { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
+            //         { hid: 'og:url', property: 'og:url', content: process.env.Project_URL },
+            //         { hid: 'og:type', property: 'og:type', content: 'website' },
 
-                    { name: 'twitter:title', content: `PollDiary - Home` },
-                    { name: 'twitter:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
-                    // { name: 'twitter:image', content: process.env.API_URL+'/logo/favicon2.png' },
-                    { name: 'twitter:card', content: 'summary' },
-                    // { name: 'poll-id', content: '123456' }, // Replace with the actual poll ID
-                    // { name: 'poll-title', content: 'My Awesome Poll' },
-                ]
-            });
+            //         { name: 'twitter:title', content: `PollDiary - Home` },
+            //         { name: 'twitter:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
+                    
+            //         { name: 'twitter:card', content: 'summary' },
+            //     ]
+            // });
             // navigateTo('/polls');
         },
 
@@ -261,7 +307,7 @@
         created(){
             // this.$router.push(`/polls`);
             this.apiUrl = this.$config.public.API_URL;
-            this.getAllCurrentNews();
+            // this.getAllCurrentNews();
         },
 
         methods:{

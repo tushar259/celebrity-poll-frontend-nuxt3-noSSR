@@ -110,31 +110,89 @@
     import moment from 'moment';
     import axios from 'axios';
     export default {
-        setup(){
+        async setup(){
             // Now you can use router and route as needed
-            const route = useRoute()
+            const route = useRoute();
             const ssrNewsid = route.params.newsid;
-            useHead({
-                title: `Article - ${ssrNewsid}`,
-                meta: [
-                    
-                    {name: 'description', content: ''},
+            const config = useRuntimeConfig();
+            const ssrApiUrl = config.public.API_URL;
+            const headline = ref("");
+            const newsFound = ref(null);
+            const nId = ref("");
+            const newsDetails = ref("");
+            const industry = ref("");
+            const createdAt = ref("");
+            const thumbnail = ref("");
+            const sideNews = ref([]);
+            const bottomNews = ref([]);
 
-                    { hid: 'og:title', property: 'og:title', content: `Article - ${ssrNewsid}` },
-                    { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
-                    { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
-                    { hid: 'og:url', property: 'og:url', content: process.env.Project_URL },
-                    { hid: 'og:type', property: 'og:type', content: 'website' },
+            // console.log("ssrApiUrl: "+ssrApiUrl)
 
-                    { name: 'twitter:title', content: `Article - ${ssrNewsid}` },
-                    { name: 'twitter:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
-                    // { name: 'twitter:image', content: process.env.API_URL+'/logo/favicon2.png' },
-                    { name: 'twitter:card', content: 'summary' },
-                    // { name: 'poll-id', content: '123456' }, // Replace with the actual poll ID
-                    // { name: 'poll-title', content: 'My Awesome Poll' },
-                ]
+            await useFetch(`${ssrApiUrl}/api/get-current-news-description-details`, {
+                method: 'post',
+                body:{
+                    newsid: ssrNewsid
+                }
+            })
+            .then(response =>{
+                // console.log(response.data.value.bottomNews);
+                if(response.data.value.success == 'true'){
+                    nId.value = response.data.value.id;
+                    headline.value = response.data.value.mainNews.headline;
+                    newsDetails.value = response.data.value.mainNews.news_details;
+                    industry.value = response.data.value.mainNews.industry;
+                    createdAt.value = moment(response.data.value.mainNews.created_at).format('MMM D, YYYY');
+                    thumbnail.value = response.data.value.mainNews.thumbnail;
+                    sideNews.value = response.data.value.sideNews;
+                    bottomNews.value = response.data.value.bottomNews;
+                    // response.data.sideNews.forEach(item => {
+                    //     this.sideNews.push(item);
+                    // });
+                    // response.data.bottomNews.forEach(item =>{
+                    //     this.bottomNews.push(item);
+                    // });
+                    newsFound.value = true;
+                }
+                else{
+                    newsFound.value = false;
+                }
+            })
+            .catch(error =>{
+                console.log(error);
             });
+
+            return{
+                headline, 
+                newsFound, 
+                nId, 
+                newsDetails, 
+                industry, 
+                createdAt,
+                thumbnail,
+                sideNews,
+                bottomNews
+            }
+
+            // useHead({
+            //     title: `Article - ${ssrNewsid}`,
+            //     meta: [
+                    
+            //         {name: 'description', content: ''},
+
+            //         { hid: 'og:title', property: 'og:title', content: `Article - ${ssrNewsid}` },
+            //         { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
+            //         { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
+            //         { hid: 'og:url', property: 'og:url', content: process.env.Project_URL },
+            //         { hid: 'og:type', property: 'og:type', content: 'website' },
+
+            //         { name: 'twitter:title', content: `Article - ${ssrNewsid}` },
+            //         { name: 'twitter:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
+                    
+            //         { name: 'twitter:card', content: 'summary' },
+            //     ]
+            // });
             // navigateTo('/polls');
+            
         },
 
         data: () => ({
@@ -162,7 +220,7 @@
         },
 
         mounted(){
-            this.fetchCurrentNews();
+            // this.fetchCurrentNews();
         },
 
         methods:{
