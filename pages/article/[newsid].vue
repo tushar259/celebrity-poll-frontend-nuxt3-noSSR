@@ -1,6 +1,7 @@
 <template>
     
     <div class="newsfeed-container">
+        
         <!-- welcome home -->
         <div v-if="newsFound == false">
             Page not found
@@ -11,6 +12,12 @@
             </div>
         </div>
         <div v-else-if="newsFound == true">
+            <Head>
+                <Title>Article - {{ headline }}</Title>
+                <Meta name="description" :content="headline" />
+                <!-- <Meta name="description" :content="title" /> -->
+                <!-- <Style type="text/css" children="body { background-color: green; }" /> -->
+            </Head>
             <div class="styling-link font-selected">
                 <router-link to="/" class="navigator-link">Home</router-link><div class="navigator-link-divider">/</div>
                 <router-link :to="'/article/'+newsid" class="navigator-link">{{headline}}</router-link>
@@ -124,7 +131,7 @@
             const createdAt = ref("");
             const thumbnail = ref("");
             const sideNews = ref([]);
-            const bottomNews = ref([]);
+            const bottomNews = ref([]);        
 
             // console.log("ssrApiUrl: "+ssrApiUrl)
 
@@ -152,6 +159,7 @@
                     //     this.bottomNews.push(item);
                     // });
                     newsFound.value = true;
+                    
                 }
                 else{
                     newsFound.value = false;
@@ -172,26 +180,6 @@
                 sideNews,
                 bottomNews
             }
-
-            // useHead({
-            //     title: `Article - ${ssrNewsid}`,
-            //     meta: [
-                    
-            //         {name: 'description', content: ''},
-
-            //         { hid: 'og:title', property: 'og:title', content: `Article - ${ssrNewsid}` },
-            //         { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
-            //         { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
-            //         { hid: 'og:url', property: 'og:url', content: process.env.Project_URL },
-            //         { hid: 'og:type', property: 'og:type', content: 'website' },
-
-            //         { name: 'twitter:title', content: `Article - ${ssrNewsid}` },
-            //         { name: 'twitter:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
-                    
-            //         { name: 'twitter:card', content: 'summary' },
-            //     ]
-            // });
-            // navigateTo('/polls');
             
         },
 
@@ -211,6 +199,27 @@
             sideNews: [],
             bottomNews: [],
         }),
+
+        // app:{
+        //     head: {
+        //         title: `Article - ${headline}`,
+        //         meta: [
+                    
+        //             {name: 'description', content: ''},
+
+        //             { hid: 'og:title', property: 'og:title', content: `Article - ${headline}` },
+        //             { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
+        //             { hid: 'og:image', property: 'og:image', content: config.public.API_URL+'/'+thumbnail },
+        //             { hid: 'og:url', property: 'og:url', content: config.public.Project_URL },
+        //             { hid: 'og:type', property: 'og:type', content: 'website' },
+
+        //             { name: 'twitter:title', content: `Article - ${headline}` },
+        //             { name: 'twitter:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
+                    
+        //             { name: 'twitter:card', content: 'summary' },
+        //         ]
+        //     }
+        // },
 
         created(){
             // this.$router.push(`/polls`);

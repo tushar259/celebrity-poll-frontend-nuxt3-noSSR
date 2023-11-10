@@ -146,7 +146,7 @@ export default defineNuxtConfig({
 
       return sitemapArray;
     }
-  }
+  },
   
   // site: {
   //   url: 'https://www.polldiary.com/',
