@@ -1,4 +1,27 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+const getPollRoutes = async () => {
+  try{
+    const response = await fetch(`${process.env.API_URL}/api/get-all-dynamic-sitemap`)
+    const data = await response.json();
+    // return data.map(item => `/poll/${item.poll_title}`)
+    const pollTables = data.pollTables.map(item => `/poll/${item.poll_title}`);
+    const newsTables = data.newsTables.map(item => `/article/${item.url}`);
+    const pollIndustry = data.pollIndustry.map(item => `/industry/${item.which_industry}`);
+    const pollWinning = data.pollWinning.map(item => `/poll-winner/${item.poll_title}`);
+    
+    return {
+      pollTables,
+      newsTables,
+      pollIndustry,
+      pollWinning
+    }
+  }
+  catch(error){
+    return {};
+  }
+  
+  
+}
 export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
@@ -8,6 +31,16 @@ export default defineNuxtConfig({
        API_URL: process.env.API_URL, // Exposed to the frontend as well.
        Project_URL: process.env.Project_URL
     }
+  },
+  hooks: {
+    async 'nitro:config'(nitroConfig) {
+      if (nitroConfig.dev) return
+
+      // const slugs = await getPollRoutes();
+      const {pollTables, newsTables, pollIndustry, pollWinning} = await getPollRoutes();
+      nitroConfig.prerender.routes.push(...pollTables, ...newsTables, ...pollIndustry, ...pollWinning);
+      
+    },
   },
   app: {
     head: {
@@ -97,6 +130,24 @@ export default defineNuxtConfig({
   },
 
   modules: ['nuxt-simple-sitemap'],
+  sitemap: {
+    urls: async () =>{
+      // const slugs = await getPollRoutes();
+      const {pollTables, newsTables, pollIndustry, pollWinning} = await getPollRoutes();
+      const allRoutes = [...pollTables, ...newsTables, ...pollIndustry, ...pollWinning];
+      const sitemapArray = [];
+
+      for(let i=0; i<allRoutes.length; i++){
+        const sitemapObject = {
+          loc: allRoutes[i]
+        }
+        sitemapArray.push(sitemapObject);
+      }
+
+      return sitemapArray;
+    }
+  }
+  
   // site: {
   //   url: 'https://www.polldiary.com/',
   // },
