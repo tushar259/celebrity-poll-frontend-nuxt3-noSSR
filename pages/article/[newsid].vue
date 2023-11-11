@@ -12,9 +12,23 @@
             </div>
         </div>
         <div v-else-if="newsFound == true">
+
             <Head>
                 <Title>Article - {{ headline }}</Title>
-                <Meta name="description" :content="headline" />
+                <Meta name="description" :content="trimDescription(newsDetails)" />
+                <Meta hid="og:title" property="og:title" :content="'Article - '+headline" />
+                <Meta hid="og:description" property="og:description" :content="trimDescription(newsDetails)" />
+                <Meta hid="og:image" property="og:image" :content="getOgImageUrl(ssrApiUrl, thumbnail)" />
+                <Meta hid="og:url" property="og:url" :content="ssrFrontEndUrl+'/article/'+ssrNewsid" />
+                <Meta hid="og:type" property="og:type" content="website" />
+                
+                
+                <Meta name="twitter:title" :content="'Article - '+headline" />
+                <Meta name="twitter:description" :content="trimDescription(newsDetails)" />
+                <Meta name="twitter:card" content="summary" />
+                <Meta name="twitter:image" :content="getOgImageUrl(ssrApiUrl, thumbnail)" />
+
+
                 <!-- <Meta name="description" :content="title" /> -->
                 <!-- <Style type="text/css" children="body { background-color: green; }" /> -->
             </Head>
@@ -76,17 +90,17 @@
                         <div class="px-10-gap"></div>
                         <div class="bottom-news-row" v-for="(singlebottomNews, index) in bottomNews" :key="index">
                             <div class="bottom-news-column" v-if="index == 0 || index%3 == 0">
-                                <a :href="singlebottomNews.url"><img :src="apiUrl+'/'+singlebottomNews.thumbnail" class="bottom-news-img">
+                                <a :href="singlebottomNews.url"><img :src="apiUrl+'/'+singlebottomNews.thumbnail" :alt="singlebottomNews.headline" class="bottom-news-img">
                                 <span>{{singlebottomNews.headline}}</span></a>
                                 <div class="px-10-gap"></div>
                             </div>
                             <div class="bottom-news-column" v-else-if="index == 1 || index%2 == 1">
-                                <a :href="singlebottomNews.url"><img :src="apiUrl+'/'+singlebottomNews.thumbnail" class="bottom-news-img">
+                                <a :href="singlebottomNews.url"><img :src="apiUrl+'/'+singlebottomNews.thumbnail" :alt="singlebottomNews.headline" class="bottom-news-img">
                                 <span>{{singlebottomNews.headline}}</span></a>
                                 <div class="px-10-gap"></div>
                             </div>
                             <div class="bottom-news-column" v-else-if="index == 2 || index%2 == 2">
-                                <a :href="singlebottomNews.url"><img :src="apiUrl+'/'+singlebottomNews.thumbnail" class="bottom-news-img">
+                                <a :href="singlebottomNews.url"><img :src="apiUrl+'/'+singlebottomNews.thumbnail" :alt="singlebottomNews.headline" class="bottom-news-img">
                                 <span style="display: block;">{{singlebottomNews.headline}}</span></a>
                                 <div class="px-10-gap"></div>
                             </div>
@@ -101,7 +115,7 @@
                     </h4>
                     <div class="px-10-gap"></div>
                     <div v-for="(singleSideNews, index) in sideNews" :key="index" class="single-news-side-news-all-article">
-                        <a :href="singleSideNews.url"><img :src="apiUrl+'/'+singleSideNews.thumbnail" class="single-news-side-news-img">
+                        <a :href="singleSideNews.url"><img :src="apiUrl+'/'+singleSideNews.thumbnail" :alt="singleSideNews.headline" class="single-news-side-news-img">
                         <span>{{singleSideNews.headline}}</span></a>
                         <div class="px-20-gap"></div>
                     </div>
@@ -123,6 +137,7 @@
             const ssrNewsid = route.params.newsid;
             const config = useRuntimeConfig();
             const ssrApiUrl = config.public.API_URL;
+            const ssrFrontEndUrl = config.public.Project_URL;
             const headline = ref("");
             const newsFound = ref(null);
             const nId = ref("");
@@ -178,7 +193,10 @@
                 createdAt,
                 thumbnail,
                 sideNews,
-                bottomNews
+                bottomNews,
+                ssrApiUrl,
+                ssrFrontEndUrl,
+                ssrNewsid
             }
             
         },
@@ -187,7 +205,6 @@
             apiUrl: process.env.API_URL,
             token: process.client ? localStorage.getItem('token') : '',
             userEmail: '',
-            // 'id', 'headline', 'news_details', 'industry', 'created_at'
             nId: '',
             newsid: '',
             headline: '',
@@ -200,35 +217,11 @@
             bottomNews: [],
         }),
 
-        // app:{
-        //     head: {
-        //         title: `Article - ${headline}`,
-        //         meta: [
-                    
-        //             {name: 'description', content: ''},
-
-        //             { hid: 'og:title', property: 'og:title', content: `Article - ${headline}` },
-        //             { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
-        //             { hid: 'og:image', property: 'og:image', content: config.public.API_URL+'/'+thumbnail },
-        //             { hid: 'og:url', property: 'og:url', content: config.public.Project_URL },
-        //             { hid: 'og:type', property: 'og:type', content: 'website' },
-
-        //             { name: 'twitter:title', content: `Article - ${headline}` },
-        //             { name: 'twitter:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
-                    
-        //             { name: 'twitter:card', content: 'summary' },
-        //         ]
-        //     }
-        // },
 
         created(){
             // this.$router.push(`/polls`);
             this.apiUrl = this.$config.public.API_URL;
             this.newsid = this.$route.params.newsid;
-            // this.fetchCurrentNews();
-        },
-
-        mounted(){
             // this.fetchCurrentNews();
         },
 
@@ -265,6 +258,17 @@
                     console.error('Error fetching poll description', error);
                     this.newsFound = false;
                 });
+            },
+
+            trimDescription(text){
+                const withoutTags = text.replace(/<[^>]+>/g, '');
+                const index = withoutTags.indexOf('.', withoutTags.indexOf('.', withoutTags.indexOf('.') + 1) + 1);
+
+                return index !== -1 ? withoutTags.substring(0, index + 1) : withoutTags;
+            },
+
+            getOgImageUrl(apiUrl, thumbnail){
+                return apiUrl + '/' + thumbnail;
             },
 
             copyLinkToClipboard(){

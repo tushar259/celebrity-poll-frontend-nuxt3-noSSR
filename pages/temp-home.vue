@@ -11,6 +11,40 @@
                 </div>
             </div>
             <div v-else-if="newsFound == true">
+                <!-- title: `PollDiary - Home`,
+            //     meta: [
+                    
+            //         {name: 'description', content: ''},
+
+            //         { hid: 'og:title', property: 'og:title', content: `PollDiary - Home` },
+            //         { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
+            //         { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
+            //         { hid: 'og:url', property: 'og:url', content: process.env.Project_URL },
+            //         { hid: 'og:type', property: 'og:type', content: 'website' },
+
+            //         { name: 'twitter:title', content: `PollDiary - Home` },
+            //         { name: 'twitter:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
+                    
+            //         { name: 'twitter:card', content: 'summary' }, -->
+                <Head>
+                    <Title>PollDiary - Home</Title>
+                    <Meta name="description" content="Welcome to PollDiary! Get all the latest news & polls on entertainment & lifestyle. Get updates on Bollywood, Hollywood, Beauty, Health, Box Office, Movies, Music, K-Pop & more" />
+                    <Meta hid="og:title" property="og:title" content="PollDiary - Home" />
+                    <Meta hid="og:description" property="og:description" content="Welcome to PollDiary! Get all the latest news & polls on entertainment & lifestyle. Get updates on Bollywood, Hollywood, Beauty, Health, Box Office, Movies, Music, K-Pop & more" />
+                    <!-- <Meta hid="og:image" property="og:image" :content="" /> -->
+                    <Meta hid="og:url" property="og:url" :content="ssrFrontEndUrl" />
+                    <Meta hid="og:type" property="og:type" content="website" />
+                    
+                    
+                    <Meta name="twitter:title" content="PollDiary - Home" />
+                    <Meta name="twitter:description" content="Welcome to PollDiary! Get all the latest news & polls on entertainment & lifestyle. Get updates on Bollywood, Hollywood, Beauty, Health, Box Office, Movies, Music, K-Pop & more" />
+                    <Meta name="twitter:card" content="summary" />
+                    <!-- <Meta name="twitter:image" :content="getOgImageUrl(ssrApiUrl, thumbnail)" /> -->
+
+
+                    <!-- <Meta name="description" :content="title" /> -->
+                    <!-- <Style type="text/css" children="body { background-color: green; }" /> -->
+                </Head>
                 <div class="row">
                     <div class="col">
                         <div class="row top-left-news">
@@ -216,6 +250,7 @@
         async setup(){
             const config = useRuntimeConfig();
             const ssrApiUrl = config.public.API_URL;
+            const ssrFrontEndUrl = config.public.Project_URL;
             const newsFound = ref(null);
             const topOftopLeftNews = ref([]);
             const topLeftNews = ref([]);
@@ -237,14 +272,7 @@
                     });
                     mostViewedNews.value = response.data.value.mostViewedNews;
                     bollywoodNews.value = response.data.value.bollywoodNews;
-                    // response.data.mostViewedNews.forEach(element =>{
-                    //     element.created_at = this.beautifyTime(element.created_at);
-                    //     this.mostViewedNews.push(element);
-                    // });
-                    // response.data.bollywoodNews.forEach(element =>{
-                    //     element.created_at = this.beautifyTime(element.created_at);
-                    //     this.bollywoodNews.push(element);
-                    // });
+                    
                     newsFound.value = true;
                 }
                 else{
@@ -253,6 +281,7 @@
             })
             .catch(error =>{
                 console.log(error);
+                newsFound.value = false;
             });
 
             return{
@@ -260,28 +289,10 @@
                 topOftopLeftNews,
                 topLeftNews,
                 mostViewedNews,
-                bollywoodNews
+                bollywoodNews,
+                ssrFrontEndUrl
             }
-            // Now you can use router and route as needed
             
-            // useHead({
-            //     title: `PollDiary - Home`,
-            //     meta: [
-                    
-            //         {name: 'description', content: ''},
-
-            //         { hid: 'og:title', property: 'og:title', content: `PollDiary - Home` },
-            //         { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
-            //         { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
-            //         { hid: 'og:url', property: 'og:url', content: process.env.Project_URL },
-            //         { hid: 'og:type', property: 'og:type', content: 'website' },
-
-            //         { name: 'twitter:title', content: `PollDiary - Home` },
-            //         { name: 'twitter:description', content: 'Welcome to PollDiary! Vote your favourite star. We are dedicated to providing an engaging platform for star polls and discussions.' },
-                    
-            //         { name: 'twitter:card', content: 'summary' },
-            //     ]
-            // });
             // navigateTo('/polls');
         },
 
