@@ -29,7 +29,7 @@
                       <a class="nav-link custom-cursor" href="/" :class="{ 'active': activeLink === 'home' }" @click="gotoHome()">Home</a>
                   </li>
                   <li class="nav-item active">
-                      <a class="nav-link custom-cursor" href="/" :class="{ 'active': activeLink === 'polls' }" @click="gotoPolls()">Polls</a>
+                      <a class="nav-link custom-cursor" href="/polls" :class="{ 'active': activeLink === 'polls' }" @click="gotoPolls()">Polls</a>
                   </li>
                   <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle text-truncate" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -208,7 +208,7 @@ export default {
       // console.log("window.location.search: "+window.location.search); // query string part of the current URL
       // this.$nuxt.$on('class-changed', ($event) => this.updateSpecificDivClass($event))
       this.apiUrl = this.$config.public.API_URL;
-      this.checkIfUserLoggedin();
+    //   this.checkIfUserLoggedin();
       // console.log("Public API URL: "+this.$config.public.API_URL);
       // console.log("Private API URL: "+this.$config.private_API_URL);
       

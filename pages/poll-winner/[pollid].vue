@@ -28,6 +28,7 @@
         <div class="row poll-page-row">
             <div class="styling-link font-selected">
                 <router-link to="/" class="navigator-link">Home</router-link><div class="navigator-link-divider">/</div> <!-- <i class='fas fa-angle-right'></i> -->
+                <router-link to="/polls" class="navigator-link">Polls</router-link><div class="navigator-link-divider">/</div> <!-- <i class='fas fa-angle-right'></i> -->
                 <router-link :to="'/industry/'+whichIndustry" class="navigator-link">{{whichIndustry}}</router-link><div class="navigator-link-divider">/</div>
                 <router-link :to="'/poll-winner/'+pollId" class="navigator-link">{{pollId}}</router-link>
             </div>

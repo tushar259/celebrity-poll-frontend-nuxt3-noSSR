@@ -30,6 +30,7 @@
             <div class="col-md-6">
                 <div class="styling-link font-selected">
                     <router-link to="/" class="navigator-link">Home</router-link><div class="navigator-link-divider">/</div>
+                    <router-link to="/polls" class="navigator-link">Polls</router-link><div class="navigator-link-divider">/</div>
                     <router-link :to="'/industry/'+whichIndustry" class="navigator-link capitalized">{{whichIndustry}}</router-link><div class="navigator-link-divider">/</div>
                     <router-link :to="'/poll/'+pollId" class="navigator-link">{{pollId}}</router-link>
                 </div>
