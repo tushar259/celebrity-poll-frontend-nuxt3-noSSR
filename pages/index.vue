@@ -36,7 +36,9 @@
                         <div class="row top-left-news">
                             <div class="col-md-5">
                                 <a :href="'/article/' + topOftopLeftNews[0].url" class="top-left-news-image-latest">
-                                    <img :src="apiUrl + '/' + topOftopLeftNews[0].thumbnail" :alt="topOftopLeftNews[0].headline" ><br>
+                                    <div class="top-left-new-image-frame">
+                                        <img :src="apiUrl + '/' + topOftopLeftNews[0].thumbnail" :alt="topOftopLeftNews[0].headline" ><br>
+                                    </div>
                                     <span>{{topOftopLeftNews[0].headline}}<br>
                                         <small>{{beautifyTime(topOftopLeftNews[0].created_at)}}</small>
                                     </span>

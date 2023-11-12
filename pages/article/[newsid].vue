@@ -115,7 +115,7 @@
                     </h4>
                     <div class="px-10-gap"></div>
                     <div v-for="(singleSideNews, index) in sideNews" :key="index" class="single-news-side-news-all-article">
-                        <a :href="singleSideNews.url"><img :src="apiUrl+'/'+singleSideNews.thumbnail" :alt="singleSideNews.headline" class="single-news-side-news-img">
+                        <a :href="singleSideNews.url"><div class="most-viewed-img-frame"><img :src="apiUrl+'/'+singleSideNews.thumbnail" :alt="singleSideNews.headline" class="single-news-side-news-img"></div>
                         <span>{{singleSideNews.headline}}</span></a>
                         <div class="px-20-gap"></div>
                     </div>
