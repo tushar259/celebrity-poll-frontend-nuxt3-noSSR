@@ -118,7 +118,7 @@
                                     <img :src="apiUrl + '/' + singlebollywoodNews.thumbnail" :alt="singlebollywoodNews.headline">
                                     <span>
                                         {{singlebollywoodNews.headline}}<br>
-                                        <small>{{beautifyTime(singlebollywoodNews.created_at)}}</small>
+                                        <small>{{singlebollywoodNews.created_at}}</small>
                                     </span>
                                 </a>
                                 <div class="px-5-gap"></div>
@@ -134,7 +134,7 @@
                                     <img :src="apiUrl + '/' + singlemusicNews.thumbnail" :alt="singlemusicNews.headline">
                                     <span>
                                         {{singlemusicNews.headline}}<br>
-                                        <small>{{beautifyTime(singlemusicNews.created_at)}}</small>
+                                        <small>{{singlemusicNews.created_at}}</small>
                                     </span>
                                 </a>
                                 <div class="px-5-gap"></div>
@@ -150,7 +150,7 @@
                                     <img :src="apiUrl + '/' + singlehollywoodNews.thumbnail" :alt="singlehollywoodNews.headline">
                                     <span>
                                         {{singlehollywoodNews.headline}}<br>
-                                        <small>{{beautifyTime(singlehollywoodNews.created_at)}}</small>
+                                        <small>{{singlehollywoodNews.created_at}}</small>
                                     </span>
                                 </a>
                                 <div class="px-5-gap"></div>
@@ -163,10 +163,12 @@
                                 
                                 <div class="px-5-gap"></div>
                                 <a :href="'/article/' + singlesouthIndiaNews.url" class="d-flex top-left-news-image">
+                                    
                                     <img :src="apiUrl + '/' + singlesouthIndiaNews.thumbnail" :alt="singlesouthIndiaNews.headline">
+                                    
                                     <span>
                                         {{singlesouthIndiaNews.headline}}<br>
-                                        <small>{{beautifyTime(singlesouthIndiaNews.created_at)}}</small>
+                                        <small>{{singlesouthIndiaNews.created_at}}</small>
                                     </span>
                                 </a>
                                 <div class="px-5-gap"></div>
@@ -182,7 +184,7 @@
                                     <img :src="apiUrl + '/' + singletvNews.thumbnail" :alt="singletvNews.headline">
                                     <span>
                                         {{singletvNews.headline}}<br>
-                                        <small>{{beautifyTime(singletvNews.created_at)}}</small>
+                                        <small>{{singletvNews.created_at}}</small>
                                     </span>
                                 </a>
                                 <div class="px-5-gap"></div>
@@ -198,7 +200,7 @@
                                     <img :src="apiUrl + '/' + singleworldwideNews.thumbnail" :alt="singleworldwideNews.headline">
                                     <span>
                                         {{singleworldwideNews.headline}}<br>
-                                        <small>{{beautifyTime(singleworldwideNews.created_at)}}</small>
+                                        <small>{{singleworldwideNews.created_at}}</small>
                                     </span>
                                 </a>
                                 <div class="px-5-gap"></div>
@@ -232,7 +234,9 @@
                         <div class="px-10-gap"></div>
                         <div v-for="(singlemostViewedNews, index) in mostViewedNews" :key="index" class="most-viewed-news">
                             <a :href="'/article/' + singlemostViewedNews.url" class="">
-                                <img :src="apiUrl + '/' + singlemostViewedNews.thumbnail" :alt="singlemostViewedNews.headline">
+                                <div class="most-viewed-img-frame">
+                                    <img :src="apiUrl + '/' + singlemostViewedNews.thumbnail" :alt="singlemostViewedNews.headline">
+                                </div>
                                 <span>
                                     {{singlemostViewedNews.headline}}
                                 </span>

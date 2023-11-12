@@ -868,8 +868,8 @@ input[type='text'] {
 }
 .bottom-news-img{
     border-radius: 4px;
-    height: 200px;
-    width: 100%;
+    /* height: 200px;
+    width: 100%; */
 }
 .top-left-news-image img{
     height: 100px;
@@ -914,4 +914,17 @@ input[type='text'] {
 .top-left-news-image small{
     color: #696868;
 }
+.most-viewed-img-frame{
+    width: 100%;
+    height: 180px; 
+    overflow: hidden; 
+    /* border: 1px solid #ddd; */
+}
+.most-viewed-img-frame img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    object-position: center;
+}
+
 /*NEW FEATURE*/

@@ -90,17 +90,17 @@
                         <div class="px-10-gap"></div>
                         <div class="bottom-news-row" v-for="(singlebottomNews, index) in bottomNews" :key="index">
                             <div class="bottom-news-column" v-if="index == 0 || index%3 == 0">
-                                <a :href="singlebottomNews.url"><img :src="apiUrl+'/'+singlebottomNews.thumbnail" :alt="singlebottomNews.headline" class="bottom-news-img">
+                                <a :href="singlebottomNews.url"><div class="most-viewed-img-frame"><img :src="apiUrl+'/'+singlebottomNews.thumbnail" :alt="singlebottomNews.headline" class="bottom-news-img"></div>
                                 <span>{{singlebottomNews.headline}}</span></a>
                                 <div class="px-10-gap"></div>
                             </div>
                             <div class="bottom-news-column" v-else-if="index == 1 || index%2 == 1">
-                                <a :href="singlebottomNews.url"><img :src="apiUrl+'/'+singlebottomNews.thumbnail" :alt="singlebottomNews.headline" class="bottom-news-img">
+                                <a :href="singlebottomNews.url"><div class="most-viewed-img-frame"><img :src="apiUrl+'/'+singlebottomNews.thumbnail" :alt="singlebottomNews.headline" class="bottom-news-img"></div>
                                 <span>{{singlebottomNews.headline}}</span></a>
                                 <div class="px-10-gap"></div>
                             </div>
                             <div class="bottom-news-column" v-else-if="index == 2 || index%2 == 2">
-                                <a :href="singlebottomNews.url"><img :src="apiUrl+'/'+singlebottomNews.thumbnail" :alt="singlebottomNews.headline" class="bottom-news-img">
+                                <a :href="singlebottomNews.url"><div class="most-viewed-img-frame"><img :src="apiUrl+'/'+singlebottomNews.thumbnail" :alt="singlebottomNews.headline" class="bottom-news-img"></div>
                                 <span style="display: block;">{{singlebottomNews.headline}}</span></a>
                                 <div class="px-10-gap"></div>
                             </div>
