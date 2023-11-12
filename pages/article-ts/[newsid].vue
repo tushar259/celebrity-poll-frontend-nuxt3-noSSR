@@ -123,7 +123,6 @@
             </div>
             
         </div>
-        
     </div>
 </template>
 
@@ -142,18 +141,24 @@
     const industry = ref("");
     const createdAt = ref("");
     const thumbnail = ref("");
-    const sideNewsVar = ref([]);
-    const bottomNewsVar = ref([]);
+    const sideNews = ref([]);
+    const bottomNews = ref([]);
 
-    const {data} = await useFetch(`${ssrApiUrl}/api/get-current-news-description-details`, {
-        method: 'post',
-        body:{
-            newsid: ssrNewsid
-        }
-    });
-
-    const response = toRaw(data.value);
-    console.log(response);
+    const response = {};
+    
+        const {data, error} = await useFetch(`${ssrApiUrl}/api/get-current-news-description-details`, {
+            method: 'post',
+            body:{
+                newsid: ssrNewsid
+            }
+        });
+        newsFound.value = true;
+    
+        response.value = data.value;
+        headline.value = response.value.mainNews.headline; 
+    // const response = toRaw(data.value);
+        console.log(response.value);
+    
     // .then(response =>{
     //     console.log(response.data.value.bottomNews);
     //     if(response.data.value.success == 'true'){
