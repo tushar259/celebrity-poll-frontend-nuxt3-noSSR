@@ -149,40 +149,75 @@
             const bottomNews = ref([]);        
 
             // console.log("ssrApiUrl: "+ssrApiUrl)
+            const response = {};
 
-            await useFetch(`${ssrApiUrl}/api/get-current-news-description-details`, {
-                method: 'post',
-                body:{
-                    newsid: ssrNewsid
-                }
-            })
-            .then(response =>{
-                // console.log(response.data.value.bottomNews);
-                if(response.data.value.success == 'true'){
-                    nId.value = response.data.value.id;
-                    headline.value = response.data.value.mainNews.headline;
-                    newsDetails.value = response.data.value.mainNews.news_details;
-                    industry.value = response.data.value.mainNews.industry;
-                    createdAt.value = moment(response.data.value.mainNews.created_at).format('MMM D, YYYY');
-                    thumbnail.value = response.data.value.mainNews.thumbnail;
-                    sideNews.value = response.data.value.sideNews;
-                    bottomNews.value = response.data.value.bottomNews;
-                    // response.data.sideNews.forEach(item => {
-                    //     this.sideNews.push(item);
-                    // });
-                    // response.data.bottomNews.forEach(item =>{
-                    //     this.bottomNews.push(item);
-                    // });
+            // try{
+
+                const {data} = await useFetch(`${ssrApiUrl}/api/get-current-news-description-details`, {
+                    method: 'post',
+                    body:{
+                        newsid: ssrNewsid
+                    }
+                })
+                response.value = data.value;
+                nId.value = response.value.mainNews.id;
+                headline.value = response.value.mainNews.headline;
+                newsDetails.value = response.value.mainNews.news_details;
+                industry.value = response.value.mainNews.industry;
+                createdAt.value = moment(response.value.mainNews.created_at).format('MMM D, YYYY');
+                thumbnail.value = response.value.mainNews.thumbnail;
+                sideNews.value = response.value.sideNews;
+                bottomNews.value = response.value.bottomNews;
+
+                if(response.value.success == 'true'){
                     newsFound.value = true;
-                    
                 }
                 else{
                     newsFound.value = false;
                 }
-            })
-            .catch(error =>{
-                console.log(error);
-            });
+                
+
+            // }
+            // catch(error){
+            //     newsFound.value = false;
+            // }
+            // .then(response =>{
+            //     // console.log(response.data.value.bottomNews);
+
+
+
+            //     if(response.data.value.success == 'true'){
+            //         nId.value = response.data.value.id;
+            //         headline.value = response.data.value.mainNews.headline;
+            //         newsDetails.value = response.data.value.mainNews.news_details;
+            //         industry.value = response.data.value.mainNews.industry;
+            //         createdAt.value = moment(response.data.value.mainNews.created_at).format('MMM D, YYYY');
+            //         thumbnail.value = response.data.value.mainNews.thumbnail;
+            //         sideNews.value = response.data.value.sideNews;
+            //         bottomNews.value = response.data.value.bottomNews;
+
+
+
+
+            //         // response.data.sideNews.forEach(item => {
+            //         //     this.sideNews.push(item);
+            //         // });
+            //         // response.data.bottomNews.forEach(item =>{
+            //         //     this.bottomNews.push(item);
+            //         // });
+
+
+
+            //         newsFound.value = true;
+                    
+            //     }
+            //     else{
+            //         newsFound.value = false;
+            //     }
+            // })
+            // .catch(error =>{
+            //     console.log(error);
+            // });
 
             return{
                 headline, 

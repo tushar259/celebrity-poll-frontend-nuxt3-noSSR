@@ -1,20 +1,27 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import axios from 'axios'
 const getPollRoutes = async () => {
   try{
-    const response = await fetch(`${process.env.API_URL}/api/get-all-dynamic-sitemap`)
-    const data = await response.json();
+    const {data} = await axios.get(`${process.env.API_URL}/api/get-all-dynamic-sitemap-new`)
+    // const data = await response.json();
+    console.log(data);
+    return data.map(item => item.url);
     // return data.map(item => `/poll/${item.poll_title}`)
-    const pollTables = data.pollTables.map(item => `/poll/${item.poll_title}`);
-    const newsTables = data.newsTables.map(item => `/article/${item.url}`);
-    const pollIndustry = data.pollIndustry.map(item => `/industry/${item.which_industry}`);
-    const pollWinning = data.pollWinning.map(item => `/poll-winner/${item.poll_title}`);
+
+    //working codes below
+    // const pollTables = data.pollTables.map(item => `/poll/${item.poll_title}`);
+    // const newsTables = data.newsTables.map(item => `/article/${item.url}`);
+    // const pollIndustry = data.pollIndustry.map(item => `/industry/${item.which_industry}`);
+    // const pollWinning = data.pollWinning.map(item => `/poll-winner/${item.poll_title}`);
+    // console.log(pollTables);
+    // return {
+    //   pollTables,
+    //   newsTables,
+    //   pollIndustry,
+    //   pollWinning
+    // }
+    // const slug = data.all_url.map(item => item.url);
     
-    return {
-      pollTables,
-      newsTables,
-      pollIndustry,
-      pollWinning
-    }
   }
   catch(error){
     return {};
@@ -37,9 +44,15 @@ export default defineNuxtConfig({
       if (nitroConfig.dev) return
 
       // const slugs = await getPollRoutes();
-      const {pollTables, newsTables, pollIndustry, pollWinning} = await getPollRoutes();
-      nitroConfig.prerender.routes.push(...pollTables, ...newsTables, ...pollIndustry, ...pollWinning);
-      
+      try {
+        // const {pollTables, newsTables, pollIndustry, pollWinning} = await getPollRoutes();
+        // nitroConfig.prerender.routes.push(...pollTables, ...newsTables, ...pollIndustry, ...pollWinning);
+        let slug = await getPollRoutes();
+        nitroConfig.prerender.routes.push(...slug);
+        // return
+      } catch (error) {
+        console.error('Error adding routes to prerender:', error);
+      }
     },
   },
   app: {
@@ -132,19 +145,27 @@ export default defineNuxtConfig({
   modules: ['nuxt-simple-sitemap'],
   sitemap: {
     urls: async () =>{
-      // const slugs = await getPollRoutes();
-      const {pollTables, newsTables, pollIndustry, pollWinning} = await getPollRoutes();
-      const allRoutes = [...pollTables, ...newsTables, ...pollIndustry, ...pollWinning];
-      const sitemapArray = [];
-
-      for(let i=0; i<allRoutes.length; i++){
-        const sitemapObject = {
-          loc: allRoutes[i]
-        }
-        sitemapArray.push(sitemapObject);
+      try{
+        // const slugs = await getPollRoutes();
+        // const {pollTables, newsTables, pollIndustry, pollWinning} = await getPollRoutes();
+        // const allRoutes = [...pollTables, ...newsTables, ...pollIndustry, ...pollWinning];
+        let slug = await getPollRoutes();
+        const allRoutes = [...slug];
+        // const sitemapArray = [];
+        return allRoutes.map(route => ({ loc: route }));
+      } catch (error) {
+        console.error('Error generating sitemap URLs:', error);
+        return [];
       }
+      
+      // for(let i=0; i<allRoutes.length; i++){
+      //   const sitemapObject = {
+      //     loc: allRoutes[i]
+      //   }
+      //   sitemapArray.push(sitemapObject);
+      // }
 
-      return sitemapArray;
+      // return sitemapArray;
     }
   },
   
