@@ -268,7 +268,7 @@
 
             await useFetch(`${ssrApiUrl}/api/get-all-current-news`)
             .then(response =>{
-                // console.log(response.data.value.bottomNews);
+                console.log(response);
                 if(response.data.value.success == 'true'){
                     response.data.value.topLeftNews.forEach((element, index) => {
                         element.created_at = element.created_at;
@@ -536,8 +536,16 @@
             },
 
             beautifyTime(timestamp) {
+                
+                // const indiaTime = new Date().toLocaleString('en-US', {
+                //     timeZone: 'Asia/Kolkata',
+                // });
+                const getIndiaTimeNow = Date.now();
+                const indiaTime = new Date(getIndiaTimeNow).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+                
                 timestamp = Date.parse(timestamp) / 1000;
-                const now = Date.now() / 1000;
+                // const now = Date.now() / 1000;
+                const now = Date.parse(indiaTime) / 1000;
                 const diff = Math.floor(now - timestamp);
                 if (diff < 60) {
                     return 'now';
