@@ -25,7 +25,7 @@
                 
                 <Meta name="twitter:title" :content="'Article - '+headline" />
                 <Meta name="twitter:description" :content="trimDescription(newsDetails)" />
-                <Meta name="twitter:card" content="summary" />
+                <Meta name="twitter:card" content="summary_large_image" />
                 <Meta name="twitter:image" :content="getOgImageUrl(ssrApiUrl, thumbnail)" />
 
 
