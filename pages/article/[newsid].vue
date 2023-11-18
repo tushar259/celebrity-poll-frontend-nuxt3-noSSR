@@ -260,6 +260,10 @@
             // this.fetchCurrentNews();
         },
 
+        mounted(){
+            this.increasePageVisitCount();
+        },
+
         methods:{
             fetchCurrentNews() {
                 const formData = {
@@ -292,6 +296,27 @@
                 .catch((error) => {
                     console.error('Error fetching poll description', error);
                     this.newsFound = false;
+                });
+            },
+
+            increasePageVisitCount(){
+                const formData = {
+                    'newsid': this.newsid
+                }
+                axios.post(this.apiUrl+`/api/increase-news-page-visit-count`, formData)
+                .then((response) => {
+                    
+                    if(response.data.success == "true"){
+                        console.log("Welcome.");
+                    }
+                    else{
+                        console.log("Welcome!");
+                    }
+                    
+                })
+                .catch((error) => {
+                    console.error('Error fetching poll description', error);
+                    
                 });
             },
 
