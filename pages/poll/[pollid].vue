@@ -185,7 +185,7 @@
         created() {
             this.apiUrl = this.$config.public.API_URL;
             this.pollId = this.$route.params.pollid;
-            this.pollId = this.pollId.replace(/:/g, '');
+            //this.pollId = this.pollId.replace(/:/g, '');
 
             this.ifUserVotedThenTime = process.client ? localStorage.getItem(`whenUserVoted${this.pollId}`) : '',
             this.ifUserVotedThenCanVoteNow = process.client ? localStorage.getItem(`canUserVoteNow${this.pollId}`) : "true",
