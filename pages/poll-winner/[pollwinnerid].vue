@@ -68,7 +68,7 @@
     export default {
         setup(){
             const route = useRoute()
-            const pollid = route.params.pollId;
+            const pollid = route.params.pollwinnerid;
             // Now you can use router and route as needed
             
             
@@ -88,8 +88,6 @@
                     { name: 'twitter:description', content: 'Welcome to PollDiary! Get all the latest news & polls on entertainment & lifestyle. Get updates on Bollywood, Hollywood, Beauty, Health, Box Office, Movies, Music, K-Pop & more' },
                     // { name: 'twitter:image', content: process.env.API_URL+'/logo/favicon2.png' },
                     { name: 'twitter:card', content: 'summary' },
-                    // { name: 'poll-id', content: '123456' }, // Replace with the actual poll ID
-                    // { name: 'poll-title', content: 'My Awesome Poll' },
                 ]
             })
         },
@@ -118,7 +116,7 @@
 
         created() {
             this.apiUrl = this.$config.public.API_URL;
-            this.pollId = this.$route.params.pollid;
+            this.pollId = this.$route.params.pollwinnerid;
             this.pollId = this.pollId.replace(/:/g, '');
             // this.pollId = this.pollId.replace(/-/g, ' ');
             this.getPollInfo();

@@ -144,8 +144,6 @@
                     { name: 'twitter:description', content: 'Welcome to PollDiary! Get all the latest news & polls on entertainment & lifestyle. Get updates on Bollywood, Hollywood, Beauty, Health, Box Office, Movies, Music, K-Pop & more' },
                     // { name: 'twitter:image', content: process.env.API_URL+'/logo/favicon2.png' },
                     { name: 'twitter:card', content: 'summary' },
-                    // { name: 'poll-id', content: '123456' }, // Replace with the actual poll ID
-                    // { name: 'poll-title', content: 'My Awesome Poll' },
                 ]
             })
         },
