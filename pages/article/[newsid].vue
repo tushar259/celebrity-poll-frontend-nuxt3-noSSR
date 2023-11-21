@@ -177,48 +177,6 @@
                 }
                 
 
-            // }
-            // catch(error){
-            //     newsFound.value = false;
-            // }
-            // .then(response =>{
-            //     // console.log(response.data.value.bottomNews);
-
-
-
-            //     if(response.data.value.success == 'true'){
-            //         nId.value = response.data.value.id;
-            //         headline.value = response.data.value.mainNews.headline;
-            //         newsDetails.value = response.data.value.mainNews.news_details;
-            //         industry.value = response.data.value.mainNews.industry;
-            //         createdAt.value = moment(response.data.value.mainNews.created_at).format('MMM D, YYYY');
-            //         thumbnail.value = response.data.value.mainNews.thumbnail;
-            //         sideNews.value = response.data.value.sideNews;
-            //         bottomNews.value = response.data.value.bottomNews;
-
-
-
-
-            //         // response.data.sideNews.forEach(item => {
-            //         //     this.sideNews.push(item);
-            //         // });
-            //         // response.data.bottomNews.forEach(item =>{
-            //         //     this.bottomNews.push(item);
-            //         // });
-
-
-
-            //         newsFound.value = true;
-                    
-            //     }
-            //     else{
-            //         newsFound.value = false;
-            //     }
-            // })
-            // .catch(error =>{
-            //     console.log(error);
-            // });
-
             return{
                 headline, 
                 newsFound, 
@@ -322,8 +280,8 @@
 
             trimDescription(text){
                 const withoutTags = text.replace(/<[^>]+>/g, '');
-                const index = withoutTags.indexOf('.', withoutTags.indexOf('.', withoutTags.indexOf('.') + 1) + 1);
-
+                // const index = withoutTags.indexOf('.', withoutTags.indexOf('.', withoutTags.indexOf('.') + 1) + 1);
+                const index = withoutTags.indexOf('.');
                 return index !== -1 ? withoutTags.substring(0, index + 1) : withoutTags;
             },
 
