@@ -120,7 +120,7 @@
                                     <img :src="apiUrl + '/' + singlebollywoodNews.thumbnail" :alt="singlebollywoodNews.headline">
                                     <span>
                                         {{singlebollywoodNews.headline}}<br>
-                                        <small>{{singlebollywoodNews.created_at}}</small>
+                                        <small>{{beautifyTime(singlebollywoodNews.created_at)}}</small>
                                     </span>
                                 </a>
                                 <div class="px-5-gap"></div>
@@ -266,32 +266,53 @@
             const mostViewedNews = ref([]);
             const bollywoodNews = ref([]);
 
-            await useFetch(`${ssrApiUrl}/api/get-all-current-news`)
-            .then(response =>{
-                console.log(response);
-                if(response.data.value.success == 'true'){
-                    response.data.value.topLeftNews.forEach((element, index) => {
-                        element.created_at = element.created_at;
-                        if(index <= 2){
-                            topOftopLeftNews.value.push(element); 
-                        }
-                        else{
-                            topLeftNews.value.push(element); 
-                        }
-                    });
-                    mostViewedNews.value = response.data.value.mostViewedNews;
-                    bollywoodNews.value = response.data.value.bollywoodNews;
-                    
-                    newsFound.value = true;
+            const response = {};
+
+            const {data} = await useFetch(`${ssrApiUrl}/api/get-all-current-news`)
+            response.value = data.value;
+            console.log(data);
+            response.value.topLeftNews.forEach((element, index) => {
+                element.created_at = element.created_at;
+                if(index <= 2){
+                    topOftopLeftNews.value.push(element); 
                 }
                 else{
-                    newsFound.value = false;
+                    topLeftNews.value.push(element); 
                 }
-            })
-            .catch(error =>{
-                console.log(error);
-                newsFound.value = false;
             });
+            mostViewedNews.value = response.value.mostViewedNews;
+            bollywoodNews.value = response.value.bollywoodNews;
+            if(response.value.success == 'true'){
+                newsFound.value = true;
+            }
+            else{
+                newsFound.value = false;
+            }
+            // .then(response =>{
+            //     // console.log(response.data.value.bottomNews);
+            //     if(response.data.value.success == 'true'){
+            //         response.data.value.topLeftNews.forEach((element, index) => {
+            //             element.created_at = element.created_at;
+            //             if(index <= 2){
+            //                 topOftopLeftNews.value.push(element); 
+            //             }
+            //             else{
+            //                 topLeftNews.value.push(element); 
+            //             }
+            //         });
+            //         mostViewedNews.value = response.data.value.mostViewedNews;
+            //         bollywoodNews.value = response.data.value.bollywoodNews;
+                    
+            //         newsFound.value = true;
+            //     }
+            //     else{
+            //         newsFound.value = false;
+            //     }
+            // })
+            // .catch(error =>{
+            //     console.log(error);
+            //     newsFound.value = false;
+            // });
 
             return{
                 newsFound,
@@ -335,7 +356,7 @@
                 if(this.topOftopLeftNews.length == 0){
                     axios.get(this.apiUrl+`/api/get-all-current-news`)
                     .then(response =>{
-                        console.log(response);
+                        //console.log(response);
                         if(response.data.success == 'true'){
                             response.data.topLeftNews.forEach((element, index) => {
                                 element.created_at = this.beautifyTime(element.created_at);
@@ -371,7 +392,7 @@
             },
 
             getNewsIndustryWise(industry){
-                console.log(industry);
+                //console.log(industry);
                 if(industry == 'Bollywood'){
                     if(this.bollywoodNews.length == 0){
                         const formData = {
@@ -379,7 +400,7 @@
                         }
                         axios.post(this.apiUrl+`/api/get-this-industry-news`, formData)
                         .then(response =>{
-                            console.log(response);
+                            //console.log(response);
                             if(response.data.success == 'true'){
                                 response.data.industryNews.forEach(element =>{
                                     element.created_at = this.beautifyTime(element.created_at);
@@ -399,7 +420,7 @@
                         }
                         axios.post(this.apiUrl+`/api/get-this-industry-news`, formData)
                         .then(response =>{
-                            console.log(response);
+                            //console.log(response);
                             if(response.data.success == 'true'){
                                 response.data.industryNews.forEach(element =>{
                                     element.created_at = this.beautifyTime(element.created_at);
@@ -419,7 +440,7 @@
                         }
                         axios.post(this.apiUrl+`/api/get-this-industry-news`, formData)
                         .then(response =>{
-                            console.log(response);
+                            //console.log(response);
                             if(response.data.success == 'true'){
                                 response.data.industryNews.forEach(element =>{
                                     element.created_at = this.beautifyTime(element.created_at);
@@ -439,7 +460,7 @@
                         }
                         axios.post(this.apiUrl+`/api/get-this-industry-news`, formData)
                         .then(response =>{
-                            console.log(response);
+                            //console.log(response);
                             if(response.data.success == 'true'){
                                 response.data.industryNews.forEach(element =>{
                                     element.created_at = this.beautifyTime(element.created_at);
@@ -459,7 +480,7 @@
                         }
                         axios.post(this.apiUrl+`/api/get-this-industry-news`, formData)
                         .then(response =>{
-                            console.log(response);
+                            //console.log(response);
                             if(response.data.success == 'true'){
                                 response.data.industryNews.forEach(element =>{
                                     element.created_at = this.beautifyTime(element.created_at);
@@ -479,7 +500,7 @@
                         }
                         axios.post(this.apiUrl+`/api/get-this-industry-news`, formData)
                         .then(response =>{
-                            console.log(response);
+                            //console.log(response);
                             if(response.data.success == 'true'){
                                 response.data.industryNews.forEach(element =>{
                                     element.created_at = this.beautifyTime(element.created_at);
@@ -499,7 +520,7 @@
                         }
                         axios.post(this.apiUrl+`/api/get-this-industry-news`, formData)
                         .then(response =>{
-                            console.log(response);
+                            //console.log(response);
                             if(response.data.success == 'true'){
                                 response.data.industryNews.forEach(element =>{
                                     element.created_at = this.beautifyTime(element.created_at);
@@ -522,10 +543,10 @@
 
                 axios.post(this.apiUrl+`/api/show-next-amount-top-news`, formData)
                 .then(response =>{
-                    console.log(response);
+                    //console.log(response);
                     if(response.data.success == 'true'){
                         response.data.currentNews.forEach(element => {
-                            element.created_at = this.beautifyTime(element.created_at);
+                            //element.created_at = this.beautifyTime(element.created_at);
                             this.topLeftNews.push(element); //insert rest of the indexes
                         });
                     }
@@ -536,15 +557,11 @@
             },
 
             beautifyTime(timestamp) {
-                
-                // const indiaTime = new Date().toLocaleString('en-US', {
-                //     timeZone: 'Asia/Kolkata',
-                // });
-                const getIndiaTimeNow = Date.now();
+            	const getIndiaTimeNow = Date.now();
                 const indiaTime = new Date(getIndiaTimeNow).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
                 
                 timestamp = Date.parse(timestamp) / 1000;
-                // const now = Date.now() / 1000;
+                //const now = Date.now() / 1000;
                 const now = Date.parse(indiaTime) / 1000;
                 const diff = Math.floor(now - timestamp);
                 if (diff < 60) {
@@ -556,8 +573,11 @@
                     const hours = Math.floor(diff / 3600);
                     return `${hours} hour${hours > 1 ? 's' : ''} ago`;
                 } else {
-                    const days = Math.floor(diff / 86400);
-                    return `${days} day${days > 1 ? 's' : ''} ago`;
+                    const date = new Date(timestamp * 1000);
+                    const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    return formatter.format(date);
+                    //const days = Math.floor(diff / 86400);
+                    //return `${days} day${days > 1 ? 's' : ''} ago`;
                 }
             },
             

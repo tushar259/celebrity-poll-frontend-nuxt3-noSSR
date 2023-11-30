@@ -939,4 +939,8 @@ input[type='text'] {
     object-position: center;
 }
 
+ClientOnly{
+    text-align: center;
+}
+
 /*NEW FEATURE*/
