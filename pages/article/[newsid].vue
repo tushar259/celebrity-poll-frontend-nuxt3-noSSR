@@ -15,16 +15,16 @@
 
             <Head>
                 <Title>Article - {{ headline }}</Title>
-                <Meta name="description" :content="trimDescription(newsDetails)" />
+                <Meta name="description" :content="summary" />
                 <Meta hid="og:title" property="og:title" :content="'Article - '+headline" />
-                <Meta hid="og:description" property="og:description" :content="trimDescription(newsDetails)" />
+                <Meta hid="og:description" property="og:description" :content="summary" />
                 <Meta hid="og:image" property="og:image" :content="getOgImageUrl(ssrApiUrl, thumbnail)" />
                 <Meta hid="og:url" property="og:url" :content="ssrFrontEndUrl+'/article/'+ssrNewsid" />
                 <Meta hid="og:type" property="og:type" content="website" />
                 
                 
                 <Meta name="twitter:title" :content="'Article - '+headline" />
-                <Meta name="twitter:description" :content="trimDescription(newsDetails)" />
+                <Meta name="twitter:description" :content="summary" />
                 <Meta name="twitter:card" content="summary_large_image" />
                 <Meta name="twitter:image" :content="getOgImageUrl(ssrApiUrl, thumbnail)" />
 
@@ -78,6 +78,8 @@
                 
             </div>
             <div class="px-30-gap"></div>
+            <div v-html="summary"></div>
+            <div class="px-20-gap"></div>
             <div class="row">
                 <div class="col-md-9">
                     <div class="news-details" v-html="newsDetails"></div>
@@ -146,7 +148,8 @@
             const createdAt = ref("");
             const thumbnail = ref("");
             const sideNews = ref([]);
-            const bottomNews = ref([]);        
+            const bottomNews = ref([]);
+            const summary = ref("");        
 
             // console.log("ssrApiUrl: "+ssrApiUrl)
             const response = {};
@@ -162,6 +165,7 @@
                 response.value = data.value;
                 nId.value = response.value.mainNews.id;
                 headline.value = response.value.mainNews.headline;
+                summary.value = response.value.mainNews.summary;
                 newsDetails.value = response.value.mainNews.news_details;
                 industry.value = response.value.mainNews.industry;
                 createdAt.value = moment(response.value.mainNews.created_at).format('MMM D, YYYY');
@@ -181,6 +185,7 @@
                 headline, 
                 newsFound, 
                 nId, 
+                summary,
                 newsDetails, 
                 industry, 
                 createdAt,
@@ -201,6 +206,7 @@
             nId: '',
             newsid: '',
             headline: '',
+            summary: '',
             newsDetails: '',
             industry: '',
             createdAt: '',
@@ -208,6 +214,7 @@
             thumbnail: '',
             sideNews: [],
             bottomNews: [],
+
         }),
 
 
