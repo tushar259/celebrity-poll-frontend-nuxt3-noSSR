@@ -939,8 +939,10 @@ input[type='text'] {
     object-position: center;
 }
 
-ClientOnly{
-    text-align: center;
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
 }
 
 /*NEW FEATURE*/

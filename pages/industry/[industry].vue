@@ -46,7 +46,6 @@
                                             </span>
                                         </div>
                                     </div>
-                                    ..See more
                                 </div>
                             </div>
                         </router-link>
@@ -74,7 +73,6 @@
                                     </h4>
                                     <span class="custom-card-ending-date"><span class="which-industry">{{poll.which_industry}}</span> &bull; Published {{poll.updated_at}}</span>
                                     <div class="px-20-gap"></div>
-                                    ..See more
                                 </div>
                             </div>
                         </router-link>
@@ -109,7 +107,6 @@
                                             </span>
                                         </div>
                                     </div>
-                                    ..See more
                                 </div>
                             </div>
                         </router-link>
