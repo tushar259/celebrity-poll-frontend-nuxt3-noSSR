@@ -38,8 +38,8 @@
                                     <div class="px-20-gap"></div>
                                     <div v-for="(tag, indexT) in poll.poll_tags" :key="indexT" class="card-name-n-votes">
                                         <div v-if="indexT <= 1">
-                                            <span v-if="indexT !== poll.poll_tags.length - 1">
-                                                <b>{{tag.polls}}</b> ({{tag.votes}} votes),&nbsp;
+                                            <span v-if="indexT == 1">
+                                                ,&nbsp;<b>{{tag.polls}}</b> ({{tag.votes}} votes)
                                             </span>
                                             <span v-else>
                                                 <b>{{tag.polls}}</b> ({{tag.votes}} votes)
@@ -99,8 +99,8 @@
                                     <div class="px-20-gap"></div>
                                     <div v-for="(tag, indexT) in poll.poll_tags" :key="indexT" class="card-name-n-votes">
                                         <div v-if="indexT <= 1">
-                                            <span v-if="indexT !== poll.poll_tags.length - 1">
-                                                <b>{{tag.polls}}</b>({{tag.votes}} votes),&nbsp;
+                                            <span v-if="indexT == 1">
+                                                ,&nbsp;<b>{{tag.polls}}</b>({{tag.votes}} votes)
                                             </span>
                                             <span v-else>
                                                 <b>{{tag.polls}}</b>({{tag.votes}} votes)

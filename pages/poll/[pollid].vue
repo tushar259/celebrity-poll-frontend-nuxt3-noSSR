@@ -41,7 +41,7 @@
                     <button type="button" id="shareButton" class="btn btn-primary share-button" data-bs-toggle="dropdown" aria-expanded="false">
                         <span><i class="fas fa-share-alt"></i> Share</span>
                     </button>
-                    <ul class="dropdown-menu share-dropdown-button">
+                    <ul class="dropdown-menu share-dropdown-button" aria-labelledby="shareButton">
                         <li style="display:flex;align-items: center;">
                             <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" title="facebook" style="margin-right: 13px;margin-left: 10px;" @click="shareOnFacebook">
                                 <!-- <img :src="apiUrl+'/logo/Facebook-logo.png'" alt="Facebook Share" style="height: 30px;width: 48px;"> -->
@@ -122,6 +122,7 @@
     // const toast = useToast();
     import axios from 'axios';
     export default {
+        
         setup(){
             const route = useRoute()
             const pollid = route.params.pollid;
@@ -465,13 +466,11 @@
 
                 if(this.idSelectedToVote === "" || this.idSelectedToVote === null || (this.ifUserVotedThenCanVoteNow == "false" || localStorage.getItem(`canUserVoteNow${this.pollId}`) == "false")){
                     this.disableVote = false;
-                    if(this.ifUserVotedThenCanVoteNow == "false"){
-                        this.showDangerToast("Please wait for a moment.", 5000);
-                    }
+                    
                     if(this.idSelectedToVote === "" || this.idSelectedToVote === null){
                         this.showDangerToast("Please select an option.", 5000);
                     }
-                    if(localStorage.getItem(`canUserVoteNow${this.pollId}`) == "false"){
+                    if(this.ifUserVotedThenCanVoteNow == "false" || localStorage.getItem(`canUserVoteNow${this.pollId}`) == "false"){
                         const newTime = localStorage.getItem(`whenUserVoted${this.pollId}`);
                         this.showDangerToast("Please wait for a moment.", 5000);
                         this.startCountdown(newTime);
@@ -607,7 +606,7 @@
                 document.getElementById('toastContainer').appendChild(toast);
 
                 // Initialize the Bootstrap toast component and show it
-                var toastInstance = new bootstrap.Toast(toast);
+                var toastInstance = new this.$bootstrap.Toast(toast);
                 toastInstance.show();
             },
             showDangerToast(message, delay) {
@@ -652,7 +651,7 @@
                 document.getElementById('toastContainer').appendChild(toast);
 
                 // Initialize the Bootstrap toast component and show it
-                var toastInstance = new bootstrap.Toast(toast);
+                var toastInstance = new this.$bootstrap.Toast(toast);
                 toastInstance.show();
             },
             

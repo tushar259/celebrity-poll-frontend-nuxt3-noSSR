@@ -722,7 +722,7 @@ input[type='text'] {
 }
 
 .exampleRadios-in-poll{
-    top:10px;
+    margin-top:14px;
 }
 
 .exampleRadios-in-poll:checked{
@@ -944,5 +944,9 @@ input[type='text'] {
     clear: both;
     display: table;
 }
+
+
+.iWantToHideScroll{overflow:-moz-scrollbars-none;-ms-overflow-style:none;}.iWantToHideScroll::-webkit-scrollbar{display:none;}
+
 
 /*NEW FEATURE*/

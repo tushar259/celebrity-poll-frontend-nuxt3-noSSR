@@ -19,10 +19,12 @@
     </header>
       <nav class="navbar navbar-expand-lg navbar-light" style="width: 100% !important">
           <img class="navbar-brand navbar-logo-custom" src="https://polldiary.online/public/logo/favicon2.webp" alt="logo" @click="gotoHome()">
-          
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" @click="collapse = false">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
+          <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" @click="collapse = false">
+              <span class="navbar-toggler-icon"></span>
+          </button> -->
           <div class="navbar-collapse collapse" :class="{'hide-navbar-now': collapse}" id="navbarNav">
               <ul class="navbar-nav">
                   <li class="nav-item active">
@@ -32,7 +34,7 @@
                       <a class="nav-link custom-cursor" href="/polls" :class="{ 'active': activeLink === 'polls' }" @click="gotoPolls()">Polls</a>
                   </li>
                   <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle text-truncate" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <a class="nav-link dropdown-toggle text-truncate" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           Industry
                       </a>
                       <div class="dropdown-menu" aria-labelledby="navbarDropdown">

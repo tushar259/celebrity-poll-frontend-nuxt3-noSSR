@@ -309,6 +309,51 @@
                     this.showToast('Link copied to clipboard!', 5000);
                 }
             },
+            showToast(message, delay) {
+                // Create a new toast element
+                var toast = document.createElement('div');
+                toast.className = 'toast bg-success text-white';
+                toast.setAttribute('role', 'alert');
+                toast.setAttribute('aria-live', 'assertive');
+                toast.setAttribute('aria-atomic', 'true');
+
+                // Create toast header
+                var header = document.createElement('div');
+                header.className = 'toast-header';
+                var strong = document.createElement('strong');
+                strong.className = 'me-auto';
+                strong.textContent = 'Success';
+                var small = document.createElement('small');
+                small.textContent = 'just now';
+                var closeBtn = document.createElement('button');
+                closeBtn.type = 'button';
+                closeBtn.className = 'btn-close';
+                closeBtn.setAttribute('data-bs-dismiss', 'toast');
+                closeBtn.setAttribute('aria-label', 'Close');
+                
+                header.appendChild(strong);
+                header.appendChild(small);
+                header.appendChild(closeBtn);
+
+                // Create toast body
+                var body = document.createElement('div');
+                body.className = 'toast-body';
+                body.textContent = message;
+
+                // Add header and body to the toast element
+                toast.appendChild(header);
+                toast.appendChild(body);
+
+                // Set the delay for the toast (in milliseconds)
+                toast.setAttribute('data-bs-delay', delay);
+
+                // Add the toast to the container
+                document.getElementById('toastContainer').appendChild(toast);
+
+                // Initialize the Bootstrap toast component and show it
+                var toastInstance = new this.$bootstrap.Toast(toast);
+                toastInstance.show();
+            },
             shareOnFacebook() {
                 if(process.client){
                     const protocol = window.location.protocol; // e.g., "http:" or "https:"
