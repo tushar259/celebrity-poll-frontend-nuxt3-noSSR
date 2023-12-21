@@ -722,7 +722,7 @@ input[type='text'] {
 }
 
 .exampleRadios-in-poll{
-    margin-top:14px;
+    margin-top:14px !important;
 }
 
 .exampleRadios-in-poll:checked{

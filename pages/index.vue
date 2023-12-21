@@ -1,6 +1,6 @@
 <template>
     <div >
-        <!-- welcome home -->
+        
         <div class="newsfeed-container">
             <div v-if="newsFound == false">
                 Page not found
@@ -29,7 +29,7 @@
 
 
                     <!-- <Meta name="description" :content="title" /> -->
-                    <!-- <Style type="text/css" children="body { background-color: green; }" /> -->
+                    
                 </Head>
                 <div class="row">
                     <div class="col">
@@ -46,7 +46,7 @@
                                     
                                 </a>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <div v-for="(singletopOftopLeftNews, index) in topOftopLeftNews" :key="index">
                                     <div v-if="index > 0">
                                         <hr class="d-block d-sm-none">
@@ -253,7 +253,6 @@
 </template>
 
 <script>
-    import moment from 'moment';
     import axios from 'axios';
     export default {
         async setup(){
@@ -267,53 +266,24 @@
             const bollywoodNews = ref([]);
 
             const response = {};
-
             const {data} = await useFetch(`${ssrApiUrl}/api/get-all-current-news`)
+            // const {data} = await useFetch(`https://polldiary.online/public/api/get-all-current-news`)
             response.value = data.value;
-            console.log(data);
-            response.value.topLeftNews.forEach((element, index) => {
-                element.created_at = element.created_at;
-                if(index <= 2){
-                    topOftopLeftNews.value.push(element); 
-                }
-                else{
-                    topLeftNews.value.push(element); 
-                }
-            });
-            mostViewedNews.value = response.value.mostViewedNews;
-            bollywoodNews.value = response.value.bollywoodNews;
+            
+            topOftopLeftNews.value = response.value.topLeftNews.slice(0, 3);
+            topLeftNews.value = response.value.topLeftNews.slice(3);
+            
             if(response.value.success == 'true'){
                 newsFound.value = true;
             }
             else{
                 newsFound.value = false;
             }
-            // .then(response =>{
-            //     // console.log(response.data.value.bottomNews);
-            //     if(response.data.value.success == 'true'){
-            //         response.data.value.topLeftNews.forEach((element, index) => {
-            //             element.created_at = element.created_at;
-            //             if(index <= 2){
-            //                 topOftopLeftNews.value.push(element); 
-            //             }
-            //             else{
-            //                 topLeftNews.value.push(element); 
-            //             }
-            //         });
-            //         mostViewedNews.value = response.data.value.mostViewedNews;
-            //         bollywoodNews.value = response.data.value.bollywoodNews;
-                    
-            //         newsFound.value = true;
-            //     }
-            //     else{
-            //         newsFound.value = false;
-            //     }
-            // })
-            // .catch(error =>{
-            //     console.log(error);
-            //     newsFound.value = false;
-            // });
 
+            mostViewedNews.value = response.value.allNews.slice().sort((a, b) => b.times_visited - a.times_visited).slice(0, 6);
+            
+            bollywoodNews.value = response.value.allNews.filter(news => news.industry == 'Bollywood').slice(0, 20);
+            
             return{
                 newsFound,
                 topOftopLeftNews,
@@ -323,7 +293,6 @@
                 ssrFrontEndUrl
             }
             
-            // navigateTo('/polls');
         },
 
         data: () => ({
@@ -331,11 +300,7 @@
             userEmail: '',
             apiUrl: process.env.API_URL,
             topCurrentShowPagination: 0,
-            topLeftNews: [],
-            topOftopLeftNews: [],
             newsFound: null,
-            mostViewedNews: [],
-            bollywoodNews: [],
             musicNews: [],
             hollywoodNews: [],
             southIndiaNews: [],
@@ -346,9 +311,7 @@
         }),
 
         created(){
-            // this.$router.push(`/polls`);
             this.apiUrl = this.$config.public.API_URL;
-            // this.getAllCurrentNews();
         },
 
         methods:{
@@ -356,15 +319,14 @@
                 if(this.topOftopLeftNews.length == 0){
                     axios.get(this.apiUrl+`/api/get-all-current-news`)
                     .then(response =>{
-                        //console.log(response);
                         if(response.data.success == 'true'){
                             response.data.topLeftNews.forEach((element, index) => {
                                 element.created_at = this.beautifyTime(element.created_at);
                                 if(index == 0){
-                                    this.topOftopLeftNews.push(element); //insert first index only
+                                    this.topOftopLeftNews.push(element); 
                                 }
                                 else{
-                                    this.topLeftNews.push(element); //insert rest of the indexes
+                                    this.topLeftNews.push(element);
                                 }
                             });
                             response.data.mostViewedNews.forEach(element =>{
@@ -392,7 +354,6 @@
             },
 
             getNewsIndustryWise(industry){
-                //console.log(industry);
                 if(industry == 'Bollywood'){
                     if(this.bollywoodNews.length == 0){
                         const formData = {
@@ -400,7 +361,6 @@
                         }
                         axios.post(this.apiUrl+`/api/get-this-industry-news`, formData)
                         .then(response =>{
-                            //console.log(response);
                             if(response.data.success == 'true'){
                                 response.data.industryNews.forEach(element =>{
                                     element.created_at = this.beautifyTime(element.created_at);
