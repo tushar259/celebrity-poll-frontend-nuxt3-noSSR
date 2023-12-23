@@ -2,7 +2,6 @@
     
     <div class="newsfeed-container">
         
-        <!-- welcome home -->
         <div v-if="newsFound == false">
             Page not found
         </div>
@@ -29,8 +28,6 @@
                 <Meta name="twitter:image" :content="getOgImageUrl(ssrApiUrl, thumbnail)" />
 
 
-                <!-- <Meta name="description" :content="title" /> -->
-                <!-- <Style type="text/css" children="body { background-color: green; }" /> -->
             </Head>
             <div class="styling-link font-selected">
                 <router-link to="/" class="navigator-link">Home</router-link><div class="navigator-link-divider">/</div>
@@ -55,22 +52,17 @@
                 <ul class="dropdown-menu share-dropdown-button">
                     <li style="display:flex;align-items: center;">
                         <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" title="facebook" style="margin-right: 13px;margin-left: 10px;" @click="shareOnFacebook">
-                            <!-- <img :src="apiUrl+'/logo/Facebook-logo.png'" alt="Facebook Share" style="height: 30px;width: 48px;"> -->
+                            
                             <i class="fab fa-facebook" style="font-size:26px"></i>
                         </a>
                     
                         <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="twitter" style="margin-right: 13px;" @click="shareOnTwitter">
-                            <!-- <img :src="apiUrl+'/logo/Twitter-logo.svg.png'" alt="Twitter Share" style="height: 24px;width: 31px;"> -->
+                            
                             <i class="fab fa-twitter" style="font-size:28px"></i>
                         </a>
                     
-                        <!-- <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" title="instagram" @click="shareOnInstagram">
-                            <img :src="apiUrl+'/logo/Instagram_logo_2016.svg.webp'" alt="LinkedIn Share" style="height: 27px;width: 27px;">
-                        </a> -->
                         <a href="#" @click="copyLinkToClipboard()">
                             <i class="fas fa-copy fa-lg" style="padding-bottom: 10px;"></i>
-                            <!-- <i class="fa-regular fa-copy fa-lg"></i> -->
-                            <!-- <i class="fa fa-copy" style="font-size:24px"></i> -->
                             
                         </a>
                     </li>
@@ -134,7 +126,7 @@
     import axios from 'axios';
     export default {
         async setup(){
-            // Now you can use router and route as needed
+            
             const route = useRoute();
             const ssrNewsid = route.params.newsid;
             const config = useRuntimeConfig();
@@ -147,14 +139,9 @@
             const industry = ref("");
             const createdAt = ref("");
             const thumbnail = ref("");
-            const sideNews = ref([]);
-            const bottomNews = ref([]);
             const summary = ref("");        
 
-            // console.log("ssrApiUrl: "+ssrApiUrl)
             const response = {};
-
-            // try{
 
                 const {data} = await useFetch(`${ssrApiUrl}/api/get-current-news-description-details`, {
                     method: 'post',
@@ -162,16 +149,15 @@
                         newsid: ssrNewsid
                     }
                 })
+                
                 response.value = data.value;
-                nId.value = response.value.mainNews.id;
-                headline.value = response.value.mainNews.headline;
-                summary.value = response.value.mainNews.summary;
-                newsDetails.value = response.value.mainNews.news_details;
-                industry.value = response.value.mainNews.industry;
-                createdAt.value = moment(response.value.mainNews.created_at).format('MMM D, YYYY');
-                thumbnail.value = response.value.mainNews.thumbnail;
-                sideNews.value = response.value.sideNews;
-                bottomNews.value = response.value.bottomNews;
+                nId.value = response.value.mainNews[0].id;
+                headline.value = response.value.mainNews[0].headline;
+                summary.value = response.value.mainNews[0].summary;
+                newsDetails.value = response.value.mainNews[0].news_details;
+                industry.value = response.value.mainNews[0].industry;
+                createdAt.value = moment(response.value.mainNews[0].created_at).format('MMM D, YYYY');
+                thumbnail.value = response.value.mainNews[0].thumbnail;
 
                 if(response.value.success == 'true'){
                     newsFound.value = true;
@@ -179,7 +165,6 @@
                 else{
                     newsFound.value = false;
                 }
-                
 
             return{
                 headline, 
@@ -190,8 +175,6 @@
                 industry, 
                 createdAt,
                 thumbnail,
-                sideNews,
-                bottomNews,
                 ssrApiUrl,
                 ssrFrontEndUrl,
                 ssrNewsid
@@ -203,26 +186,16 @@
             apiUrl: process.env.API_URL,
             token: process.client ? localStorage.getItem('token') : '',
             userEmail: '',
-            nId: '',
             newsid: '',
-            headline: '',
-            summary: '',
-            newsDetails: '',
-            industry: '',
-            createdAt: '',
             newsFound: null,
-            thumbnail: '',
             sideNews: [],
             bottomNews: [],
 
         }),
 
-
         created(){
-            // this.$router.push(`/polls`);
             this.apiUrl = this.$config.public.API_URL;
             this.newsid = this.$route.params.newsid;
-            // this.fetchCurrentNews();
         },
 
         mounted(){
@@ -266,13 +239,21 @@
 
             increasePageVisitCount(){
                 const formData = {
-                    'newsid': this.newsid
+                    'newsid': this.newsid,
+                    'industry': this.industry,
+                    'mainNewsId': this.nId
                 }
                 axios.post(this.apiUrl+`/api/increase-news-page-visit-count`, formData)
                 .then((response) => {
                     
                     if(response.data.success == "true"){
                         console.log("Welcome.");
+                        response.data.sideNews.forEach(item => {
+                            this.sideNews.push(item);
+                        });
+                        response.data.bottomNews.forEach(item =>{
+                            this.bottomNews.push(item);
+                        });
                     }
                     else{
                         console.log("Welcome!");
