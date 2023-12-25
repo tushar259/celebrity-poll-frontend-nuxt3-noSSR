@@ -51,9 +51,9 @@
                     <li class="nav-item active">
                         <a class="nav-link custom-cursor" href="/poll-history" :class="{ 'active': activeLink === 'pollHistory' }" @click="gotoPollHistory()">Poll History</a>
                     </li>
-                    <li class="nav-item active">
+                    <!-- <li class="nav-item active">
                         <a class="nav-link custom-cursor" href="/countries" :class="{ 'active': activeLink === 'countries' }" @click="gotoCountries()">Countries</a>
-                    </li>
+                    </li> -->
                     
                 </ul>
                 

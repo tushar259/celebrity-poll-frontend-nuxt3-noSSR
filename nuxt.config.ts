@@ -75,7 +75,11 @@ export default defineNuxtConfig({
     // {src: '~/jsplugins/bootstrap.client.js', mode: 'client'},
     // { src: "~/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js", mode: "client" }
   ],
-  modules: ['nuxt-simple-sitemap'],
+  modules: ['nuxt-speedkit', 'nuxt-simple-sitemap'],
   
   components: true,
+
+  image: {
+    domains: ['https://polldiary.online/public']
+  }
 })

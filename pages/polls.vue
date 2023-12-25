@@ -8,14 +8,28 @@
         </div>
     </div>
     <div v-else-if="pollFound == true" class="parent-background">
-        
+        <Head>
+            <Title>PollDiary - Polls</Title>
+            <Meta name="description" content="Welcome to PollDiary! Get all the latest news & polls on entertainment & lifestyle. Get updates on Bollywood, Hollywood, Beauty, Health, Box Office, Movies, Music, K-Pop & more" />
+            <Meta hid="og:title" property="og:title" content="PollDiary - Polls" />
+            <Meta hid="og:description" property="og:description" content="Welcome to PollDiary! Get all the latest news & polls on entertainment & lifestyle. Get updates on Bollywood, Hollywood, Beauty, Health, Box Office, Movies, Music, K-Pop & more" />
+            <!-- <Meta hid="og:image" property="og:image" :content="getOgImageUrl(ssrApiUrl, thumbnail)" /> -->
+            <Meta hid="og:url" property="og:url" content="https://www.polldiary.com/polls" />
+            <Meta hid="og:type" property="og:type" content="website" />
+            
+            
+            <Meta name="twitter:title" content="PollDiary - Polls" />
+            <Meta name="twitter:description" content="Welcome to PollDiary! Get all the latest news & polls on entertainment & lifestyle. Get updates on Bollywood, Hollywood, Beauty, Health, Box Office, Movies, Music, K-Pop & more" />
+            <Meta name="twitter:card" content="summary_large_image" />
+            <!-- <Meta name="twitter:image" :content="getOgImageUrl(ssrApiUrl, thumbnail)" /> -->
+        </Head>
         <div class="row poll-page-background">
             
             <div class="styling-link-for-home font-selected">
                 <router-link to="" class="navigator-link">Home</router-link>
             </div>
             
-            <div class="col-md-6 list-of-anything">
+            <div class="col-md-9 list-of-anything">
                 
                 <h6 class="poll-heads-in-all-poll-new"><span>New polls</span></h6>
                 <div v-if="allRecentPollsFound == true">
@@ -30,20 +44,25 @@
                                     <h4 class="card-title custom-card-title">
                                     <strong>{{poll.poll_title}}</strong>
                                     </h4>
-                                    <span class="custom-card-ending-date"><span class="which-industry">{{poll.which_industry}}</span> &bull; Closing {{poll.ending_date}}</span>
-                                    <div class="px-20-gap"></div>
+                                    <span class="custom-card-ending-date">Closing {{callMoment(poll.ending_date)}}</span>
+                                    <!-- <div class="px-20-gap"></div>
                                     <div v-for="(tag, indexT) in poll.poll_tags" :key="indexT" class="card-name-n-votes">
                                         <div v-if="indexT <= 1">
-                                            <span v-if="indexT !== poll.poll_tags.length - 1">
-                                                <b>{{tag.polls}}</b> ({{tag.votes}} votes),&nbsp;
+                                            <span v-if="indexT == 1">
+                                                ,&nbsp;<b>{{tag.polls}}</b> ({{tag.votes}} votes)
                                             </span>
                                             <span v-else>
                                                 <b>{{tag.polls}}</b> ({{tag.votes}} votes)
                                             </span>
                                         </div>
-                                    </div>
-                                    ..See more
+                                        
+                                    </div> -->
+                                    
                                 </div>
+                                
+                            </div>
+                            <div class="card-short-description">
+                                {{trimDescription(poll.before_poll_description)}}
                             </div>
                         </router-link>
                         <div v-if="index%6==0">
@@ -53,59 +72,45 @@
                     
                 </div>
             </div>
-            <div class="col-md-6" >
+            <div class="col-md-3" >
                 
                 <h6 class="poll-heads-in-all-poll-new"><span>Recent results</span></h6>
                 <div v-if="resultPollsFound == true">
                     <div v-for="(poll, index) in resultAllPolls" :key="index">
-                        <router-link class="card my-3 custom-card-border" :to="'/poll-winner/'+poll.poll_title">
+                        <router-link class="custom-card-border poll-right-side" :to="'/poll-winner/'+poll.poll_title">
                             
                             <div class="card-body d-flex">
-                                <div>
-                                    <img :src="apiUrl+'/'+poll.thumbnail_image" class="thumbnail-images-in-list-of-polls">
-                                </div>
+                                
                                 <div class="thumbnail-texts-in-list-of-polls">
                                     <h4 class="card-title custom-card-title">
-                                    <strong>{{poll.poll_title}}</strong>
+                                    {{poll.poll_title}}
                                     </h4>
-                                    <span class="custom-card-ending-date"><span class="which-industry">{{poll.which_industry}}</span> &bull; Published {{poll.updated_at}}</span>
-                                    <div class="px-20-gap"></div>
-                                    ..See more
+                                    <span class="custom-card-ending-date">Published {{poll.updated_at}}</span>
+                                    
                                 </div>
                             </div>
                         </router-link>
+                        <div class="px-30-gap"></div>
                     </div>
                 </div>
                 <div class="px-10-gap"></div>
                 <h6 class="poll-heads-in-all-poll-new"><span>Polls ending</span></h6>
                 <div v-if="allPollFound == true">
                     <div v-for="(poll, index) in allPolls" :key="index">
-                        <router-link class="card my-3 custom-card-border" :to="'/poll/'+poll.poll_title">
+                        <router-link class="custom-card-border poll-right-side" :to="'/poll/'+poll.poll_title">
                             
                             <div class="card-body d-flex">
-                                <div>
-                                    <img :src="apiUrl+'/'+poll.thumbnail_image" class="thumbnail-images-in-list-of-polls">
-                                </div>
+                                
                                 <div class="thumbnail-texts-in-list-of-polls">
                                     <h4 class="card-title custom-card-title">
-                                    <strong>{{poll.poll_title}}</strong> 
+                                    {{poll.poll_title}} 
                                     </h4>
-                                    <span class="custom-card-ending-date"><span class="which-industry">{{poll.which_industry}}</span> &bull; Closing {{poll.ending_date}}</span>
-                                    <div class="px-20-gap"></div>
-                                    <div v-for="(tag, indexT) in poll.poll_tags" :key="indexT" class="card-name-n-votes">
-                                        <div v-if="indexT <= 1">
-                                            <span v-if="indexT !== poll.poll_tags.length - 1">
-                                                <b>{{tag.polls}}</b>({{tag.votes}} votes),&nbsp;
-                                            </span>
-                                            <span v-else>
-                                                <b>{{tag.polls}}</b>({{tag.votes}} votes)
-                                            </span>
-                                        </div>
-                                    </div>
-                                    ..See more
+                                    <span class="custom-card-ending-date">Closing {{poll.ending_date}}</span>
+                                    
                                 </div>
                             </div>
                         </router-link>
+                        <div class="px-30-gap"></div>
                         <div v-if="index%3==0">
                             <!-- ad -->
                         </div>
@@ -121,29 +126,41 @@
     import axios from 'axios';
     import moment from 'moment';
     export default {
-        setup(){
-            // Now you can use router and route as needed
+        async setup(){
             
-            useHead({
-                title: `PollDiary - Polls`,
-                meta: [
-                    
-                    {name: 'description', content: ''},
+            const route = useRoute();
+            const ssrNewsid = route.params.newsid;
+            const config = useRuntimeConfig();
+            const ssrApiUrl = config.public.API_URL;
+            const ssrFrontEndUrl = config.public.Project_URL;
+            const allRecentUploadedPolls = ref([]);
+            const allRecentPollsFound = ref(null);
+            const pollFound = ref(null);
+            const response = {};
 
-                    { hid: 'og:title', property: 'og:title', content: 'PollDiary - Polls'},
-                    { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! We are dedicated to providing an engaging platform for star polls and discussions.' },
-                    { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
-                    { hid: 'og:url', property: 'og:url', content: process.env.Project_URL+'/polls' },
-                    { hid: 'og:type', property: 'og:type', content: 'website' },
+                const {data} = await useFetch(`${ssrApiUrl}/api/get-all-recent-uploaded-poll`)
+                
+                response.value = data.value;
+                allRecentUploadedPolls.value = response.value.all_polls;
+                
 
-                    { name: 'twitter:title', content: 'PollDiary - Polls'},
-                    { name: 'twitter:description', content: 'Welcome to PollDiary! We are dedicated to providing an engaging platform for star polls and discussions.' },
-                    { name: 'twitter:image', content: process.env.API_URL+'/logo/favicon2.png' },
-                    { name: 'twitter:card', content: 'summary' },
-                    // { name: 'poll-id', content: '123456' }, // Replace with the actual poll ID
-                    // { name: 'poll-title', content: 'My Awesome Poll' },
-                ]
-            })
+                if(response.value.success == true){
+                    pollFound.value = true;
+                    allRecentPollsFound.value = true;
+                }
+                else{
+                    pollFound.value = false;
+                    allRecentPollsFound.value = false;
+                }
+
+            return{
+                pollFound,
+                allRecentUploadedPolls,
+                allRecentPollsFound,
+                ssrNewsid,
+                ssrFrontEndUrl
+            }
+            
         },
         
         data: () => ({
@@ -157,9 +174,6 @@
             userEmail: '',
             allRecentUploadedPolls: [],
             allRecentPollsFound: null,
-            // showRecentPolls: false,
-            // showResultPolls: false,
-            // showEndingPolls: false,
             pageDescriptionForMeta: ''
             
         }),
@@ -168,16 +182,38 @@
 
         created() {
             this.apiUrl = this.$config.public.API_URL;
-            this.getAllRecentPolls();
+            // this.getAllRecentPolls();
             this.getAllPollsEnding();
             this.getlistOfResultPolls();
         },
 
         methods: {
+            trimDescription(description) {
+                if(process.client){
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = description;
+
+                    const firstPara = tempDiv.querySelector('p');
+                    let trimmedText = '';
+
+                    if (firstPara) {
+                        trimmedText = firstPara.textContent.trim();
+                    } else {
+                        const paragraphs = tempDiv.innerHTML.split('<br><br>');
+                        if (paragraphs.length > 0) {
+                            trimmedText = paragraphs[0].trim();
+                        }
+                    }
+                    return trimmedText;
+                }
+            },
+            callMoment(givenDate){
+                return moment(givenDate).format('D MMM YYYY');
+            },
             getAllRecentPolls(){
                 axios.get(this.apiUrl+'/api/get-all-recent-uploaded-poll')
                 .then(response => {
-                    
+                
                     if(response.data.success === true){
                         this.allRecentPollsFound = true;
                         
@@ -248,7 +284,6 @@
                     else if(response.data.success === false && response.data.message === "No poll found"){
                         this.resultPollsFound = false;
                     }
-                    // console.log(response.data);
                 })
                 .catch(error => {
                     console.log(error);
@@ -320,10 +355,6 @@
                             console.log(error);
                         });
                     }
-                    // else{
-                    //     //no token means no user logged in
-                    //     console.log("no token in storage");
-                    // }
                 }
             }
         }

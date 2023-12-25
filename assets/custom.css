@@ -124,8 +124,8 @@ input[type='text'] {
 }
 
 .poll-page-background {
-    margin-left: 1% !important;
-    margin-right: 1% !important;
+    margin-left: 6% !important;
+    margin-right: 6% !important;
     padding-top: 30px;
 }
 
@@ -245,7 +245,7 @@ input[type='text'] {
 }
 
 .card-body{
-    margin: 2% !important;
+    margin: 1% !important;
 }
 
 .navigator-link-divider{
@@ -445,8 +445,8 @@ input[type='text'] {
 }
 
 .thumbnail-images-in-list-of-polls {
-    height: 100px;
-    width: 100px;
+    height: 70px;
+    width: 70px;
     border-radius: 4px;
 }
 
@@ -950,3 +950,12 @@ input[type='text'] {
 
 
 /*NEW FEATURE*/
+
+.poll-right-side:hover .card-title{
+    font-weight: bold;
+}
+.card-short-description{
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 2%;
+}
