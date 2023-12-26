@@ -8,6 +8,20 @@
         </div>
     </div>
     <div v-else-if="pollFound == true" class="parent-background">
+        <Head>
+            <Title>Poll Winner - {{pollWinnerId}}</Title>
+            <Meta name="description" :content="pageDescriptionForMeta" />
+            <Meta hid="og:title" property="og:title" :content="'Poll Winner - '+pollWinnerId" />
+            <Meta hid="og:description" property="og:description" :content="pageDescriptionForMeta" />
+            <Meta hid="og:image" property="og:image" :content="ssrApiUrl+'/'+thumbnail" />
+            <Meta hid="og:url" property="og:url" :content="ssrFrontEndUrl+'/poll-winner/'+pollWinnerId" />
+            <Meta hid="og:type" property="og:type" content="website" />
+             
+            <Meta name="twitter:title" :content="'Poll Winner - '+pollWinnerId" />
+            <Meta name="twitter:description" :content="pageDescriptionForMeta" />
+            <Meta name="twitter:card" content="summary_large_image" />
+            <Meta name="twitter:image" :content="ssrApiUrl+'/'+thumbnail" />
+        </Head>
         <div v-if="thumbnail != ''" class="custom-thumbnail">
             <div class="image-card">
                 <div class="image-card-body">
@@ -27,10 +41,8 @@
         <div class="px-10-gap"></div>
         <div class="row poll-page-row">
             <div class="styling-link font-selected">
-                <router-link to="/" class="navigator-link">Home</router-link><div class="navigator-link-divider">/</div> <!-- <i class='fas fa-angle-right'></i> -->
-                <router-link to="/polls" class="navigator-link">Polls</router-link><div class="navigator-link-divider">/</div> <!-- <i class='fas fa-angle-right'></i> -->
-                <router-link :to="'/industry/'+whichIndustry" class="navigator-link">{{whichIndustry}}</router-link><div class="navigator-link-divider">/</div>
-                <router-link :to="'/poll-winner/'+pollId" class="navigator-link">{{pollId}}</router-link>
+                <router-link to="/" class="navigator-link">Home</router-link><div class="navigator-link-divider">/</div>
+                <router-link to="/polls" class="navigator-link">Polls</router-link>
             </div>
         </div>
         <div class="px-10-gap"></div>
@@ -66,30 +78,92 @@
     import axios from 'axios';
     import moment from 'moment';
     export default {
-        setup(){
+        async setup(){
             const route = useRoute()
-            const pollid = route.params.pollwinnerid;
-            // Now you can use router and route as needed
+            const pollWinnerId = route.params.pollwinnerid;
             
-            
-            useHead({
-                title: `Poll Winner - ${pollid}`,
-                meta: [
-                    
-                    {name: 'description', content: 'Welcome to PollDiary! Get all the latest news & polls on entertainment & lifestyle. Get updates on Bollywood, Hollywood, Beauty, Health, Box Office, Movies, Music, K-Pop & more'},
+            const config = useRuntimeConfig();
+            const ssrApiUrl = config.public.API_URL;
+            const ssrFrontEndUrl = config.public.Project_URL;
+            const pollFound = ref(null);
+            const pollTitle = ref("");
+            // const beforePollDescription = ref("");
+            const afterPollDescription = ref("");
+            const whichIndustry = ref("");
+            const startingDate = ref("");
+            const endingDate = ref("");
+            const publishedDate = ref("");
+            const winnersName = ref("");
+            const winnersVotes = ref("");
+            const pageDescriptionForMeta = ref("");
+            const totalVotes = ref("");
+            const thumbnail = ref("");
+            const winnersThumbnail = ref("");
 
-                    { hid: 'og:title', property: 'og:title', content: 'Poll Winner - '+pollid },
-                    { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! Get all the latest news & polls on entertainment & lifestyle. Get updates on Bollywood, Hollywood, Beauty, Health, Box Office, Movies, Music, K-Pop & more' },
-                    // { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
-                    { hid: 'og:url', property: 'og:url', content: 'https://www.polldiary.com/poll/'+pollid },
-                    { hid: 'og:type', property: 'og:type', content: 'website' },
+            const response = {};
 
-                    { name: 'twitter:title', content: 'Poll Winner - '+pollid },
-                    { name: 'twitter:description', content: 'Welcome to PollDiary! Get all the latest news & polls on entertainment & lifestyle. Get updates on Bollywood, Hollywood, Beauty, Health, Box Office, Movies, Music, K-Pop & more' },
-                    // { name: 'twitter:image', content: process.env.API_URL+'/logo/favicon2.png' },
-                    { name: 'twitter:card', content: 'summary' },
-                ]
+            const {data} = await useFetch(`${ssrApiUrl}/api/get-poll-winner-info`, {
+                method: 'post',
+                body:{
+                    pollId: pollWinnerId
+                }
             })
+
+            response.value = data.value;
+            
+            pollTitle.value = response.value.title_n_other_info.poll_title;
+            afterPollDescription.value = response.value.title_n_other_info.after_poll_description;
+            whichIndustry.value = response.value.title_n_other_info.which_industry;
+            startingDate.value = moment(response.value.title_n_other_info.starting_date).format('D MMM YYYY');
+            endingDate.value = response.value.title_n_other_info.ending_date;
+            publishedDate.value = moment(response.value.title_n_other_info.updated_at).format('D MMM YYYY');
+            
+            winnersName.value = response.value.title_n_other_info.winners_name;
+            
+            totalVotes.value = response.value.title_n_other_info.total_votes;
+            winnersVotes.value = response.value.title_n_other_info.winners_votes;
+
+            thumbnail.value = response.value.images_uploaded[0].placeholder;
+            winnersThumbnail.value = response.value.images_uploaded[2].placeholder;
+
+            if(response.value.success == true){
+                pollFound.value = true;
+            }
+            else{
+                pollFound.value = false;
+            }
+
+            const hasHTMLTags = /<[a-z][\s\S]*>/i.test(response.value.title_n_other_info.after_poll_description);
+
+            if (hasHTMLTags) {
+                const strippedText = response.value.title_n_other_info.after_poll_description.replace(/<[^>]+>/g, '');
+                
+                const trimmedText = strippedText.split('\n')[0].trim(); 
+
+                pageDescriptionForMeta.value = trimmedText;
+            } else {
+                pageDescriptionForMeta.value = response.value.title_n_other_info.after_poll_description.trim();
+            }
+
+            return{
+                pollFound,
+                pollWinnerId,
+                pollTitle,
+                afterPollDescription,
+                ssrApiUrl,
+                ssrFrontEndUrl,
+                whichIndustry,
+                startingDate,
+                endingDate,
+                publishedDate,
+                winnersName,
+                totalVotes,
+                winnersVotes,
+                thumbnail,
+                winnersThumbnail,
+                pageDescriptionForMeta,
+
+            }
         },
         
 
@@ -97,18 +171,7 @@
             apiUrl: process.env.API_URL,
             pollId: null,
             pollFound: null,
-            pollTitle: '',
-            whichIndustry: '',
-            startingDate: '',
-            endingDate: '',
-            publishedDate: '',
             imagesFound: [],
-            totalVotes: '',
-            thumbnail: '',
-            winnersThumbnail: '',
-            winnersName: '',
-            winnersVotes: '',
-            afterPollDescription: '',
             token: process.client ? localStorage.getItem('token') : '',
             userEmail: '',
         }),
@@ -119,7 +182,7 @@
             this.pollId = this.$route.params.pollwinnerid;
             this.pollId = this.pollId.replace(/:/g, '');
             // this.pollId = this.pollId.replace(/-/g, ' ');
-            this.getPollInfo();
+            // this.getPollInfo();
             // window.scrollTo(0, 0);
         },
 
@@ -186,10 +249,3 @@
     }
 </script>
 
-<style>
-/* 
-.winner-animation{
-    --api-url: {{ apiUrl }};
-    background-image: url('var(--api-url)/winner/winnerCelebration.gif');
-} */
-</style>

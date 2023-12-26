@@ -30,8 +30,7 @@
 
             </Head>
             <div class="styling-link font-selected">
-                <router-link to="/" class="navigator-link">Home</router-link><div class="navigator-link-divider">/</div>
-                <router-link :to="'/article/'+newsid" class="navigator-link">{{headline}}</router-link>
+                <router-link to="/" class="navigator-link">Home</router-link>
             </div>
             <div class="px-20-gap"></div>
             <h1>{{headline}}</h1>

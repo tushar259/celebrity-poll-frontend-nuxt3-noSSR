@@ -1,5 +1,8 @@
 <template>
     <div class="contact-us">
+        <div class="styling-link font-selected" style="margin-left: 3%;padding-top: 20px;">
+        	<router-link to="/" class="navigator-link">Home</router-link>
+        </div>
         <div class="container">
             <h2>Contact Information</h2>
             <p>If you have any questions or need assistance, please feel free to contact us through the following channels:</p>
