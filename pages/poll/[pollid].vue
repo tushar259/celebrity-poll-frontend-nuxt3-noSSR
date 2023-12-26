@@ -8,6 +8,20 @@
         </div>
     </div>
     <div v-else-if="pollFound == true" class="parent-background">
+        <Head>
+            <Title>Poll - {{pollid}}</Title>
+            <Meta name="description" :content="pageDescriptionForMeta" />
+            <Meta hid="og:title" property="og:title" :content="'Poll - '+pollid" />
+            <Meta hid="og:description" property="og:description" :content="pageDescriptionForMeta" />
+            <Meta hid="og:image" property="og:image" :content="ssrApiUrl+'/'+thumbnail" />
+            <Meta hid="og:url" property="og:url" :content="ssrFrontEndUrl+'/poll/'+pollid" />
+            <Meta hid="og:type" property="og:type" content="website" />
+            
+            <Meta name="twitter:title" :content="'Poll - '+pollid" />
+            <Meta name="twitter:description" :content="pageDescriptionForMeta" />
+            <Meta name="twitter:card" content="summary_large_image" />
+            <Meta name="twitter:image" :content="ssrApiUrl+'/'+thumbnail" />
+        </Head>
         <div v-if="thumbnail != ''" class="custom-thumbnail">
             <div class="image-card">
                 <div class="image-card-body">
@@ -30,9 +44,7 @@
             <div class="col-md-6">
                 <div class="styling-link font-selected">
                     <router-link to="/" class="navigator-link">Home</router-link><div class="navigator-link-divider">/</div>
-                    <router-link to="/polls" class="navigator-link">Polls</router-link><div class="navigator-link-divider">/</div>
-                    <router-link :to="'/industry/'+whichIndustry" class="navigator-link capitalized">{{whichIndustry}}</router-link><div class="navigator-link-divider">/</div>
-                    <router-link :to="'/poll/'+pollId" class="navigator-link">{{pollId}}</router-link>
+                    <router-link to="/polls" class="navigator-link">Polls</router-link>
                 </div>
             </div>
             <div class="col-md-6" style="text-align: right;">
@@ -49,17 +61,12 @@
                             </a>
                         
                             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="twitter" style="margin-right: 13px;" @click="shareOnTwitter">
-                                <!-- <img :src="apiUrl+'/logo/Twitter-logo.svg.png'" alt="Twitter Share" style="height: 24px;width: 31px;"> -->
+                                
                                 <i class="fab fa-twitter" style="font-size:28px"></i>
                             </a>
                         
-                            <!-- <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" title="instagram" @click="shareOnInstagram">
-                                <img :src="apiUrl+'/logo/Instagram_logo_2016.svg.webp'" alt="LinkedIn Share" style="height: 27px;width: 27px;">
-                            </a> -->
                             <a href="#" @click="copyLinkToClipboard()">
                                 <i class="fas fa-copy fa-lg" style="padding-bottom: 10px;"></i>
-                                <!-- <i class="fa-regular fa-copy fa-lg"></i> -->
-                                <!-- <i class="fa fa-copy" style="font-size:24px"></i> -->
                                 
                             </a>
                         </li>
@@ -72,7 +79,7 @@
         <div class="row poll-page-row">
             <div class="col-md-5 custom-column">
                 <div class="poll-page-custom-card">
-                    <h5>{{ pollTitle }}?</h5>
+                    <!-- <h5>{{ pollTitle }}?</h5> -->
                     <span class="lite-color-in-project">Participate in Poll, Cast your vote.</span>
                     <div class="px-30-gap"></div>
                     <div  v-for="(poll, index) in pollsVoted" :key="index" class="polls-in-page">
@@ -118,59 +125,109 @@
 
 <script>
     import moment from 'moment';
-    // import { useToast } from 'vue-toastification';
-    // const toast = useToast();
     import axios from 'axios';
     export default {
         
-        setup(){
+        async setup(){
             const route = useRoute()
             const pollid = route.params.pollid;
-            // Now you can use router and route as needed
-            
-            
-            useHead({
-                title: `Poll - ${pollid}`,
-                meta: [
-                    
-                    {name: 'description', content: 'Welcome to PollDiary! Get all the latest news & polls on entertainment & lifestyle. Get updates on Bollywood, Hollywood, Beauty, Health, Box Office, Movies, Music, K-Pop & more'},
+            const config = useRuntimeConfig();
+            const ssrApiUrl = config.public.API_URL;
+            const ssrFrontEndUrl = config.public.Project_URL;
+            const pollFound = ref(null);
+            const pollTitle = ref("");
+            const beforePollDescription = ref("");
+            // const afterPollDescription = ref("");
+            const whichIndustry = ref("");
+            const startingDate = ref("");
+            const endingDate = ref("");
+            const tableNameStartsWith = ref("");
+            const pollsVoted = ref([]);
+            const pageDescriptionForMeta = ref("");
+            const totalVotes = ref(0);
+            const thumbnail = ref("");
 
-                    { hid: 'og:title', property: 'og:title', content: 'Poll - '+pollid },
-                    { hid: 'og:description', property: 'og:description', content: 'Welcome to PollDiary! Get all the latest news & polls on entertainment & lifestyle. Get updates on Bollywood, Hollywood, Beauty, Health, Box Office, Movies, Music, K-Pop & more' },
-                    // { hid: 'og:image', property: 'og:image', content: process.env.API_URL+'/logo/favicon2.png' },
-                    { hid: 'og:url', property: 'og:url', content: 'https://www.polldiary.com/poll/'+pollid },
-                    { hid: 'og:type', property: 'og:type', content: 'website' },
+            const response = {};
 
-                    { name: 'twitter:title', content: 'Poll - '+pollid },
-                    { name: 'twitter:description', content: 'Welcome to PollDiary! Get all the latest news & polls on entertainment & lifestyle. Get updates on Bollywood, Hollywood, Beauty, Health, Box Office, Movies, Music, K-Pop & more' },
-                    // { name: 'twitter:image', content: process.env.API_URL+'/logo/favicon2.png' },
-                    { name: 'twitter:card', content: 'summary' },
-                ]
+            const {data} = await useFetch(`${ssrApiUrl}/api/get-poll-info`, {
+                method: 'post',
+                body:{
+                    pollId: pollid
+                }
             })
+
+            response.value = data.value;
+            pollTitle.value = response.value.title_n_other_info.poll_title;
+            beforePollDescription.value = response.value.title_n_other_info.before_poll_description;
+            // afterPollDescription.value = response.value.title_n_other_info.after_poll_description;
+            // pageDescriptionForMeta.value = response.value.title_n_other_info.before_poll_description;
+            whichIndustry.value = response.value.title_n_other_info.which_industry;
+            startingDate.value = moment(response.value.title_n_other_info.starting_date).format('D MMM YYYY');
+            endingDate.value = moment(response.value.title_n_other_info.ending_date).format('D MMM YYYY');
+            tableNameStartsWith.value = response.value.title_n_other_info.table_name_starts_with;
+
+            // console.log(pageDescriptionForMeta.value);
+            
+            response.value.polls_n_counts.forEach(item => {
+                const percent = ((item.votes / response.value.total_votes) * 100).toFixed(1);
+                item.percent = percent > 0 ? percent : 0;
+                pollsVoted.value.push(item);
+            });
+
+            totalVotes.value = parseInt(response.value.total_votes);
+            
+            if(response.value.images_uploaded[0]){
+                thumbnail.value = response.value.images_uploaded[0].placeholder;
+            }
+
+            if(response.value.success == true){
+                pollFound.value = true;
+            }
+            else{
+                pollFound.value = false;
+            }
+
+            const hasHTMLTags = /<[a-z][\s\S]*>/i.test(response.value.title_n_other_info.before_poll_description);
+
+            if (hasHTMLTags) {
+                const strippedText = response.value.title_n_other_info.before_poll_description.replace(/<[^>]+>/g, '');
+                
+                const trimmedText = strippedText.split('\n')[0].trim(); 
+
+                pageDescriptionForMeta.value = trimmedText;
+            } else {
+                pageDescriptionForMeta.value = response.value.title_n_other_info.before_poll_description.trim();
+            }
+ 
+            return{
+                pollid,
+                ssrApiUrl,
+                ssrFrontEndUrl,
+                pollFound,
+                pollTitle,
+                beforePollDescription,
+                whichIndustry,
+                startingDate,
+                endingDate,
+                tableNameStartsWith,
+                pollsVoted,
+                totalVotes,
+                thumbnail,
+                pageDescriptionForMeta
+            }
         },
-        
 
         data: () => ({
             apiUrl: process.env.API_URL,
             pollId: null,
             pollFound: null,
-            pollTitle: '',
-            beforePollDescription: '',
             afterPollDescription: '',
-            whichIndustry: '',
-            startingDate: '',
-            endingDate: '',
-            pollsVoted: [],
             imagesFound: [],
-            totalVotes: 0,
-            thumbnail: '',
             idSelectedToVote: '',
-            tableNameStartsWith: '',
             disableVote: false,
             token: process.client ? localStorage.getItem('token') : '',
             userEmail: '',
             voteMessage: '',
-            pageDescriptionForMeta: '',
             selectedPollTagName: '',
             youCanVoteIn: 60,
             timer: null,
@@ -179,27 +236,13 @@
             ifUserVotedThenCanVoteNow: "true",
         }),
 
-        
 
         created() {
             this.apiUrl = this.$config.public.API_URL;
             this.pollId = this.$route.params.pollid;
-            //this.pollId = this.pollId.replace(/:/g, '');
 
-            this.ifUserVotedThenTime = process.client ? localStorage.getItem(`whenUserVoted${this.pollId}`) : '',
-            this.ifUserVotedThenCanVoteNow = process.client ? localStorage.getItem(`canUserVoteNow${this.pollId}`) : "true",
-            // this.pollId = this.pollId.replace(/-/g, ' ');
-            // console.log(this.pollId);
-            // if(process.client){
-            //     document.title = 'Fans - '+this.pollTitle;
-            // }
-            // const protocol = window.location.protocol; // e.g., "http:" or "https:"
-            // const hostname = window.location.hostname; // e.g., "www.example.com"
-            // const port = window.location.port; // e.g., "8080" (if exists)
-            // const url = `${protocol}//${hostname}${port ? `:${port}` : ''}`;
-            // console.log(url);
-
-            this.getPollInfo();
+            this.ifUserVotedThenTime = process.client ? localStorage.getItem(`whenUserVoted${this.pollId}`) : '';
+            this.ifUserVotedThenCanVoteNow = process.client ? localStorage.getItem(`canUserVoteNow${this.pollId}`) : "true";
 
             if(process.client){
                 if(this.ifUserVotedThenCanVoteNow == "false"){
@@ -209,13 +252,26 @@
             }
         },
 
-        beforeMount(){
-            // if(process.client){
-            //     window.scrollTo(0, 0);
-            // }
-        },
-
         methods: {
+            trimDescription(description) {
+                if(process.client){
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = description;
+
+                    const firstPara = tempDiv.querySelector('p');
+                    let trimmedText = '';
+
+                    if (firstPara) {
+                        trimmedText = firstPara.textContent.trim();
+                    } else {
+                        const paragraphs = tempDiv.innerHTML.split('<br><br>');
+                        if (paragraphs.length > 0) {
+                            trimmedText = paragraphs[0].trim();
+                        }
+                    }
+                    return trimmedText;
+                }
+            },
             copyLinkToClipboard(){
                 if(process.client){
                     const urlToCopy = window.location.href;
@@ -243,7 +299,7 @@
                     const pageUrl = currentLink;
 
                     const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}&quote=${encodeURIComponent(description)}&hashtag=${encodeURIComponent(title)}&picture=${encodeURIComponent(imageUrl)}`;
-                    // const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentLink)}`;
+                    
                     window.open(shareUrl, '_blank');
                 }
             },
@@ -263,9 +319,7 @@
                     const text = `${title}`;
 
                     const shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(text)}&via=${twitterUsername}`;
-                    // const text = "Check out this link!";
-                    // const shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentLink)}&text=${encodeURIComponent(text)}`;
-                    // const shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentLink)}`;
+                    
                     window.open(shareUrl, '_blank');
                 }
             },
@@ -285,8 +339,6 @@
                     const text = `Check out this link! ${imageUrl} ${title} ${description} ${pageUrl}`;
                     const shareText = encodeURIComponent(text);
                     const shareUrl = `https://www.instagram.com/?text=${shareText}`;
-                    // const shareText = encodeURIComponent(`Check out this link: ${currentLink}`);
-                    // const shareUrl = `https://www.instagram.com/?text=${shareText}`;
                     window.open(shareUrl, '_blank');
                 }
             },
@@ -295,14 +347,11 @@
             },
 
             getPollInfo(){
-                // const formData = new FormData();
-                // formData.append('pollId', this.pollId);
                 const formData = {
                     'pollId': this.pollId
                 }
                 axios.post(this.apiUrl+'/api/get-poll-info', formData)
                 .then(response => {
-                    // console.log(response);
                     if(response.data.success === true){
                         this.pollFound = true;
                         this.pollTitle = response.data.title_n_other_info.poll_title;
@@ -337,10 +386,9 @@
                         this.pollFound = false;
                     }
                     if(response.data.success === false && response.data.message === "Poll not found"){
-                        // this.$router.push('/*');
+                        
                         this.pollFound = false;
                     }
-                    // console.log(response);
                 })
                 .catch(error => {
                     console.log(error);
@@ -348,7 +396,6 @@
             },
 
             selectedOptionToVote(id, name){
-                // console.log(id);
                 this.idSelectedToVote = id;
                 this.selectedPollTagName = name;
             },
@@ -357,24 +404,18 @@
                 if(process.client){
                     return new Promise((resolve, reject) => {
                         
-                        // const formData = {
-                        //     "token": this.token
-                        // };
                         if(localStorage.getItem('token')){
                             axios.post(this.apiUrl+'/api/auth/check-if-user-logged-in', {
-                                // other data you want to send
+                                
                             }, {
                                 headers: {
                                     'Authorization': `Bearer ${this.token}`
                                 }
                             })
                             .then(response =>{
-                                // console.log(response.data);
                                 if(response.data.success === true && response.data.message === "User logged in"){
                                     this.userEmail = response.data.userInfoFromTk.email;
                                     resolve(true);
-                                    // this.$router.push(`/`);
-                                    // this.userId = response.data.userInfoFromTk.id;
                                 }
                                 else{
                                     resolve(false);
@@ -387,72 +428,37 @@
                         }
                         else{
                             resolve(false);
-                            // console.log("no token in storage");
                         }
                     });
                 }
             },
 
             preCheckBeforeVote(){
-                // this.disableVote = true;
-                // this.voteMessage = "";
-                // if(this.token.length > 0){
-                //     let value = await this.checkIfUserLoggedin();
-                //     console.log("is he logged in: "+this.userEmail);
-                //     if(value == true){
-                //         this.voteNow();
-                //     }
-                //     else{
-                //         this.disableVote = false;
-                //         this.voteMessage = "<span style='color:red;'>You need to login.</span>";
-                //         setTimeout(() => {
-                //             this.voteMessage = "";
-                //         }, 2000);
-                        
-                //     }
-                // }
-                // else{
-                //     this.disableVote = false;
-                //     this.voteMessage = "<span style='color:red;'>You need to login.</span>";
-                //     setTimeout(() => {
-                //         this.voteMessage = "";
-                //     }, 2000);
-                // }
+                
                 if(process.client){
                     this.disableVote = true;
-                    // this.voteMessage = "";
                     if(localStorage.getItem('token')){
                         if (this.token.length > 0) {
                             this.checkIfUserLoggedin().then((value) => {
-                                // console.log("Is he logged in: " + this.userEmail);
                                 if (value === true) {
                                     this.voteNow();
                                 } 
                                 else{
                                     this.disableVote = false;
                                     this.showDangerToast("You need to login.", 5000);
-                                    // this.voteMessage = "<span style='color:red;'>You need to login.</span>";
-                                    // setTimeout(() => {
-                                    //     this.voteMessage = "";
-                                    // }, 2000);
+                                    
                                 }
                             }).catch((error) => {
                                 this.disableVote = false;
                                 console.log(error);
                                 this.showDangerToast("You need to login.", 5000);
-                                // this.voteMessage = "<span style='color:red;'>Server went down.</span>";
-                                // setTimeout(() => {
-                                //     this.voteMessage = "";
-                                // }, 2000);
+                                
                             });
                         }
                         else{
                             this.disableVote = false;
                             this.showDangerToast("You need to login.", 5000);
-                            // this.voteMessage = "<span style='color:red;'>You need to login.</span>";
-                            // setTimeout(() => {
-                            //     this.voteMessage = "";
-                            // }, 2000);
+                            
                         }
                     }
                     else{
@@ -463,7 +469,7 @@
             },
 
             voteNow(){
-
+                this.disableVote = true;
                 if(this.idSelectedToVote === "" || this.idSelectedToVote === null || (this.ifUserVotedThenCanVoteNow == "false" || localStorage.getItem(`canUserVoteNow${this.pollId}`) == "false")){
                     this.disableVote = false;
                     
@@ -475,10 +481,6 @@
                         this.showDangerToast("Please wait for a moment.", 5000);
                         this.startCountdown(newTime);
                     }
-                    // this.voteMessage = "<span style='color:red;'>Please select an option.</span>";
-                    // setTimeout(() => {
-                    //     this.voteMessage = "";
-                    // }, 2000);
                 }
                 else{
                     localStorage.setItem(`canUserVoteNow${this.pollId}`, "false");
@@ -490,11 +492,9 @@
                     };
                     axios.post(this.apiUrl+'/api/vote-selected-candidate', formData)
                     .then(response => {
-                        // console.log(response);
                         this.pollsVoted = [];
                         if(response.data.success === true){
                             response.data.new_polls.forEach(item => {
-                                // const votesNumber = parseInt(item.votes);
                                 if(((item.votes / response.data.total_votes) * 100).toFixed(1) > 0){
                                     item.percent = ((item.votes / response.data.total_votes) * 100).toFixed(1);
                                 }
@@ -502,7 +502,6 @@
                                     item.percent = 0;
                                 }
                                 
-                                // item.votes = votesNumber.toLocaleString();
                                 item.votes = parseInt(item.votes);
                                 this.pollsVoted.push(item);
                             });
@@ -519,10 +518,6 @@
                                 localStorage.setItem(`whenUserVoted${this.pollId}`, newTime);
                                 
                                 this.startCountdown(newTime);
-
-                                // setTimeout(() => {
-                                //     this.voteMessage = "";
-                                // }, 2000);
                             }
                             
                             // this.voteMessage = "<span style='color:green;'>"+response.data.message+"</span>";
@@ -536,11 +531,14 @@
                 }
             },
             startCountdown(newTime) {
+                if (this.timer) {
+                    return;
+                }
                 this.timer = setInterval(() => {
                     const currentTime = new Date().getTime();
                     const elapsedTime = currentTime - newTime;
                     const remainingSeconds = Math.max(60 - Math.floor(elapsedTime / 1000), 0);
-
+                    
                     if(remainingSeconds > 0){
                         this.showTimer = true;
                         this.youCanVoteIn = remainingSeconds;
@@ -550,7 +548,9 @@
                         localStorage.setItem(`canUserVoteNow${this.pollId}`, "true");
                         this.ifUserVotedThenCanVoteNow = "true";
                         clearInterval(this.timer); // Stop the timer when it reaches 0
-                        window.location.reload();
+                        this.timer = null;
+                        return;
+                        // window.location.reload();
                     }
                 }, 1000); // Update every 1000 milliseconds (1 second)
                 

@@ -129,7 +129,6 @@
         async setup(){
             
             const route = useRoute();
-            const ssrNewsid = route.params.newsid;
             const config = useRuntimeConfig();
             const ssrApiUrl = config.public.API_URL;
             const ssrFrontEndUrl = config.public.Project_URL;
@@ -157,7 +156,6 @@
                 pollFound,
                 allRecentUploadedPolls,
                 allRecentPollsFound,
-                ssrNewsid,
                 ssrFrontEndUrl
             }
             
@@ -177,8 +175,6 @@
             pageDescriptionForMeta: ''
             
         }),
-
-        
 
         created() {
             this.apiUrl = this.$config.public.API_URL;
