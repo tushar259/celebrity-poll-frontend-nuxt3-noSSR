@@ -76,6 +76,22 @@ export default defineNuxtConfig({
     // { src: "~/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js", mode: "client" }
   ],
   modules: ['nuxt-speedkit', 'nuxt-simple-sitemap'],
+
+  speedkit: {
+    // Example configuration options
+    prefetch: {
+      includePaths: ['/article/**', '/poll/**'],
+      // excludePaths: ['/admin/**'],
+    },
+    preload: {
+      includePaths: ['/', '/polls'],
+      // excludePaths: ['/contact'],
+    },
+    cache: {
+      browser: true,
+      server: true,
+    },
+  },
   
   components: true,
 

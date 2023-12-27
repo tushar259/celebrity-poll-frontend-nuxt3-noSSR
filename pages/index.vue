@@ -11,7 +11,6 @@
                 </div>
             </div>
             <div v-else-if="newsFound == true">
-                
                 <Head>
                     <Title>PollDiary - Home</Title>
                     <Meta name="description" content="Welcome to PollDiary! Get all the latest news & polls on entertainment & lifestyle. Get updates on Bollywood, Hollywood, Beauty, Health, Box Office, Movies, Music, K-Pop & more" />
@@ -34,19 +33,20 @@
                 <div class="row">
                     <div class="col">
                         <div class="row top-left-news">
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <a :href="'/article/' + topOftopLeftNews[0].url" class="top-left-news-image-latest">
                                     <div class="top-left-new-image-frame">
                                         <img :src="apiUrl + '/' + topOftopLeftNews[0].thumbnail" :alt="topOftopLeftNews[0].headline" ><br>
                                     </div>
                                     <span>{{topOftopLeftNews[0].headline}}<br>
                                         <small>{{beautifyTime(topOftopLeftNews[0].created_at)}}</small>
+                                        <div class="summary-color">{{trimSummary(topOftopLeftNews[0].summary)}}</div>
                                     </span>
                                     
                                     
                                 </a>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <div v-for="(singletopOftopLeftNews, index) in topOftopLeftNews" :key="index">
                                     <div v-if="index > 0">
                                         <hr class="d-block d-sm-none">
@@ -55,9 +55,11 @@
                                             <img :src="apiUrl + '/' + singletopOftopLeftNews.thumbnail" :alt="singletopOftopLeftNews.headline" ><br>
                                             <span>{{singletopOftopLeftNews.headline}}<br>
                                                 <small>{{beautifyTime(singletopOftopLeftNews.created_at)}}</small>
+                                                
                                             </span>
                                             
                                         </a>
+                                        <div class="summary-color">{{trimSummary(singletopOftopLeftNews.summary)}}</div>
                                         <div class="px-20-gap" v-if="index == 1"></div>
                                     </div>
                                 </div>
@@ -66,7 +68,7 @@
                         </div>
                         <div class="px-10-gap"></div>
                         <div class="row top-left-news">
-                            <div v-for="(singletopLeftNews, index) in topLeftNews" :key="index" class="col-md-5">
+                            <div v-for="(singletopLeftNews, index) in topLeftNews" :key="index" class="col-md-6">
                                 <hr class="d-block d-sm-none">
                                 <div class="px-5-gap"></div>
                                 <a :href="'/article/' + singletopLeftNews.url" class="d-flex top-left-news-image">
@@ -75,11 +77,11 @@
                                     <span>
                                         {{singletopLeftNews.headline}}<br>
                                         <small>{{beautifyTime(singletopLeftNews.created_at)}}</small>
+                                        
                                     </span>
-                                    
-                                
                                 </a>
-                                <div class="px-5-gap"></div>
+                                <div class="summary-color">{{trimSummary(singletopLeftNews.summary)}}</div>
+                                <div class="px-30-gap"></div>
                             </div>
                         </div>
 
@@ -113,7 +115,7 @@
                         <div class="px-20-gap"></div>
 
                         <div class="row top-left-news" v-if="selectedOption == 'Bollywood'">
-                            <div v-for="(singlebollywoodNews, index) in bollywoodNews" :key="index" class="col-md-5" >
+                            <div v-for="(singlebollywoodNews, index) in bollywoodNews" :key="index" class="col-md-6" >
                                 
                                 <div class="px-5-gap"></div>
                                 <a :href="'/article/' + singlebollywoodNews.url" class="d-flex top-left-news-image">
@@ -121,15 +123,17 @@
                                     <span>
                                         {{singlebollywoodNews.headline}}<br>
                                         <small>{{beautifyTime(singlebollywoodNews.created_at)}}</small>
+                                        
                                     </span>
                                 </a>
-                                <div class="px-5-gap"></div>
+                                <div class="summary-color">{{trimSummary(singlebollywoodNews.summary)}}</div>
+                                <div class="px-30-gap"></div>
                                 <hr class="d-block d-sm-none">
                             </div>
                         </div>
 
                         <div class="row top-left-news" v-if="selectedOption == 'Music'">
-                            <div v-for="(singlemusicNews, index) in musicNews" :key="index" class="col-md-5" >
+                            <div v-for="(singlemusicNews, index) in musicNews" :key="index" class="col-md-6" >
                                 
                                 <div class="px-5-gap"></div>
                                 <a :href="'/article/' + singlemusicNews.url" class="d-flex top-left-news-image">
@@ -137,15 +141,17 @@
                                     <span>
                                         {{singlemusicNews.headline}}<br>
                                         <small>{{singlemusicNews.created_at}}</small>
+                                        
                                     </span>
                                 </a>
-                                <div class="px-5-gap"></div>
+                                <div class="summary-color">{{trimSummary(singlemusicNews.summary)}}</div>
+                                <div class="px-30-gap"></div>
                                 <hr class="d-block d-sm-none">
                             </div>
                         </div>
 
                         <div class="row top-left-news" v-if="selectedOption == 'Hollywood'">
-                            <div v-for="(singlehollywoodNews, index) in hollywoodNews" :key="index" class="col-md-5" >
+                            <div v-for="(singlehollywoodNews, index) in hollywoodNews" :key="index" class="col-md-6" >
                                 
                                 <div class="px-5-gap"></div>
                                 <a :href="'/article/' + singlehollywoodNews.url" class="d-flex top-left-news-image">
@@ -153,17 +159,19 @@
                                     <span>
                                         {{singlehollywoodNews.headline}}<br>
                                         <small>{{singlehollywoodNews.created_at}}</small>
+                                        
                                     </span>
                                 </a>
-                                <div class="px-5-gap"></div>
+                                <div class="summary-color">{{trimSummary(singlehollywoodNews.summary)}}</div>
+                                <div class="px-30-gap"></div>
                                 <hr class="d-block d-sm-none">
                             </div>
                         </div>
 
                         <div class="row top-left-news" v-if="selectedOption == 'South India'">
-                            <div v-for="(singlesouthIndiaNews, index) in southIndiaNews" :key="index" class="col-md-5" >
+                            <div v-for="(singlesouthIndiaNews, index) in southIndiaNews" :key="index" class="col-md-6" >
                                 
-                                <div class="px-5-gap"></div>
+                                <div class="px-30-gap"></div>
                                 <a :href="'/article/' + singlesouthIndiaNews.url" class="d-flex top-left-news-image">
                                     
                                     <img :src="apiUrl + '/' + singlesouthIndiaNews.thumbnail" :alt="singlesouthIndiaNews.headline">
@@ -171,15 +179,17 @@
                                     <span>
                                         {{singlesouthIndiaNews.headline}}<br>
                                         <small>{{singlesouthIndiaNews.created_at}}</small>
+                                        
                                     </span>
                                 </a>
-                                <div class="px-5-gap"></div>
+                                <div class="summary-color">{{trimSummary(singlesouthIndiaNews.summary)}}</div>
+                                <div class="px-30-gap"></div>
                                 <hr class="d-block d-sm-none">
                             </div>
                         </div>
 
                         <div class="row top-left-news" v-if="selectedOption == 'TV'">
-                            <div v-for="(singletvNews, index) in tvNews" :key="index" class="col-md-5" >
+                            <div v-for="(singletvNews, index) in tvNews" :key="index" class="col-md-6" >
                                 
                                 <div class="px-5-gap"></div>
                                 <a :href="'/article/' + singletvNews.url" class="d-flex top-left-news-image">
@@ -187,15 +197,17 @@
                                     <span>
                                         {{singletvNews.headline}}<br>
                                         <small>{{singletvNews.created_at}}</small>
+                                        
                                     </span>
                                 </a>
-                                <div class="px-5-gap"></div>
+                                <div class="summary-color">{{trimSummary(singletvNews.summary)}}</div>
+                                <div class="px-30-gap"></div>
                                 <hr class="d-block d-sm-none">
                             </div>
                         </div>
 
                         <div class="row top-left-news" v-if="selectedOption == 'Worldwide'">
-                            <div v-for="(singleworldwideNews, index) in worldwideNews" :key="index" class="col-md-5" >
+                            <div v-for="(singleworldwideNews, index) in worldwideNews" :key="index" class="col-md-6" >
                                 
                                 <div class="px-5-gap"></div>
                                 <a :href="'/article/' + singleworldwideNews.url" class="d-flex top-left-news-image">
@@ -203,16 +215,18 @@
                                     <span>
                                         {{singleworldwideNews.headline}}<br>
                                         <small>{{singleworldwideNews.created_at}}</small>
+                                        
                                     </span>
                                 </a>
-                                <div class="px-5-gap"></div>
+                                <div class="summary-color">{{trimSummary(singleworldwideNews.summary)}}</div>
+                                <div class="px-30-gap"></div>
                                 <hr class="d-block d-sm-none">
                             </div>
                         </div>
 
                         <div class="row top-left-news" v-if="selectedOption == 'Others'">
                             
-                            <div v-for="(singleOthersNews, index) in othersNews" :key="index" class="col-md-5" >
+                            <div v-for="(singleOthersNews, index) in othersNews" :key="index" class="col-md-6" >
                                 
                                 <div class="px-5-gap"></div>
                                 <a :href="'/article/' + singleOthersNews.url" class="d-flex top-left-news-image">
@@ -220,9 +234,11 @@
                                     <span>
                                         {{singleOthersNews.headline}}<br>
                                         <small>{{singleOthersNews.created_at}}</small>
+                                        
                                     </span>
                                 </a>
-                                <div class="px-5-gap"></div>
+                                <div class="summary-color">{{trimSummary(singleOthersNews.summary)}}</div>
+                                <div class="px-30-gap"></div>
                                 <hr class="d-block d-sm-none">
                             </div>
                         </div>
@@ -241,8 +257,10 @@
                                 </div>
                                 <span>
                                     {{singlemostViewedNews.headline}}
+                                    
                                 </span>
                             </a>
+                            <div class="summary-color">{{trimSummary(singlemostViewedNews.summary)}}</div>
                             <div class="px-15-gap"></div>
                         </div>
                     </div>
@@ -259,98 +277,91 @@
             const config = useRuntimeConfig();
             const ssrApiUrl = config.public.API_URL;
             const ssrFrontEndUrl = config.public.Project_URL;
-            const newsFound = ref(null);
             const topOftopLeftNews = ref([]);
             const topLeftNews = ref([]);
             const mostViewedNews = ref([]);
             const bollywoodNews = ref([]);
+            const newsFound = ref(null);
 
             const response = {};
-            const {data} = await useFetch(`${ssrApiUrl}/api/get-all-current-news`)
-            // const {data} = await useFetch(`https://polldiary.online/public/api/get-all-current-news`)
+
+            const {data} = await useFetch(`${ssrApiUrl}/api/get-all-current-news`);
+
             response.value = data.value;
             
             topOftopLeftNews.value = response.value.topLeftNews.slice(0, 3);
             topLeftNews.value = response.value.topLeftNews.slice(3);
-            
+
             if(response.value.success == 'true'){
                 newsFound.value = true;
             }
             else{
                 newsFound.value = false;
             }
-
-            mostViewedNews.value = response.value.allNews.slice().sort((a, b) => b.times_visited - a.times_visited).slice(0, 6);
             
+            mostViewedNews.value = response.value.allNews.slice().sort((a, b) => b.times_visited - a.times_visited).slice(0, 6);
             bollywoodNews.value = response.value.allNews.filter(news => news.industry == 'Bollywood').slice(0, 20);
             
             return{
                 newsFound,
                 topOftopLeftNews,
                 topLeftNews,
+                ssrFrontEndUrl,
                 mostViewedNews,
-                bollywoodNews,
-                ssrFrontEndUrl
+                bollywoodNews
             }
             
         },
 
         data: () => ({
+            newsFound: null,
             token: process.client ? localStorage.getItem('token') : '',
             userEmail: '',
             apiUrl: process.env.API_URL,
             topCurrentShowPagination: 0,
-            newsFound: null,
             musicNews: [],
             hollywoodNews: [],
             southIndiaNews: [],
             tvNews: [],
             worldwideNews: [],
             othersNews: [],
-            selectedOption: 'Bollywood'
+            selectedOption: 'Bollywood',
         }),
 
         created(){
             this.apiUrl = this.$config.public.API_URL;
+            // this.getAllSideNews();
         },
 
         methods:{
-            getAllCurrentNews(){
-                if(this.topOftopLeftNews.length == 0){
-                    axios.get(this.apiUrl+`/api/get-all-current-news`)
-                    .then(response =>{
-                        if(response.data.success == 'true'){
-                            response.data.topLeftNews.forEach((element, index) => {
-                                element.created_at = this.beautifyTime(element.created_at);
-                                if(index == 0){
-                                    this.topOftopLeftNews.push(element); 
-                                }
-                                else{
-                                    this.topLeftNews.push(element);
-                                }
-                            });
-                            response.data.mostViewedNews.forEach(element =>{
-                                element.created_at = this.beautifyTime(element.created_at);
-                                this.mostViewedNews.push(element);
-                            });
-                            response.data.bollywoodNews.forEach(element =>{
-                                element.created_at = this.beautifyTime(element.created_at);
-                                this.bollywoodNews.push(element);
-                            });
-                            this.newsFound = true;
-                        }
-                        else{
-                            this.newsFound = false;
-                        }
-                    })
-                    .catch(error =>{
-                        console.log(error);
-                        this.newsFound = false;
-                    });
+            getAllSideNews(){
+                axios.get(this.apiUrl+`/api/get-all-side-news-at-home`)
+                .then(response =>{
+                    if(response.data.success == 'true'){
+                        this.mostViewedNews = [...response.data.mostViewedNews];
+                        this.bollywoodNews = [...response.data.bollywoodNews];
+                        
+                    }
+                })
+                .catch(error =>{
+                    console.log(error);
+                });
+                
+            },
+
+            trimSummary(summary){
+                
+                if(summary == null || summary == undefined || summary.trim() == '' || summary == 'null'){
+                    return "";
                 }
                 else{
-                    this.newsFound = true;
+                    const dotIndex = summary.indexOf('.');
+                    if (dotIndex !== -1) {
+                        return summary.substring(0, dotIndex + 1); // Include the dot in the substring
+                    }
+                    return summary;
                 }
+                
             },
 
             getNewsIndustryWise(industry){
