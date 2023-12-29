@@ -19,7 +19,7 @@
         </header>
         <nav class="navbar sticky-top navbar-light bg-light">
             <ul class="navbar-nav d-flex flex-row iWantToHideScroll">
-                <li class="">
+                <li>
                     <img class="navbar-logo-custom" src="https://www.polldiary.online/public/logo/favicon2.webp" alt="logo" @click="gotoHome()">
                 </li>
                 <li class="nav-item gap-nav-items">
@@ -28,8 +28,8 @@
                 <li class="nav-item gap-nav-items">
                     <a class="nav-link custom-cursor" href="/polls" :class="{ 'active': activeLink === 'polls' }" @click="gotoPolls()">Polls</a>
                 </li>
-                <li class="nav-item gap-nav-items">
-                    <a class="nav-link" style="width: 80px;" href="/poll-history" :class="{ 'active': activeLink === 'pollHistory' }" @click="gotoPollHistory()">Poll History</a>
+                <li class="nav-item gap-nav-items" style="width: 97px;">
+                    <a class="nav-link" style="width: 97px" href="/poll-history" :class="{ 'active': activeLink === 'pollHistory' }" @click="gotoPollHistory()">Poll History</a>
                 </li>
             </ul>
         </nav>
