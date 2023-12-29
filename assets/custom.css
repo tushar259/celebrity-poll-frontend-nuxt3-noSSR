@@ -946,7 +946,7 @@ input[type='text'] {
 }
 
 
-.iWantToHideScroll{overflow:-moz-scrollbars-none;-ms-overflow-style:none;}.iWantToHideScroll::-webkit-scrollbar{display:none;}
+.iWantToHideScroll{overflow:auto;overflow:-moz-scrollbars-none;-ms-overflow-style:none;}.iWantToHideScroll::-webkit-scrollbar{display:none;}
 
 
 /*NEW FEATURE*/
@@ -961,4 +961,7 @@ input[type='text'] {
 }
 .summary-color{
     color: #555;
+}
+.gap-nav-items{
+    padding-left: 15px;
 }

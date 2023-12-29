@@ -1,6 +1,6 @@
 <template>
     <div>
-          <header class="top-layer">
+        <header class="top-layer">
           <div class="container">
               <div class="row">
                   <div class="col-md-4 d-none d-md-block">
@@ -17,13 +17,30 @@
               </div>
           </div>
         </header>
-        <nav class="navbar navbar-expand-lg navbar-light" style="width: 100% !important">
+        <nav class="navbar sticky-top navbar-light bg-light">
+            <ul class="navbar-nav d-flex flex-row iWantToHideScroll">
+                <li class="">
+                    <img class="navbar-logo-custom" src="https://www.polldiary.online/public/logo/favicon2.webp" alt="logo" @click="gotoHome()">
+                </li>
+                <li class="nav-item gap-nav-items">
+                    <a class="nav-link custom-cursor" href="/" :class="{ 'active': activeLink === 'home' }" @click="gotoHome()">Home</a>
+                </li>
+                <li class="nav-item gap-nav-items">
+                    <a class="nav-link custom-cursor" href="/polls" :class="{ 'active': activeLink === 'polls' }" @click="gotoPolls()">Polls</a>
+                </li>
+                <li class="nav-item gap-nav-items">
+                    <a class="nav-link" style="width: 80px;" href="/poll-history" :class="{ 'active': activeLink === 'pollHistory' }" @click="gotoPollHistory()">Poll History</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- <nav class="navbar navbar-expand-lg navbar-light" style="width: 100% !important">
             <img class="navbar-brand navbar-logo-custom" src="https://www.polldiary.online/public/logo/favicon2.webp" alt="logo" @click="gotoHome()">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>
+            </button> 
             
             <div class="navbar-collapse collapse" :class="{'hide-navbar-now': collapse}" id="navbarNav">
+            <div class="navbar-collapse collapse">
                 <ul class="navbar-nav">
                     <li class="nav-item active">
                         <a class="nav-link custom-cursor" href="/" :class="{ 'active': activeLink === 'home' }" @click="gotoHome()">Home</a>
@@ -32,33 +49,18 @@
                         <a class="nav-link custom-cursor" href="/polls" :class="{ 'active': activeLink === 'polls' }" @click="gotoPolls()">Polls</a>
                     </li>
                     
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-truncate" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Industry
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <!-- <a class="dropdown-item capitalized custom-cursor" v-for="(industryName, index) in allIndustry" :key="index" :class="{ 'active': activeLink === industryName.which_industry }" :href="'/industry/'+industryName.which_industry" @click="transferIndustryTo(industryName.which_industry)">{{industryName.which_industry}}</a> -->
-                            <a class="dropdown-item capitalized custom-cursor" :class="{ 'active': activeLink === 'Bollywood' }" :href="'/industry/Bollywood'" @click="transferIndustryTo('Bollywood')">Bollywood</a>
-                            <a class="dropdown-item capitalized custom-cursor" :class="{ 'active': activeLink === 'Cricket' }" :href="'/industry/Cricket'" @click="transferIndustryTo('Cricket')">Cricket</a>
-                            <a class="dropdown-item capitalized custom-cursor" :class="{ 'active': activeLink === 'Football' }" :href="'/industry/Football'" @click="transferIndustryTo('Football')">Football</a>
-                            <a class="dropdown-item capitalized custom-cursor" :class="{ 'active': activeLink === 'Gaming' }" :href="'/industry/Gaming'" @click="transferIndustryTo('Gaming')">Gaming</a>
-                            <a class="dropdown-item capitalized custom-cursor" :class="{ 'active': activeLink === 'Hollywood' }" :href="'/industry/Hollywood'" @click="transferIndustryTo('Hollywood')">Hollywood</a>
-                            <a class="dropdown-item capitalized custom-cursor" :class="{ 'active': activeLink === 'Music' }" :href="'/industry/Music'" @click="transferIndustryTo('Music')">Music</a>
-                            <a class="dropdown-item capitalized custom-cursor" :class="{ 'active': activeLink === 'South India' }" :href="'/industry/South India'" @click="transferIndustryTo('South India')">South India</a>
-                            
-                        </div>
-                    </li>
+                    
                     <li class="nav-item active">
                         <a class="nav-link custom-cursor" href="/poll-history" :class="{ 'active': activeLink === 'pollHistory' }" @click="gotoPollHistory()">Poll History</a>
                     </li>
-                    <!-- <li class="nav-item active">
+                    <li class="nav-item active">
                         <a class="nav-link custom-cursor" href="/countries" :class="{ 'active': activeLink === 'countries' }" @click="gotoCountries()">Countries</a>
-                    </li> -->
+                    </li>
                     
                 </ul>
                 
             </div>
-        </nav>
+        </nav> -->
   
         <div class="content">
             <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>

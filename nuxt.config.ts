@@ -75,10 +75,37 @@ export default defineNuxtConfig({
     // {src: '~/jsplugins/bootstrap.client.js', mode: 'client'},
     // { src: "~/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js", mode: "client" }
   ],
-  modules: ['nuxt-speedkit', 'nuxt-simple-sitemap'],
-
+  modules: ['nuxt-speedkit','nuxt-simple-sitemap'],
+  
   speedkit: {
-    // Example configuration options
+  
+  	detection: {
+      performance: true,
+      browserSupport: true
+    },
+
+    performanceMetrics: {
+      device: {
+        hardwareConcurrency: { min: 2, max: 48 },
+        deviceMemory: { min: 2 }
+      },
+      timing: {
+        fcp: 800,
+        dcl: 1200
+      }
+    },
+    
+    /*targetFormats: ['webp', 'avif', 'jpg|jpeg|png|gif'],
+
+    componentAutoImport: false,
+    componentPrefix: undefined,
+
+    
+    lazyOffset: {
+      component: '0%',
+      asset: '0%'
+    },*/
+    
     prefetch: {
       includePaths: ['/article/**', '/poll/**'],
       // excludePaths: ['/admin/**'],
@@ -91,11 +118,48 @@ export default defineNuxtConfig({
       browser: true,
       server: true,
     },
+    
+  },
+  
+  image: {
+    screens: {
+      default: 320,
+      xxs: 480,
+      xs: 576,
+      sm: 768,
+      md: 996,
+      lg: 1200,
+      xl: 1367,
+      xxl: 1600,
+      '4k': 1921
+    },
+
+	domains: ['https://polldiary.online/public','https://www.polldiary.online/public']
+    /*domains: [
+      'https://www.polldiary.online/public/images',
+      'https://www.polldiary.online/public/logo',
+      'https://www.polldiary.online/public/newsImages',
+      'https://www.polldiary.online/public/winner',
+      'https://www.polldiary.online/public/newsImages/1223',
+      'https://www.polldiary.online/public/newsImages/0124',
+      'https://www.polldiary.online/public/newsImages/0224',
+      'https://www.polldiary.online/public/newsImages/0324',
+      'https://www.polldiary.online/public/newsImages/0424',
+      'https://www.polldiary.online/public/newsImages/0524',
+      'https://www.polldiary.online/public/newsImages/0624',
+      'https://www.polldiary.online/public/newsImages/0724',
+      'https://www.polldiary.online/public/newsImages/0824',
+      'https://www.polldiary.online/public/newsImages/0924',
+      'https://www.polldiary.online/public/newsImages/1024',
+      'https://www.polldiary.online/public/newsImages/1124',
+      'https://www.polldiary.online/public/newsImages/1224',
+      'https://www.polldiary.online/public/newsImages/0125',
+      'https://www.polldiary.online/public/newsImages/0225',
+      'https://www.polldiary.online/public/newsImages/0325',
+      'https://www.polldiary.online/public/newsImages/0425',
+    ],*/
   },
   
   components: true,
 
-  image: {
-    domains: ['https://polldiary.online/public']
-  }
 })

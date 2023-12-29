@@ -26,7 +26,7 @@
         <div class="row poll-page-background">
             
             <div class="styling-link-for-home font-selected">
-                <router-link to="" class="navigator-link">Home</router-link>
+                <router-link to="/" class="navigator-link">Home</router-link>
             </div>
             
             <div class="col-md-9 list-of-anything">
